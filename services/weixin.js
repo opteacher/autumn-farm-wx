@@ -8,7 +8,7 @@ module.exports = {
         if(!errResp) {
             return "undefined response";
         }
-        return `${errResp.errcode || "XXXXX"}--${errResp.errmsg || "no error message"}`;
+        return `${errResp.errcode || "XXXXX"} -- ${errResp.errmsg || "no error message"}`;
     },
     async initialize() {
         // 获取access token
