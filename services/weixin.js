@@ -43,7 +43,7 @@ module.exports = {
     },
     switchMessage(ctx, msg) {
         console.log(`接收的消息：${msg}`);
-        let xml = msg.xml;
+        let xml = wxXml.xml2js(msg).xml;
         let msgTyp = xml.MsgType;
         let ret = "";
         if(msgTyp === "event") {
