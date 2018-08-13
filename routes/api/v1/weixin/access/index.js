@@ -40,7 +40,7 @@ router.post("/", async ctx => {
         data += chunk;
     });
     ctx.req.on("end", () => {
-        ctx.body = wxSvc.switchMessage(xml2json.toJson(data));
+        wxSvc.switchMessage(ctx, xml2json.toJson(data));
     });
     ctx.body = "";
 });
