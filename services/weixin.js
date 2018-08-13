@@ -4,6 +4,12 @@ const axios = require("axios");
 const wxCfg = require("../config/wx");
 
 module.exports = {
+    wrapError(errResp) {
+        if(!errResp) {
+            return "undefined response";
+        }
+        return `${errResp.errcode || "XXXXX"}--${errResp.errmsg || "no error message"}`;
+    },
     async initialize() {
         // 获取access token
         let acsTkn = (await axios.get(wxCfg.urls.getToken, {
@@ -14,7 +20,7 @@ module.exports = {
             }
         })).data;
         if(!acsTkn.access_token) {
-            throw new Error(acsTkn.errmsg ? acsTkn.errmsg : JSON.stringify(acsTkn));
+            throw new Error(this.wrapError(acsTkn));
         }
         acsTkn = acsTkn.access_token;
 
@@ -22,7 +28,7 @@ module.exports = {
         let result = (await axios.post(`${wxCfg.urls.createButton}?access_token=${acsTkn}`,
             wxCfg.templates.createButton)).data;
         if(result.errcode !== 0 || result.errmsg !== "ok") {
-            throw new Error(result.errmsg ? result.errmsg : JSON.stringify(result));
+            throw new Error(this.wrapError(result));
         }
     },
     switchMessage(ctx, msg) {
