@@ -22,8 +22,8 @@ router.get("/", async ctx => {
     let ecs = query.echostr;
     let tkn = wxCfg.token;
 
-    let ary = [tkn, tms, noc].sort();
-    let hsh = crypto.createHash("sha1").update(ary).digest("hex");
+    let dat = [tkn, tms, noc].sort().join("");
+    let hsh = crypto.createHash("sha1").update(dat).digest("hex");
     console.log(hsh);
 
     if(hsh === sig) {
