@@ -20,7 +20,7 @@ module.exports = {
                                 Title: "测试",
                                 Description: "这是关注之后的推送",
                                 PicUrl: "http://owb90pdwd.bkt.clouddn.com/th.jpeg",
-                                Url: "http://opteacher.top/doc/v1/file-list"
+                                Url: "http://opteacher.top/doc/v1"
                             }
                         }]
                     };
