@@ -1,3 +1,5 @@
+const json2xml = require("json2xml");
+
 const wxTools = require("../utils/wxTools");
 
 module.exports = {
@@ -21,7 +23,7 @@ module.exports = {
                         Url: "http://opteacher.top/doc/v1/file-list"
                     };
                     ctx.set("Content-Type", "text/xml");
-                    ret = wxTools.composeXmlData(resDat);
+                    ret = json2xml(resDat);
             }
         }
         ctx.body = ret;
