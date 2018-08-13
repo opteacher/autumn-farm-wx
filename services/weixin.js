@@ -1,7 +1,5 @@
 const json2xml = require("json2xml");
 
-const wxTools = require("../utils/wxTools");
-
 module.exports = {
     switchMessage(ctx, msg) {
         let xml = msg.xml;
