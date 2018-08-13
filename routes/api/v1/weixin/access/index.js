@@ -35,7 +35,7 @@ router.get("/", async ctx => {
 });
 
 router.post("/", async ctx => {
-    await new Promise(res => {
+    await new Promise((res, rej) => {
         var data = "";
         ctx.req.on("data", chunk => {
             data += chunk;
