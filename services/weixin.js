@@ -4,25 +4,35 @@ const axios = require("axios");
 const wxCfg = require("../config/wx");
 
 module.exports = {
+	accessToken: {},
     wrapError(errResp) {
         if(!errResp) {
             return "undefined response";
         }
         return `${errResp.errcode || "XXXXX"} -- ${errResp.errmsg || "no error message"}`;
     },
+    async getAccessToken() {
+        if(this.accessToken.tkn && Date.now() < this.accessToken.exp) {
+            return this.accessToken.tkn;
+        } else {
+	        let result = (await axios.get(wxCfg.urls.getToken, {
+		        params: {
+			        "grant_type": "client_credential",
+			        "appid": wxCfg.appid,
+			        "secret": wxCfg.secret
+		        }
+	        })).data;
+	        if(!result.access_token) {
+		        throw new Error(this.wrapError(result));
+	        }
+	        this.accessToken.tkn = result.access_token;
+	        this.accessToken.exp = Date.now() + result.expires_in * 1000;
+	        return this.accessToken.tkn;
+        }
+    },
     async initialize() {
         // 获取access token
-        let acsTkn = (await axios.get(wxCfg.urls.getToken, {
-            params: {
-                "grant_type": "client_credential",
-                "appid": wxCfg.appid,
-                "secret": wxCfg.secret
-            }
-        })).data;
-        if(!acsTkn.access_token) {
-            throw new Error(this.wrapError(acsTkn));
-        }
-        acsTkn = acsTkn.access_token;
+        let acsTkn = await this.getAccessToken();
 
         // 初始化界面
         let result = (await axios.post(`${wxCfg.urls.createButton}?access_token=${acsTkn}`,

@@ -1,16 +1,35 @@
 {
-  "appid": "wx5e95891ef30544d3",
-  "token": "opteacher",
-  "secret": "5aea98dcdcc99031be463e1455a8aa5b",
-  "urls": {
-    "getToken": "https://api.weixin.qq.com/cgi-bin/token",
-    "createButton": "https://api.weixin.qq.com/cgi-bin/menu/create"
-  },
-  "templates": {
-    "createButton": {
-      "button": [
-
-      ]
-    }
-  }
+	"appid": "wx5e95891ef30544d3",
+	"token": "opteacher",
+	"secret": "5aea98dcdcc99031be463e1455a8aa5b",
+	"urls": {
+		"getToken": "https://api.weixin.qq.com/cgi-bin/token",
+		"createButton": "https://api.weixin.qq.com/cgi-bin/menu/create"
+	},
+	"templates": {
+		"createButton": {
+			"button": [
+				{
+					"type": "view",
+					"name": "主页",
+					"url": "http://opteacher.top/#/"
+				},
+				{
+					"name": "菜单",
+					"sub_button": [
+						{
+							"type": "view",
+							"name": "搜索",
+							"url": "http://www.soso.com/"
+						},
+						{
+							"type": "click",
+							"name": "赞一下我们",
+							"key": "V1001_GOOD"
+						}
+					]
+				}
+			]
+		}
+	}
 }
