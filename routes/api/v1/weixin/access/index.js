@@ -35,14 +35,20 @@ router.get("/", async ctx => {
 });
 
 router.post("/", async ctx => {
-    var data = "";
-    ctx.req.on("data", chunk => {
-        data += chunk;
+    await new Promise(res => {
+        var data = "";
+        ctx.req.on("data", chunk => {
+            data += chunk;
+        });
+        ctx.req.on("error", msg => {
+            rej(msg)
+        });
+        ctx.req.on("end", async () => {
+            res(wxSvc.switchMessage(ctx, JSON.parse(xml2json.toJson(data))));
+        });
+    }).catch(err => {
+        ctx.body = err.message ? err.message : JSON.stringify(err);
     });
-    ctx.req.on("end", () => {
-        wxSvc.switchMessage(ctx, JSON.parse(xml2json.toJson(data)));
-    });
-    ctx.body = "";
 });
 
 module.exports = router;
