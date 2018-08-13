@@ -24,6 +24,6 @@ module.exports = {
                     ret = json2xml(resDat);
             }
         }
-        ctx.body = ret;
+        ctx.body = `<xml>${ret}</xml>`;
     }
 };
