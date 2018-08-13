@@ -35,9 +35,7 @@ router.get("/", async ctx => {
 });
 
 router.post("/", async ctx => {
-    ctx.send(wxSvc.switchMessage(
-        JSON.parse(xml2json.toJson(ctx.request.body))
-    ));
+    ctx.send(wxSvc.switchMessage(xml2json.toJson(ctx.request.body)));
 });
 
 module.exports = router;
