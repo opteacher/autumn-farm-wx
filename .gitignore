@@ -2,4 +2,4 @@ node_modules/
 .idea/
 public/dist/*
 package-lock.json
-sync.sh
+submit.sh
