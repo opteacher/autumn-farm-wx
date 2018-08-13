@@ -2,6 +2,7 @@ const wxXml = require("wx-xml");
 
 module.exports = {
     switchMessage(ctx, msg) {
+        console.debug(`接收的消息：${msg}`);
         let xml = msg.xml;
         let msgTyp = xml.MsgType;
         let ret = "";
@@ -25,5 +26,6 @@ module.exports = {
             }
         }
         ctx.body = ret;
+        console.debug(`发送的消息：${ctx.body}`);
     }
 };
