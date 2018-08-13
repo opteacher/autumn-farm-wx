@@ -1,4 +1,4 @@
-const json2xml = require("json2xml");
+const wxXml = require("wx-xml");
 
 module.exports = {
     switchMessage(ctx, msg) {
@@ -21,9 +21,9 @@ module.exports = {
                         Url: "http://opteacher.top/doc/v1/file-list"
                     };
                     ctx.set("Content-Type", "text/xml");
-                    ret = json2xml(resDat);
+                    ret = wxXml.js2xml(resDat);
             }
         }
-        ctx.body = `<xml>${ret}</xml>`;
+        ctx.body = ret;
     }
 };
