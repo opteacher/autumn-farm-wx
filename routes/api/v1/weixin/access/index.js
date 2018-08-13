@@ -42,7 +42,7 @@ router.post("/", async ctx => {
     ctx.req.on("end", () => {
         ctx.body = wxSvc.switchMessage(xml2json.toJson(data));
     });
-    ctx.send();
+    ctx.body = "";
 });
 
 module.exports = router;
