@@ -1,4 +1,16 @@
 {
+  "appid": "wx5d23d806038e6ea6",
   "token": "opteacher",
-  "secret": ""
+  "secret": "1a725ee04f3941cca1b72d22eeaed16f",
+  "urls": {
+    "getToken": "https://api.weixin.qq.com/cgi-bin/token",
+    "createButton": "https://api.weixin.qq.com/cgi-bin/menu/create"
+  },
+  "templates": {
+    "createButton": {
+      "button": [
+
+      ]
+    }
+  }
 }

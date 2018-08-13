@@ -1,6 +1,30 @@
 const wxXml = require("wx-xml");
+const axios = require("axios");
+
+const wxCfg = require("../config/wx");
 
 module.exports = {
+    async initialize() {
+        // 获取access token
+        let acsTkn = (await axios.get(wxCfg.urls.getToken, {
+            params: {
+                "grant_type": "client_credential",
+                "appid": wxCfg.appid,
+                "secret": wxCfg.secret
+            }
+        })).data;
+        if(!acsTkn.access_token) {
+            throw new Error(acsTkn.errmsg ? acsTkn.errmsg : JSON.stringify(acsTkn));
+        }
+        acsTkn = acsTkn.access_token;
+
+        // 初始化界面
+        let result = (await axios.post(`${wxCfg.urls.createButton}?access_token=${acsTkn}`,
+            wxCfg.templates.createButton)).data;
+        if(result.errcode !== 0 || result.errmsg !== "ok") {
+            throw new Error(result.errmsg ? result.errmsg : JSON.stringify(result));
+        }
+    },
     switchMessage(ctx, msg) {
         console.log(`接收的消息：${msg}`);
         let xml = msg.xml;
@@ -26,6 +50,7 @@ module.exports = {
                     };
                     ctx.set("Content-Type", "text/xml");
                     ret = wxXml.js2xml(resDat);
+                    break;
             }
         }
         if(msgTyp === "text") {

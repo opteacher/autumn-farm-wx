@@ -17,6 +17,10 @@ const config = require("./config/server");
 const models = require("./models/index").index;
 const docs = require("./docs/index")({path: __dirname});
 const router = require("./routes/index");
+const weixin = require("./services/weixin");
+
+// 初始化微信
+weixin.initialize();
 
 const app = new Koa();
 
