@@ -28,6 +28,25 @@ module.exports = {
                     ret = wxXml.js2xml(resDat);
             }
         }
+        if(msgTyp === "text") {
+            let resDat = {
+                ToUserName: xml.FromUserName,
+                FromUserName: xml.ToUserName,
+                CreateTime: Date.now(),
+                MsgType: "news",
+                ArticleCount: 1,
+                Articles: [{
+                    item: {
+                        Title: "测试",
+                        Description: "这是发送消息之后的推送",
+                        PicUrl: "http://owb90pdwd.bkt.clouddn.com/th.jpeg",
+                        Url: "http://opteacher.top/doc/v1"
+                    }
+                }]
+            };
+            ctx.set("Content-Type", "text/xml");
+            ret = wxXml.js2xml(resDat);
+        }
         ctx.body = ret;
         console.log(`发送的消息：${ctx.body}`);
     }
