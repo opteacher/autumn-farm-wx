@@ -2,7 +2,7 @@ const _ = require("lodash");
 const router = require("koa-router")();
 const projPath = require("../../../../../utils/system").projRootPath();
 const crypto = require("crypto");
-const xml2json = require("xml2json");
+const wxXml = require("wx-xml");
 
 const wxCfg = require(`${projPath}/config/wx`);
 const wxSvc = require(`${projPath}/services/weixin`);
@@ -44,7 +44,7 @@ router.post("/", async ctx => {
             rej(msg)
         });
         ctx.req.on("end", async () => {
-            res(wxSvc.switchMessage(ctx, JSON.parse(xml2json.toJson(data))));
+            res(wxSvc.switchMessage(ctx, wxXml.xml2js(data)));
         });
     }).catch(err => {
         ctx.body = err.message ? err.message : JSON.stringify(err);
