@@ -49,11 +49,11 @@ console.log("页面路由：");
 router.get("/", async ctx => {
     await ctx.render("index");
 });
-console.log("GET\t\t/");
+console.log("GET\t/");
 
 // @steps{4}:扫描src下的routes.js文件，打印所有页面路由
-for(let route of require("../src/main.js")) {
-    console.log(`GET\t/#${route}`);
-}
+// for(let route of require("../src/main.js")) {
+//     console.log(`GET\t/#${route}`);
+// }
 
 module.exports = router;

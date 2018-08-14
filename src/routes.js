@@ -1,4 +1,6 @@
+import home from "./pages/home"
+
 export default [{
 	path: "/",
-	component: require("./pages/home")
+	component: home
 }];
