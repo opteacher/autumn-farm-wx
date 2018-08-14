@@ -29,3 +29,5 @@ new Vue({
     `,
 	router: Vue.router
 }).$mount("#app");
+
+export default routes.map(route => route.path)
