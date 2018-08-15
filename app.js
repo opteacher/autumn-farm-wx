@@ -15,7 +15,7 @@ const cors = require("koa2-cors");
 
 const config = require("./config/server");
 const models = require("./models/index").index;
-const docs = require("./docs/index")({path: __dirname});
+// const docs = require("./docs/index")({path: __dirname});
 const router = require("./routes/index");
 const weixin = require("./services/weixin");
 
@@ -46,7 +46,7 @@ app.use(views("./views", {extension: "html"}));
 app.use(models.routes(), models.allowedMethods());
 
 // 文档路由
-app.use(docs.routes(), docs.allowedMethods());
+// app.use(docs.routes(), docs.allowedMethods());
 
 // 路径分配
 app.use(router.routes(), router.allowedMethods());

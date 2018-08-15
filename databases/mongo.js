@@ -69,7 +69,7 @@ Mongo.prototype.connect = function() {
         `${this.config.port}/`,
         this.config.database
     ].join(""), {
-        useMongoClient: true,
+        useNewUrlParser: true,
         keepAlive: false
     });
 };
@@ -269,6 +269,14 @@ Mongo.prototype.genPreRoutes = function(models) {
             }
         });
     });
+};
+
+Mongo.prototype.sync = function(model) {
+    return this.connect().then(new Promise((res, rej) => {
+        model.remove({}, err => {
+            err ? rej(err) : res();
+        });
+    })).catch(error => { return getErrContent(error); });
 };
 
 module.exports = new Mongo();

@@ -56,6 +56,7 @@ function docsGen(options) {
             "*.css",
             ".git",
             ".DS_Store",
+            ".idea",
             "config",
             "node_modules",
             "package.json",

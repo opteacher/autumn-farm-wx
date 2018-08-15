@@ -9,6 +9,9 @@
                 <button type="button" class="btn btn-success w-100">分类</button>
             </div>
             <div class="col">
+                <button type="button" class="btn btn-success w-100">购物车</button>
+            </div>
+            <div class="col">
                 <button type="button" class="btn btn-success w-100" @click="toAccountPage">账户</button>
             </div>
         </div>

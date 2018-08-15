@@ -1,6 +1,7 @@
 <template>
     <main-layout>
         <head-adv-bar/>
+        <button v-show="$auth.check()" @click="doLogout">退出</button>
     </main-layout>
 </template>
 
@@ -16,6 +17,11 @@
         },
         mounted() {
             holderjs.run();
+        },
+        methods: {
+            doLogout() {
+                this.$auth.logout();
+            }
         }
     }
 </script>
