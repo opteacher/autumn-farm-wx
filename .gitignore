@@ -3,3 +3,4 @@ node_modules/
 public/dist/*
 package-lock.json
 submit.sh
+*.dev.json

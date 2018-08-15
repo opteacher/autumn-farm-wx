@@ -2,7 +2,8 @@ const _ = require("lodash");
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-const cfg = require("../config/db").mongo;
+const env = require("../utils/system").env();
+const cfg = require(`../config/db.${env}`).mongo;
 const getErrContent = require("../utils/message").getErrContent;
 
 // @block{Mongo}:mongodb的实例类

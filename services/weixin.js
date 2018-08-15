@@ -1,7 +1,8 @@
 const wxXml = require("wx-xml");
 const axios = require("axios");
 
-const wxCfg = require("../config/wx");
+const env = require("../utils/system").env();
+const wxCfg = require(`../config/wx.${env}`);
 
 module.exports = {
 	accessToken: {},

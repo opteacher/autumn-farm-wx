@@ -3,7 +3,8 @@ const router = require("koa-router")();
 const projPath = require("../../../../../utils/system").projRootPath();
 const crypto = require("crypto");
 
-const wxCfg = require(`${projPath}/config/wx`);
+const env = require(`${projPath}/utils/system`).env();
+const wxCfg = require(`${projPath}/config/wx.${env}`);
 const wxSvc = require(`${projPath}/services/weixin`);
 
 router.get("/", async ctx => {

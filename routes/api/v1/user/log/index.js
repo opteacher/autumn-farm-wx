@@ -5,11 +5,12 @@ const jwt = require("jsonwebtoken");
 const uuidv4 = require("uuid/v4");
 const ms = require("ms");
 
-const projPath = require("../../../../../utils/system").projRootPath();
+const system = require("../../../../../utils/system");
+const projPath = system.projRootPath();
 const db = require(`${projPath}/databases/mongo`);
 const { Users } = require(`${projPath}/models/index`);
 const Const = require(`${projPath}/constants/controller`);
-const jwtCfg = require(`${projPath}/config/jwt`);
+const jwtCfg = require(`${projPath}/config/jwt.${system.env()}`);
 
 // @block{api_v1_user_log_in}:用户登录
 // @params{request_body}[object]:登录表单

@@ -78,6 +78,9 @@ const exp = {
     },
     projRootPath() {
         return Path.resolve(__dirname, "..");
+    },
+    env() {
+        return require("../config/server").env;
     }
 };
 
