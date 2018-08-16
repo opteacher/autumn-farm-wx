@@ -1,20 +1,20 @@
 <template>
-    <el-container>
-        <el-main class="text-center">
+    <div class="container">
+        <div class="text-center">
             <a href="/#/">
                 <img class="img-thumbnail" src="holder.js/200x200" alt="前往主页">
             </a>
             <form>
-                <el-input class="mt-3" type="text" v-model="form.body.username" placeholder="用户名" required/>
-                <el-input class="mt-2" type="password" v-model="form.body.password" placeholder="密码" required/>
+                <input class="mt-3" type="text" v-model="form.body.phonenum" placeholder="手机号" required/>
+                <input class="mt-2" type="password" v-model="form.body.password" placeholder="密码" required/>
                 <div class="text-left mt-2">
-                    <el-checkbox v-model="form.rememberMe">记住账户</el-checkbox>
+                    <input type="checkbox" v-model="form.rememberMe"/>记住账户
                 </div>
                 <button type="button" class="btn btn-success mt-4 btn-block" @click="doLogin">登录</button>
                 <a class="btn btn-default mt-2 btn-block" role="button" href="/#/logup">注册</a>
             </form>
-        </el-main>
-    </el-container>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -25,7 +25,7 @@
             return {
                 form: {
                     body: {
-                        username: "",
+                        phonenum: "",
                         password: ""
                     },
                     rememberMe: false

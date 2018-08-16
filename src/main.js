@@ -1,15 +1,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import VueAxios from "vue-axios"
-import ElementUI from "element-ui";
-import 'element-ui/lib/theme-chalk/index.css';
+import MintUI from "mint-ui";
+import "mint-ui/lib/style.css"
 import axios from "axios"
 import routes from "./routes"
 
+Vue.use(MintUI);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 // Vue.axios.defaults.baseURL = 'https://api-demo.websanova.com/api/v1';
-Vue.use(ElementUI);
 
 Vue.router = new VueRouter({ routes });
 
@@ -25,7 +25,7 @@ Vue.use(require('@websanova/vue-auth'), {
 
 new Vue({
 	template: `
-        <div v-loading.fullscreen.lock="!$auth.ready()">
+        <div class="h-100" v-show="$auth.ready()">
             <router-view></router-view>
         </div>
     `,

@@ -25,7 +25,7 @@ router.post("/in", async ctx => {
     let reqBody = ctx.request.body;
     // @step{2}:查询数据库，判断用户身份
     let result = await db.select(Users, {
-        username: reqBody.username
+        phonenum: reqBody.phonenum
     });
     if(result.length !== 1) {
         ctx.throw(Const.NO_SUCH_USER, "failed", "用户名不存在");
@@ -43,7 +43,7 @@ router.post("/in", async ctx => {
     let options = { expiresIn: payload.exp };
     delete payload.exp;
     delete payload.secret;
-    payload.sub = reqBody.username;
+    payload.sub = reqBody.phonenum;
     payload.aud = reqBody.audience || "weixin";
     payload.iat = Date.now();
     payload.jti = uuidv4();
@@ -70,7 +70,7 @@ router.post("/up", async ctx => {
     let reqBody = ctx.request.body;
     // @step{2}:查询数据库，判断用户是否重复
     let result = await db.select(Users, {
-        username: reqBody.username
+        phonenum: reqBody.phonenum
     });
     if(result.length > 0) {
         ctx.throw(Const.USER_EXISTS, "failed", "用户名已经存在");

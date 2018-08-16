@@ -1,27 +1,23 @@
 <template>
-    <main-layout>
+    <div>
         <head-adv-bar/>
-        <button v-show="$auth.check()" @click="doLogout">退出</button>
-    </main-layout>
+        <bottom-nav-bar/>
+    </div>
 </template>
 
 <script>
-    import holderjs from "holderjs"
-    import mainLayout from "../layouts/main"
+    import bottomNavBar from "../components/btmNavBar"
     import headAdvBar from "../components/hdAdvBar"
 
     export default {
-        components: {
-            "main-layout": mainLayout,
-            "head-adv-bar": headAdvBar
-        },
-        mounted() {
-            holderjs.run();
-        },
-        methods: {
-            doLogout() {
-                this.$auth.logout();
+        data() {
+            return {
+                searchData: ""
             }
+        },
+        components: {
+            "head-adv-bar": headAdvBar,
+            "bottom-nav-bar": bottomNavBar
         }
     }
 </script>
