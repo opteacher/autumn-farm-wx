@@ -4,7 +4,8 @@
   "description": "秋缘农场公众号",
   "main": "app.js",
   "scripts": {
-    "build": "webpack -d --watch",
+    "build": "webpack -p",
+    "watch": "webpack -d --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "opower",
@@ -46,10 +47,10 @@
     "qrcode": "^1.2.0",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
-    "url-loader": "^1.0.1",
+    "url-loader": "^1.1.0",
     "vue": "^2.5.16",
     "vue-axios": "^2.1.3",
-    "vue-loader": "^15.0.2",
+    "vue-loader": "^15.3.0",
     "vue-router": "^3.0.1",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",

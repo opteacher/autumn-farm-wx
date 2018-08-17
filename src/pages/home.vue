@@ -1,13 +1,15 @@
 <template>
     <div>
         <head-adv-bar/>
+        <class-recommend-bar/>
         <bottom-nav-bar/>
     </div>
 </template>
 
 <script>
-    import bottomNavBar from "../components/btmNavBar"
-    import headAdvBar from "../components/hdAdvBar"
+    import btmNavBar from "../components/btmNavBar"
+    import hdrAdvBar from "../components/hdrAdvBar"
+    import clsRcmdBar from "../components/clsRcmdBar"
 
     export default {
         data() {
@@ -16,8 +18,9 @@
             }
         },
         components: {
-            "head-adv-bar": headAdvBar,
-            "bottom-nav-bar": bottomNavBar
+            "head-adv-bar": hdrAdvBar,
+            "bottom-nav-bar": btmNavBar,
+            "class-recommend-bar": clsRcmdBar
         }
     }
 </script>
