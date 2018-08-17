@@ -2,7 +2,7 @@
     <div v-if="step === 'phone'">
         <div>
             <mt-header title="注册">
-                <router-link to="/my" slot="left">
+                <router-link to="/login" slot="left">
                     <mt-button icon="back">返回</mt-button>
                 </router-link>
             </mt-header>
@@ -82,7 +82,7 @@
                     MessageBox({
                         title: `错误 - ${res.status}`,
                         message: res.message || res.data.message || JSON.stringify(res.data)
-                    }).then(action => {
+                    }).then(() => {
                         Indicator.close()
                     });
                 }
