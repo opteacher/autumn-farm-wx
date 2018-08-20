@@ -1,5 +1,5 @@
 {
   "version": 1,
   "type": "mongo",
-  "sync": true
+  "sync": false
 }

@@ -2,7 +2,7 @@ const db = require("../databases/mongo");
 
 module.exports = db.defineModel({
     __modelName:    "user",
-    phonenum:   db.Types.String,
+    username:   db.Types.String,
     password:   db.Types.String
 }, {
     middle: {

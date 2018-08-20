@@ -12,7 +12,9 @@ const db = require(`../databases/${cfg.type}`);
 
 // @steps{1}:引进所有模型
 const exp = {
-    "Users": require("./user")
+    "Users": require("./user"),
+    "Admin": require("./admin"),
+    "Prods": require("./prod")
 };
 
 // @step{}:同步数据库

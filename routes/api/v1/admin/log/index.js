@@ -8,7 +8,7 @@ const ms = require("ms");
 const system = require("../../../../../utils/system");
 const projPath = system.projRootPath();
 const db = require(`${projPath}/databases/mongo`);
-const { Users } = require(`${projPath}/models/index`);
+const { Admin } = require(`${projPath}/models/index`);
 const Const = require(`${projPath}/constants/controller`);
 const jwtCfg = require(`${projPath}/config/jwt.${system.env()}`);
 
@@ -24,8 +24,8 @@ router.post("/in", async ctx => {
     // @step{1}:收集请求参数
     let reqBody = ctx.request.body;
     // @step{2}:查询数据库，判断用户身份
-    let result = await db.select(Users, {
-        phonenum: reqBody.phonenum
+    let result = await db.select(Admin, {
+        username: reqBody.username
     });
     if(result.length !== 1) {
         ctx.throw(Const.NO_SUCH_USER, "failed", "用户名不存在");
@@ -43,7 +43,7 @@ router.post("/in", async ctx => {
     let options = { expiresIn: payload.exp };
     delete payload.exp;
     delete payload.secret;
-    payload.sub = reqBody.phonenum;
+    payload.sub = reqBody.username;
     payload.aud = reqBody.audience || "weixin";
     payload.iat = Date.now();
     payload.jti = uuidv4();
@@ -69,14 +69,14 @@ router.post("/up", async ctx => {
     // @step{1}:收集请求参数
     let reqBody = ctx.request.body;
     // @step{2}:查询数据库，判断用户是否重复
-    let result = await db.select(Users, {
-        phonenum: reqBody.phonenum
+    let result = await db.select(Admin, {
+        username: reqBody.username
     });
     if(result.length > 0) {
         ctx.throw(Const.USER_EXISTS, "failed", "用户名已经存在");
     }
     // @step{3}:插入数据库
-    result = await db.save(Users, reqBody, null, null);
+    result = await db.save(Admin, reqBody, null, null);
     // @step{4}:返回
     if(typeof result === "string") {
         ctx.throw(Const.SAVE_USER_FAILED, "failed", `持久化用户数据失败：${result}`);
