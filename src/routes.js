@@ -1,20 +1,26 @@
-import home from "./pages/home"
-import my from "./pages/my"
-import login from "./pages/login"
-import logup from "./pages/logup"
+import prodList from "./pages/prodList"
+import prodDtl from "./pages/prodDtl"
+import wxAuth from "./pages/wxAuth"
+import orderList from "./pages/orderList"
+import orderDtl from "./pages/orderDtl"
+import newOrder from "./pages/newOrder"
 
 export default [{
-	path: "/",
-	component: home
+	path: "/prod/list/:type",
+	component: prodList
 }, {
-	path: "/my",
-	component: my,
+	path: "/prod/detail/:id",
+	component: prodDtl,
 }, {
-	path: "/login",
-	component: login,
-	meta: {auth: false}
+	path: "/wx/auth",
+	component: wxAuth
 }, {
-	path: "/logup",
-	component: logup,
-	meta: {auth: false}
+	path: "/order/list",
+	component: orderList
+}, {
+	path: "/order/detail/:oid",
+	component: orderDtl
+}, {
+	path: "/order/new/:oid",
+	component: newOrder
 }];

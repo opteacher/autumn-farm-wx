@@ -12,22 +12,39 @@
         {
           "type": "view",
           "name": "网上商城",
-          "url": "http://opteacher.top/#/"
+          "url": "http://opteacher.top/#/",
+          "sub_button": [
+            {
+              "name": "水果",
+              "type": "view",
+              "url": "http://opteacher.top/#/prod/list/fruit"
+            },
+            {
+              "name": "家禽",
+              "type": "view",
+              "url": "http://opteacher.top/#/prod/list/poultry"
+            },
+            {
+              "name": "水产",
+              "type": "view",
+              "url": "http://opteacher.top/#/prod/list/aquatic"
+            }
+          ]
         },
         {
-          "name": "菜单",
+          "name": "我的",
           "sub_button": [
             {
               "type": "view",
-              "name": "搜索",
-              "url": "http://www.soso.com/"
-            },
-            {
-              "type": "click",
-              "name": "赞一下我们",
-              "key": "V1001_GOOD"
+              "name": "订单",
+              "url": "http://opteacher.top/#/order/list"
             }
           ]
+        },
+        {
+          "type": "view",
+          "name": "联系方式",
+          "url": "http://opteacher.top/#/contact/us"
         }
       ]
     }
