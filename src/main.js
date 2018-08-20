@@ -1,7 +1,7 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import Vue from "vue"
+import VueRouter from "vue-router"
 import VueAxios from "vue-axios"
-import MintUI from "mint-ui";
+import MintUI from "mint-ui"
 import "mint-ui/lib/style.css"
 import axios from "axios"
 import routes from "./routes"

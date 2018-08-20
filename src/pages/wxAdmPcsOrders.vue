@@ -1,174 +1,37 @@
 <template>
     <wx-admin-lyt tabIndex="orders">
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">订单号</label>
-                    <em class="weui-form-preview__value">12345</em>
+        <div class="weui-cells">
+            <a class="weui-cell weui-cell_access" href="/#/autumnFarmWX/admin/process/order/category/waitForPay">
+                <div class="weui-cell__bd">
+                    <span>带付款订单</span>
                 </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">商品</label>
-                    <span class="weui-form-preview__value">葡萄 - 0xabcd</span>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="/#/autumnFarmWX/admin/process/order/category/waitForSend">
+                <div class="weui-cell__bd">
+                    <span>待发货订单</span>
+                    <span class="weui-badge" v-show="numWaitForSend !== 0">{{numWaitForSend}}</span>
                 </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">数量</label>
-                    <span class="weui-form-preview__value">1 - 大箱</span>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="/#/autumnFarmWX/admin/process/order/category/alreadySent">
+                <div class="weui-cell__bd">
+                    <span>已发货订单</span>
                 </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">时间</label>
-                    <span class="weui-form-preview__value">2018-08-20 13:20:00</span>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="/#/autumnFarmWX/admin/process/order/category/finished">
+                <div class="weui-cell__bd">
+                    <span>已完成订单</span>
                 </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">客户</label>
-                    <span class="weui-form-preview__value">张先生</span>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="/#/autumnFarmWX/admin/process/order/category/canceled">
+                <div class="weui-cell__bd">
+                    <span>已撤销订单</span>
                 </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">联系电话</label>
-                    <span class="weui-form-preview__value">13918559376</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">状态</label>
-                    <span class="weui-form-preview__value">未付款</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">备注</label>
-                    <span class="weui-form-preview__value"></span>
-                </div>
-            </div>
-            <div class="weui-form-preview__ft">
-                <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">取消订单</a>
-            </div>
-        </div>
-        <br/>
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">订单号</label>
-                    <em class="weui-form-preview__value">12345</em>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">商品</label>
-                    <span class="weui-form-preview__value">葡萄 - 0xabcd</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">数量</label>
-                    <span class="weui-form-preview__value">1 - 大箱</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">时间</label>
-                    <span class="weui-form-preview__value">2018-08-20 13:20:00</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">客户</label>
-                    <span class="weui-form-preview__value">张先生</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">联系电话</label>
-                    <span class="weui-form-preview__value">13918559376</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">状态</label>
-                    <span class="weui-form-preview__value">已付款</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">备注</label>
-                    <span class="weui-form-preview__value"></span>
-                </div>
-            </div>
-            <div class="weui-form-preview__ft">
-                <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">取消订单</a>
-                <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary">输入快递号</button>
-            </div>
-        </div>
-        <br/>
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">订单号</label>
-                    <em class="weui-form-preview__value">12345</em>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">商品</label>
-                    <span class="weui-form-preview__value">葡萄 - 0xabcd</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">数量</label>
-                    <span class="weui-form-preview__value">1 - 大箱</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">时间</label>
-                    <span class="weui-form-preview__value">2018-08-20 13:20:00</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">客户</label>
-                    <span class="weui-form-preview__value">张先生</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">联系电话</label>
-                    <span class="weui-form-preview__value">13918559376</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">状态</label>
-                    <span class="weui-form-preview__value">已发货</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">快递单号</label>
-                    <span class="weui-form-preview__value">12345</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">备注</label>
-                    <span class="weui-form-preview__value"></span>
-                </div>
-            </div>
-        </div>
-        <br/>
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">订单号</label>
-                    <em class="weui-form-preview__value">12345</em>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">商品</label>
-                    <span class="weui-form-preview__value">葡萄 - 0xabcd</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">数量</label>
-                    <span class="weui-form-preview__value">1 - 大箱</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">时间</label>
-                    <span class="weui-form-preview__value">2018-08-20 13:20:00</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">客户</label>
-                    <span class="weui-form-preview__value">张先生</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">联系电话</label>
-                    <span class="weui-form-preview__value">13918559376</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">状态</label>
-                    <span class="weui-form-preview__value">已完成</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">快递单号</label>
-                    <span class="weui-form-preview__value">12345</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">备注</label>
-                    <span class="weui-form-preview__value"></span>
-                </div>
-            </div>
+                <div class="weui-cell__ft"></div>
+            </a>
         </div>
     </wx-admin-lyt>
 </template>
@@ -178,11 +41,32 @@
     import wxAdminLyt from "../layouts/wxAdminLyt"
 
     export default {
+    	data() {
+    		return {
+    			numWaitForSend: 0
+            }
+        },
         components: {
             "wx-admin-lyt": wxAdminLyt
         },
         mounted() {
             holderjs.run()
+        },
+        methods: {
+	        toDetail(category) {
+	        	let self = this;
+	        	return () => {
+			        self.$router.push(`/autumnFarmWX/admin/process/order/category/${category}`)
+                }
+            }
+        },
+        async created() {
+        	try {
+        		let result = (await this.axios.get("/mdl/v1/orders?process=waitForSend")).data.data;
+        		this.numWaitForSend = result.length
+            } catch (e) {
+		        weui.alert(`查询代发货订单数失败：${e.message || JSON.stringify(e)}`)
+	        }
         }
     }
 </script>

@@ -14,7 +14,8 @@ const db = require(`../databases/${cfg.type}`);
 const exp = {
     "Users": require("./user"),
     "Admin": require("./admin"),
-    "Prods": require("./prod")
+    "Prods": require("./prod"),
+    "Orders": require("./order")
 };
 
 // @step{}:同步数据库

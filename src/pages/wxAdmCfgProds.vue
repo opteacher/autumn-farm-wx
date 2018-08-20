@@ -19,15 +19,17 @@
             </div>
         </div>
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_primary" @click="addProd">添加产品</a>
+            <a class="weui-btn weui-btn_primary" @click="$router.push('/autumnFarmWX/admin/config/prod/new')">添加产品</a>
         </div>
     </wx-admin-lyt>
 </template>
 
 <script>
     import holderjs from "holderjs"
+    import Vue from "vue"
     import { MessageBox } from "mint-ui"
     import wxAdminLyt from "../layouts/wxAdminLyt"
+    import addProdForm from "../components/addProdForm"
 
     export default {
         components: {
@@ -50,18 +52,6 @@
         },
         methods: {
             addProd() {
-                weui.dialog({
-                    title: "添加产品",
-                    content: "内容",
-                    buttons: [{
-                        label: "取消",
-                        type: "default"
-                    }, {
-                        label: "确定",
-                        type: "primary",
-                        onClick: () => { alert("确定") }
-                    }]
-                })
             }
         }
     }
