@@ -16,30 +16,33 @@
                 <a href="javascript:" class="weui-search-bar__cancel-btn" id="search_cancel">取消</a>
             </div>
         </div>
-        <br/>
-        <div class="weui-form-preview">
+        <div v-for="order in orders" class="weui-form-preview">
             <div class="weui-form-preview__hd">
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">订单号</label>
-                    <em class="weui-form-preview__value">12345</em>
+                    <em class="weui-form-preview__value">{{order.oid}}</em>
                 </div>
             </div>
             <div class="weui-form-preview__bd">
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">商品*数量</label>
-                    <span class="weui-form-preview__value">葡萄(0xabcd) * 1(大箱)</span>
+                    <span class="weui-form-preview__value">{{order.prodName}}({{order.prodId}}) * {{order.amount}}({{order.unit}})</span>
                 </div>
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">下单时间</label>
-                    <span class="weui-form-preview__value">2018-08-20 13:20:00</span>
+                    <span class="weui-form-preview__value">{{order.time}}</span>
                 </div>
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">客户(联系电话)</label>
-                    <span class="weui-form-preview__value">张先生(13918559376)</span>
+                    <span class="weui-form-preview__value">{{order.custName}}({{order.custContact}})</span>
                 </div>
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">状态</label>
-                    <span class="weui-form-preview__value">未付款</span>
+                    <span class="weui-form-preview__value">{{order.process}}</span>
+                </div>
+                <div class="weui-form-preview__item" v-show="order.wayBill">
+                    <label class="weui-form-preview__label">运单(快递)</label>
+                    <span class="weui-form-preview__value">{{order.wayBill}}</span>
                 </div>
             </div>
             <div class="weui-form-preview__ft">
@@ -47,102 +50,6 @@
             </div>
         </div>
         <br/>
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">订单号</label>
-                    <em class="weui-form-preview__value">12345</em>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">商品/数量</label>
-                    <span class="weui-form-preview__value">葡萄(0xabcd) / 1(大箱)</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">下单时间</label>
-                    <span class="weui-form-preview__value">2018-08-20 13:20:00</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">客户/联系电话</label>
-                    <span class="weui-form-preview__value">张先生 / 13918559376</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">状态</label>
-                    <span class="weui-form-preview__value">已付款</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">备注</label>
-                    <span class="weui-form-preview__value"></span>
-                </div>
-            </div>
-            <div class="weui-form-preview__ft">
-                <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">取消订单</a>
-                <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary">输入快递号</button>
-            </div>
-        </div>
-        <br/>
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">订单号</label>
-                    <em class="weui-form-preview__value">12345</em>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">商品/数量</label>
-                    <span class="weui-form-preview__value">葡萄(0xabcd) / 1(大箱)</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">下单时间</label>
-                    <span class="weui-form-preview__value">2018-08-20 13:20:00</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">客户/联系电话</label>
-                    <span class="weui-form-preview__value">张先生 / 13918559376</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">状态</label>
-                    <span class="weui-form-preview__value">已发货</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">备注</label>
-                    <span class="weui-form-preview__value"></span>
-                </div>
-            </div>
-        </div>
-        <br/>
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">订单号</label>
-                    <em class="weui-form-preview__value">12345</em>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">商品/数量</label>
-                    <span class="weui-form-preview__value">葡萄(0xabcd) / 1(大箱)</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">下单时间</label>
-                    <span class="weui-form-preview__value">2018-08-20 13:20:00</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">客户/联系电话</label>
-                    <span class="weui-form-preview__value">张先生 / 13918559376</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">状态</label>
-                    <span class="weui-form-preview__value">已完成</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">备注</label>
-                    <span class="weui-form-preview__value"></span>
-                </div>
-            </div>
-        </div>
     </wx-admin-lyt>
 </template>
 
@@ -155,10 +62,15 @@
 		components: {
 			"wx-admin-lyt": wxAdminLyt
 		},
+        data() {
+		    return {
+		        orders: []
+            }
+        },
 		mounted() {
 			holderjs.run()
 		},
-        created() {
+        async created() {
 	        $(function(){
 		        let $searchBar = $('#search_bar'),
 			        $searchText = $('#search_text'),
@@ -192,6 +104,12 @@
 			        $searchInput.blur();
 		        });
 	        });
+
+	        try {
+                this.orders = (await this.axios.get(`/mdl/v1/orders?process=${this.$route.params.category}`)).data.data
+            } catch (e) {
+                weui.alert(`获取订单列表失败：${e.message || JSON.stringify(e)}`)
+            }
         }
 	}
 </script>

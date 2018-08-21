@@ -157,9 +157,11 @@ router.get("/refs", async ctx => {
     }
     // @step{3}:过期则重新签发token
     console.log("token过期，重新签发");
+    expiresIn = payload.exp;
+    delete payload.exp;
     payload.iat = Date.now();
     payload.jti = uuidv4();
-    token = jwt.sign(payload, jwtCfg.secret, {expiresIn: payload.exp});
+    token = jwt.sign(payload, jwtCfg.secret, {expiresIn});
     ctx.set("authorization", token);
     // @step{4}:返回
     ctx.body = {
