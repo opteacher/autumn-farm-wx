@@ -12,7 +12,7 @@
                     </div>
                     <div class="weui-media-box__bd">
                         <h4 class="weui-media-box__title">{{prod.name}}</h4>
-                        <p class="weui-media-box__desc">{{prod.bsDesc}}</p>
+                        <p class="weui-media-box__desc">{{prod.baseDesc}}</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -48,10 +48,6 @@
                 this.prods = (await this.axios.get("/mdl/v1/prods")).data.data;
             } catch (e) {
                 weui.alert(`获取产品列表失败：${e.message || JSON.stringify(e)}`)
-            }
-        },
-        methods: {
-            addProd() {
             }
         }
     }

@@ -1,20 +1,26 @@
 <template>
     <wx-admin-lyt tabIndex="orders">
-        <div id="search_header">
-            <div class="weui-search-bar" id="search_bar">
-                <form class="weui-search-bar__form">
-                    <div class="weui-search-bar__box">
-                        <i class="weui-icon-search"></i>
-                        <input type="search" class="weui-search-bar__input" id="search_input" placeholder="搜索" />
-                        <a href="javascript:" class="weui-icon-clear" id="search_clear"></a>
-                    </div>
-                    <label for="search_input" class="weui-search-bar__label" id="search_text">
-                        <i class="weui-icon-search"></i>
-                        <span>搜索</span>
-                    </label>
-                </form>
-                <a href="javascript:" class="weui-search-bar__cancel-btn" id="search_cancel">取消</a>
-            </div>
+        <div id="backToOrders" class="weui-cells mb-3">
+            <a class="weui-cell weui-cell_access" href="/#/autumnFarmWX/admin/process/orders">
+                <div class="weui-cell__hd"></div>
+                <div class="weui-cell__bd ml-3">
+                    <p class="gray-text mb-0">返回订单列表</p>
+                </div>
+            </a>
+        </div>
+        <div class="weui-search-bar d-none" id="search_bar">
+            <form class="weui-search-bar__form">
+                <div class="weui-search-bar__box">
+                    <i class="weui-icon-search"></i>
+                    <input type="search" class="weui-search-bar__input" id="search_input" placeholder="搜索" />
+                    <a href="javascript:" class="weui-icon-clear" id="search_clear"></a>
+                </div>
+                <label for="search_input" class="weui-search-bar__label" id="search_text">
+                    <i class="weui-icon-search"></i>
+                    <span>搜索</span>
+                </label>
+            </form>
+            <a href="javascript:" class="weui-search-bar__cancel-btn" id="search_cancel">取消</a>
         </div>
         <div v-for="order in orders" class="weui-form-preview">
             <div class="weui-form-preview__hd">
@@ -117,8 +123,5 @@
 <style type="text/scss">
     #search_text {
         margin-bottom: 0.3rem !important;
-    }
-    #search_header {
-        margin-top: -2.5vh;
     }
 </style>
