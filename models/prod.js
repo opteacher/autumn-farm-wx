@@ -5,11 +5,16 @@ module.exports = db.defineModel({
     icon:       db.Types.String,
     name:       db.Types.String,
     type:       db.Types.String,
-    baseDesc:   db.Types.String,
-    moreDesc:   db.Types.String,
-    detail: {
-
-    }
+    title:      db.Types.String,
+    prices: [{
+        price:  db.Types.String,
+        unit:   db.Types.String
+    }],
+    express: [{
+        type:   db.Types.String,
+        cost:   db.Types.String
+    }],
+    prefer:     [db.Types.String]
 }, {
     router: {
         methods: ["GET", "ALL", "POST", "PUT", "DELETE"]

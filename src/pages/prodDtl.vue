@@ -11,20 +11,22 @@
         </div>
         <hdr-adv-bar/>
         <div class="weui-tab">
-            <div class="weui-navbar mb-3">
-                <div class="weui-navbar__item weui-bar__item_on">
-                    详细介绍
-                </div>
-                <div class="weui-navbar__item">
-                    评论
-                </div>
+            <div class="weui-navbar mb-3" style="display: none;">
+                <div class="weui-navbar__item weui-bar__item_on">介绍</div>
+                <div class="weui-navbar__item" @click="hdlCommentTab">评论</div>
             </div>
-            <div class="weui-tab__panel weui-article">
-                <div class="weui-article">
-                    <h1 class="mb-0">{{prod.name}}</h1>
-                    <p class="mb-0">{{prod.baseDesc}}</p>
+            <div class="weui-panel">
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <h4 class="weui-media-box__title">{{prod.name}}</h4>
+                        <p class="weui-media-box__desc mb-0">{{prod.title}}</p>
+                        <ul class="weui-media-box__info mb-0">
+                            <li class="weui-media-box__info__meta">快递：顺丰</li>
+                            <li class="weui-media-box__info__meta">￥30</li>
+                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">十箱以上免费送</li>
+                        </ul>
+                    </div>
                 </div>
-                <section v-html="this.prod.moreDesc"></section>
             </div>
         </div>
         <div class="fixed-bottom weui-form-preview__ft">
@@ -57,14 +59,13 @@
                     throw new Error(`未找到指定id：${this.$route.params.id}产品记录`)
                 }
                 this.prod = this.prod[0];
-                this.prod.moreDesc = this.cvtMkdToHtml(this.prod.moreDesc)
             } catch (e) {
                 weui.alert(`获取产品详情失败：${e.message || JSON.stringify(e)}`)
             }
         },
         methods: {
-            cvtMkdToHtml(content) {
-                return markdown.toHTML(content)
+        	hdlCommentTab() {
+        		weui.alert("评论功能还未开启，敬请期待")
             }
         }
     }

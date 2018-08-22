@@ -12,7 +12,7 @@
                     </div>
                     <div class="weui-media-box__bd">
                         <h4 class="weui-media-box__title">{{prod.name}}</h4>
-                        <p class="weui-media-box__desc">{{prod.baseDesc}}</p>
+                        <p class="weui-media-box__desc">{{prod.title}}</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
