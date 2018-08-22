@@ -11,7 +11,7 @@ module.exports = db.defineModel({
         unit:   db.Types.String
     }],
     express: [{
-        type:   db.Types.String,
+        typ:    db.Types.String,
         cost:   db.Types.String
     }],
     prefer:     [db.Types.String]

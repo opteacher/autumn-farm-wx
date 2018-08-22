@@ -78,7 +78,7 @@
                     <label class="weui-label">快递方式</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" placeholder="请输入快递方式" v-model="form.body.express[0].type">
+                    <input class="weui-input" type="text" placeholder="请输入快递方式" v-model="form.body.express[0].typ">
                 </div>
             </div>
             <div class="weui-cell pt-0 pb-0">
@@ -130,7 +130,7 @@
                         title: "",
                         prices: [],
 					    express: [{
-    						type: "",
+    						typ: "",
                             cost: "",
                             money: "￥"
                         }],

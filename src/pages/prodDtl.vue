@@ -21,9 +21,9 @@
                         <h4 class="weui-media-box__title">{{prod.name}}</h4>
                         <p class="weui-media-box__desc mb-0">{{prod.title}}</p>
                         <ul class="weui-media-box__info mb-0">
-                            <li class="weui-media-box__info__meta">快递：顺丰</li>
-                            <li class="weui-media-box__info__meta">￥30</li>
-                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">十箱以上免费送</li>
+                            <li class="weui-media-box__info__meta">快递：{{prod.express[0].typ}}</li>
+                            <li class="weui-media-box__info__meta">{{prod.express[0].cost}}</li>
+                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{prod.prefer.join(" & ")}}</li>
                         </ul>
                     </div>
                 </div>
@@ -46,7 +46,10 @@
         },
         data() {
             return {
-                prod: {}
+                prod: {
+                	express:[{}],
+                    prefer: []
+                },
             }
         },
         mounted() {
