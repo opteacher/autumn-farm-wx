@@ -68,6 +68,10 @@ module.exports = {
                     };
                     ret = wxXml.js2xml(resDat);
                     break;
+                case "view":
+                    xml.EventKey += `?openid=${xml.FromUserName}`;
+                    ret = wxXml.js2xml(xml);
+                    break;
             }
         }
         if(msgTyp === "text") {
