@@ -93,7 +93,7 @@ module.exports = {
             };
             ret = wxXml.js2xml(resDat);
         }
-        console.log(`发送的消息：${ctx.body}`);
+        console.log(`发送的消息：${ret}`);
         return ret;
     }
 };
