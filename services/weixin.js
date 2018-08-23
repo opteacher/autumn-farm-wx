@@ -80,23 +80,15 @@ module.exports = {
 		            ToUserName: xml.FromUserName,
 		            FromUserName: xml.ToUserName,
 		            CreateTime: Date.now(),
-		            MsgType: "news",
-		            ArticleCount: 1,
-		            Articles: [{
-			            item: {
-				            Title: "管理员链接",
-				            Description: "点击登陆管理员页面",
-				            PicUrl: "http://owb90pdwd.bkt.clouddn.com/th.jpeg",
-				            Url: [
-					            wxCfg.urls.authorize,
-					            `?appid=${wxCfg.appid}`,
-					            `&redirect_uri=${encodeURI("http://opteacher.top/#/autumnFarmWX/admin/process/orders")}`,
-					            "&response_type=code",
-					            "&scope=snsapi_base",
-					            "#wechat_redirect"
-				            ].join("")
-			            }
-		            }]
+		            MsgType: "text",
+		            Content: [
+			            wxCfg.urls.authorize,
+			            `?appid=${wxCfg.appid}`,
+			            `&redirect_uri=${encodeURI("http://opteacher.top/#/autumnFarmWX/admin/process/orders")}`,
+			            "&response_type=code",
+			            "&scope=snsapi_base",
+			            "#wechat_redirect"
+		            ].join("")
 	            };
 	            ret = wxXml.js2xml(resDat);
             }
