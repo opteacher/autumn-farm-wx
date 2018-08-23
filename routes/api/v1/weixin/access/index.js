@@ -35,20 +35,21 @@ router.get("/", async ctx => {
 });
 
 router.post("/", async ctx => {
-    await new Promise((res, rej) => {
-        var data = "";
-        ctx.req.on("data", chunk => {
-            data += chunk;
-        });
-        ctx.req.on("error", msg => {
-            rej(msg)
-        });
-        ctx.req.on("end", async () => {
-            res(wxSvc.switchMessage(ctx, data));
-        });
-    }).catch(err => {
-        ctx.body = err.message ? err.message : JSON.stringify(err);
-    });
+	var data = "";
+	ctx.req.on("data", chunk => {
+		data += chunk;
+	});
+	ctx.req.on("error", msg => {
+		ctx.body = msg.message ? msg.message : JSON.stringify(msg);
+	});
+	ctx.req.on("end", async () => {
+		let respBody = wxSvc.switchMessage(ctx, data);
+		if(respBody.length === 0) {
+			ctx.body = "错误的请求格式，来源非微信";
+        }
+		ctx.set("Content-Type", "text/xml");
+		ctx.body = respBody;
+	});
 });
 
 module.exports = router;

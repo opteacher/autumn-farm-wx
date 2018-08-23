@@ -3,6 +3,7 @@ const axios = require("axios");
 
 const env = require("../utils/system").env();
 const wxCfg = require(`../config/wx.${env}`);
+const cookies = require("../utils/cookies");
 
 module.exports = {
 	accessToken: {},
@@ -45,10 +46,13 @@ module.exports = {
     switchMessage(ctx, msg) {
         console.log(`接收的消息：${msg}`);
         let xml = wxXml.xml2js(msg).xml;
+        if(!xml) {
+            return ""
+        }
         let msgTyp = xml.MsgType;
         let ret = "";
         if(msgTyp === "event") {
-            switch(xml.Event) {
+            switch(xml.Event.toLowerCase()) {
                 case "subscribe":
                     let resDat = {
                         ToUserName: xml.FromUserName,
@@ -65,8 +69,12 @@ module.exports = {
                             }
                         }]
                     };
-                    ctx.set("Content-Type", "text/xml");
                     ret = wxXml.js2xml(resDat);
+                    break;
+                case "view":
+                    // 保存微信用户openid
+	                ctx.set("openid", xml.FromUserName);
+                    ret = xml.FromUserName;
                     break;
             }
         }
@@ -86,10 +94,9 @@ module.exports = {
                     }
                 }]
             };
-            ctx.set("Content-Type", "text/xml");
             ret = wxXml.js2xml(resDat);
         }
-        ctx.body = ret;
         console.log(`发送的消息：${ctx.body}`);
+        return ret;
     }
 };
