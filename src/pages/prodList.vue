@@ -46,7 +46,7 @@
             holderjs.run()
         },
         created() {
-        	weui.alert(JSON.stringify(this.$route.query));
+        	weui.alert(JSON.stringify(cookies.get("openid")));
             this.loadProdList(this.$route.params.type)
         },
         methods: {
