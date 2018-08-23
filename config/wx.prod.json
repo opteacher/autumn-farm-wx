@@ -10,24 +10,22 @@
     "createButton": {
       "button": [
         {
-          "type": "view",
           "name": "网上商城",
-          "url": "http://opteacher.top/#/",
           "sub_button": [
             {
               "name": "水果",
               "type": "view",
-              "url": "http://opteacher.top/#/prod/list/fruit"
+              "url": "http://opteacher.top/#/autumnFarmWX/prod/list/fruit"
             },
             {
               "name": "家禽",
               "type": "view",
-              "url": "http://opteacher.top/#/prod/list/poultry"
+              "url": "http://opteacher.top/#/autumnFarmWX/prod/list/poultry"
             },
             {
               "name": "水产",
               "type": "view",
-              "url": "http://opteacher.top/#/prod/list/aquatic"
+              "url": "http://opteacher.top/#/autumnFarmWX/prod/list/aquatic"
             }
           ]
         },
@@ -37,14 +35,14 @@
             {
               "type": "view",
               "name": "订单",
-              "url": "http://opteacher.top/#/order/list"
+              "url": "http://opteacher.top/#/autumnFarmWX/order/list"
             }
           ]
         },
         {
           "type": "view",
           "name": "联系方式",
-          "url": "http://opteacher.top/#/contact/us"
+          "url": "http://opteacher.top/#/autumnFarmWX/contact/us"
         }
       ]
     }

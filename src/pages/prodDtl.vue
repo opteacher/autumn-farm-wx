@@ -223,9 +223,7 @@
                 this.totalAmount = upSig.replace(up, this.totalAmount)
             },
             newOrder() {
-                let orders = cookies.get("orders") || [];
-                orders.push(this.order);
-                cookies.set("orders", orders);
+                console.log(this.order);
         	    this.$router.push({path: "/autumnFarmWX/order/new"})
             }
         }
