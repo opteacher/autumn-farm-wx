@@ -15,7 +15,7 @@
             {
               "name": "水果",
               "type": "view",
-              "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e95891ef30544d3&redirect_uri=http%3A%2F%2Fopteacher.top%2F%23%2FautumnFarmWX%2Fprod%2Flist%2Ffruit&response_type=code&scope=snsapi_base&state=12345#wechat_redirect"
+              "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e95891ef30544d3&redirect_uri=http%3A%2F%2Fopteacher.top%2F%23%2FautumnFarmWX%2Fprod%2Flist%2Ffruit&response_type=code&scope=snsapi_base#wechat_redirect"
             },
             {
               "name": "家禽",

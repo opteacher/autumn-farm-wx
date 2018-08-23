@@ -46,7 +46,7 @@
             holderjs.run()
         },
         created() {
-        	weui.alert(JSON.stringify(this.$route.params));
+        	weui.alert(JSON.stringify(this.$route.query));
             this.loadProdList(this.$route.params.type)
         },
         methods: {
