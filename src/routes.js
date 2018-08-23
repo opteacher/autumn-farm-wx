@@ -37,43 +37,25 @@ export default [{
 }, {
     path: "/autumnFarmWX/admin/process/orders",
     component: wxAdmPcsOrders,
-	meta: {
-    	auth: true,
-		redirect: "/autumnFarmWX/admin/login"
-    }
+	meta: {auth: true}
 }, {
 	path: "/autumnFarmWX/admin/process/order/category/:category",
 	component: wxAdmPcsOrderCtg,
-	meta: {
-		auth: true,
-		redirect: "/autumnFarmWX/admin/login"
-	}
+	meta: {auth: true}
 }, {
     path: "/autumnFarmWX/admin/config/advbar",
     component: wxAdmCfgAdvBar,
-    meta: {
-        auth: true,
-        redirect: "/autumnFarmWX/admin/login"
-    }
+    meta: {auth: true}
 }, {
     path: "/autumnFarmWX/admin/config/prods",
     component: wxAdmCfgProds,
-    meta: {
-        auth: true,
-        redirect: "/autumnFarmWX/admin/login"
-    }
+    meta: {auth: true}
 }, {
     path: "/autumnFarmWX/admin/config/prod/:pid/detail",
     component: wxAdmCfgProdDtl,
-    meta: {
-        auth: true,
-        redirect: "/autumnFarmWX/admin/login"
-    }
+    meta: {auth: true}
 }, {
 	path: "/autumnFarmWX/admin/config/prod/new",
 	component: wxAdmCfgProdNew,
-	meta: {
-		auth: true,
-		redirect: "/autumnFarmWX/admin/login"
-	}
+	meta: {auth: true}
 }];

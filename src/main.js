@@ -17,6 +17,7 @@ Vue.use(require('@websanova/vue-auth'), {
 	auth:   require('@websanova/vue-auth/drivers/auth/basic.js'),
 	http:   require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
 	router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
+	authRedirect:   { path: "/autumnFarmWX/admin/login" },
     loginData:		{ url: "/api/v1/admin/log/in" },
     registerData:	{ url: "/api/v1/admin/log/up" },
 	fetchData:		{ url: "/api/v1/admin/log/stat" },
