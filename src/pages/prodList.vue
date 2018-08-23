@@ -30,7 +30,6 @@
 <script>
     import holderjs from "holderjs"
     import hdrAdvBar from "../components/hdrAdvBar"
-    import cookies from "../../utils/cookies"
 
     export default {
         data() {
@@ -46,7 +45,6 @@
             holderjs.run()
         },
         created() {
-        	weui.alert(JSON.stringify(cookies.get("openid")));
             this.loadProdList(this.$route.params.type)
         },
         methods: {

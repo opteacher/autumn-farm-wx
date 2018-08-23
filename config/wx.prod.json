@@ -4,8 +4,12 @@
   "secret": "5aea98dcdcc99031be463e1455a8aa5b",
   "urls": {
     "getToken": "https://api.weixin.qq.com/cgi-bin/token",
-    "createButton": "https://api.weixin.qq.com/cgi-bin/menu/create"
+    "createButton": "https://api.weixin.qq.com/cgi-bin/menu/create",
+    "authorize": "https://open.weixin.qq.com/connect/oauth2/authorize"
   },
+  "adminPasswords": [
+    "慧慧柚子"
+  ],
   "templates": {
     "createButton": {
       "button": [
@@ -20,12 +24,12 @@
             {
               "name": "家禽",
               "type": "view",
-              "url": "http://opteacher.top/#/autumnFarmWX/prod/list/poultry"
+              "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e95891ef30544d3&redirect_uri=http%3A%2F%2Fopteacher.top%2F%23%2FautumnFarmWX%2Fprod%2Flist%2Fpoultry&response_type=code&scope=snsapi_base#wechat_redirect"
             },
             {
               "name": "水产",
               "type": "view",
-              "url": "http://opteacher.top/#/autumnFarmWX/prod/list/aquatic"
+              "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e95891ef30544d3&redirect_uri=http%3A%2F%2Fopteacher.top%2F%23%2FautumnFarmWX%2Fprod%2Flist%2Faquatic&response_type=code&scope=snsapi_base#wechat_redirect"
             }
           ]
         },
@@ -35,14 +39,14 @@
             {
               "type": "view",
               "name": "订单",
-              "url": "http://opteacher.top/#/autumnFarmWX/order/list"
+              "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e95891ef30544d3&redirect_uri=http%3A%2F%2Fopteacher.top%2F%23%2FautumnFarmWX%2Forder%2Flist&response_type=code&scope=snsapi_base#wechat_redirect"
             }
           ]
         },
         {
           "type": "view",
           "name": "联系方式",
-          "url": "http://opteacher.top/#/autumnFarmWX/contact/us"
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e95891ef30544d3&redirect_uri=http%3A%2F%2Fopteacher.top%2F%23%2FautumnFarmWX%2Fcontact%2Fus&response_type=code&scope=snsapi_base#wechat_redirect"
         }
       ]
     }
