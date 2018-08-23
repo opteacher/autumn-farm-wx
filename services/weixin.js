@@ -83,7 +83,7 @@ module.exports = {
 		            ToUserName: xml.FromUserName,
 		            FromUserName: xml.ToUserName,
 		            CreateTime: Date.now(),
-		            MsgType: "text",
+		            MsgType: "news",
 		            ArticleCount: 1,
 		            Articles: [{
 			            item: {
