@@ -35,7 +35,9 @@ router.get("/", async ctx => {
 });
 
 router.post("/", async ctx => {
-    new Promise((res, rej) => {
+	ctx.set("openid", ctx.request.query.openid);
+
+    ctx.body = await new Promise((res, rej) => {
 	    var data = "";
 	    ctx.req.on("data", chunk => {
 		    data += chunk;
@@ -44,16 +46,17 @@ router.post("/", async ctx => {
 	        rej(msg)
 	    });
 	    ctx.req.on("end", async () => {
-		    res(wxSvc.switchMessage(ctx, data));
+		    res(wxSvc.switchMessage(data));
 	    });
     }).then(res => {
 	    if(res.length === 0) {
 		    ctx.body = "错误的请求格式，来源非微信";
 	    }
 	    ctx.set("Content-Type", "text/xml");
-	    ctx.body = res;
+	    return res;
     }).catch(err => {
-	    ctx.body = err.message || JSON.stringify(err);
+        ctx.set("Content-Type", "application/json");
+	    return err;
     })
 });
 

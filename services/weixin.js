@@ -43,7 +43,7 @@ module.exports = {
             throw new Error(this.wrapError(result));
         }
     },
-    switchMessage(ctx, msg) {
+    switchMessage(msg) {
         console.log(`接收的消息：${msg}`);
         let xml = wxXml.xml2js(msg);
         let msgTyp = xml.MsgType;
@@ -67,11 +67,6 @@ module.exports = {
                         }]
                     };
                     ret = wxXml.js2xml(resDat);
-                    break;
-                case "view":
-                    // 保存微信用户openid
-	                ctx.set("openid", xml.FromUserName);
-                    ret = xml.FromUserName;
                     break;
             }
         }
