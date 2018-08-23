@@ -171,6 +171,7 @@
                 this.prod.prefer = _.compact(this.prod.prefer);
 
                 this.order.prodId = this.prod._id;
+                this.order.prodName = this.prod.name;
                 this.order.unit = this.prod.prices[0].unit;
                 this.totalAmount = this.prod.prices[0].price;
 
@@ -222,9 +223,30 @@
                 this.totalAmount = parseFloat(up) * this.order.amount;
                 this.totalAmount = upSig.replace(up, this.totalAmount)
             },
-            newOrder() {
-                console.log(this.order);
-        	    this.$router.push({path: "/autumnFarmWX/order/new"})
+            async newOrder() {
+	            try {
+		            this.order.openId = cookies.get("openid");
+		            this.order.time = new Date();
+		            let result = (await this.axios.post("/mdl/v1/order", this.order)).data.data;
+		            if(result.length < 1) {
+			            weui.alert(`插入订单数据库失败：${JSON.stringify(result)}`);
+			            return
+		            }
+		            result = result[0];
+
+		            weui.alert("下单成功，请于24内完成付款", () => {
+			            this.$router.push({
+				            path: "/autumnFarmWX/order/new",
+				            query: {
+					            orderId: result._id,
+					            prodId: this.order.prodId,
+					            prodTyp: this.prod.type
+				            }
+			            })
+		            })
+	            } catch (e) {
+		            weui.alert(`新增订单失败：${e.message || JSON.stringify(e)}`)
+	            }
             }
         }
     }

@@ -8,6 +8,7 @@ module.exports = db.defineModel({
 	amount:         db.Types.Number,
 	unit:           db.Types.String,
 	time:           db.Types.Date,
+	address:        db.Types.String,
 	openId:			db.Types.String,
 	custName:       db.Types.String,
 	custContact:    db.Types.String,
