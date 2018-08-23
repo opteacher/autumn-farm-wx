@@ -1,5 +1,4 @@
 <template>
-    <!--<div>{{$route.params.id}}</div>-->
     <div>
         <div class="weui-cells mt-0">
             <a class="weui-cell weui-cell_access" :href="`/#/autumnFarmWX/prod/list/${$route.query.type}`">
@@ -21,24 +20,123 @@
                         <h4 class="weui-media-box__title">{{prod.name}}</h4>
                         <p class="weui-media-box__desc mb-0">{{prod.title}}</p>
                         <ul class="weui-media-box__info mb-0">
-                            <li class="weui-media-box__info__meta">快递：{{prod.express[0].typ}}</li>
-                            <li class="weui-media-box__info__meta">{{prod.express[0].cost}}</li>
-                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{prod.prefer.join(" & ")}}</li>
+                            <li class="weui-media-box__info__meta">上市时间</li>
+                            <li class="weui-media-box__info__meta">{{prod.date}}</li>
                         </ul>
                     </div>
                 </div>
             </div>
+            <div class="weui-panel" v-show="prod.prefer.length !== 0">
+                <div class="weui-panel__hd">优惠</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_small-appmsg">
+                        <div class="weui-cells">
+                            <div v-for="prefer in prod.prefer" class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <p class="weui-media-box__desc">{{prefer}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-panel">
+                <div class="weui-panel__hd">价格方案</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_small-appmsg">
+                        <div class="weui-cells">
+                            <div v-for="price in prod.prices" class="weui-cell">
+                                <div class="weui-cell__bd"><p>{{price.price}}</p></div>
+                                <div class="weui-cell__ft gray-text">{{price.unit}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-panel" style="margin-bottom: 10vh">
+                <div class="weui-panel__hd">运送方式</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_small-appmsg">
+                        <div class="weui-cells">
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd"><p>自提</p></div>
+                                <div class="weui-cell__ft gray-text">店铺位置: 上海</div>
+                            </div>
+                            <div v-for="express in prod.express" class="weui-cell">
+                                <div class="weui-cell__bd"><p>{{express.typ}}</p></div>
+                                <div class="weui-cell__ft gray-text">{{express.cost}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="fixed-bottom weui-form-preview__ft">
-            <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">加入购物车</a>
-            <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">立即购买</button>
+        <div class="fixed-bottom weui-form-preview__ft" style="background-color: white">
+            <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:" onclick="weui.alert('购物车功能还未开启')">加入购物车</a>
+            <button id="showActionSheetMenu" type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">立即购买</button>
+        </div>
+
+        <div>
+            <div class="weui-mask" id="actionSheetMask" style="display: none"></div>
+            <div class="weui-actionsheet" id="actionSheetMenu">
+                <div class="weui-actionsheet__title">
+                    <div class="weui-media-box weui-media-box_appmsg pl-0 pr-0">
+                        <div class="weui-media-box__hd">
+                            <img class="weui-media-box__thumb" :src="prod.icon" alt="">
+                        </div>
+                        <div class="weui-media-box__bd text-left">
+                            <h4 class="weui-media-box__title">{{prod.name}}</h4>
+                            <p class="weui-media-box__desc text-truncate">{{prod.title}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-actionsheet__menu">
+                    <div class="weui-actionsheet__cell weui-cell  weui-cell_noactive weui-cell_select weui-cell_select-after">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">购买类型</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <select class="weui-select gray-text pl-5" v-model="order.unit" @change="hdlBuyChg">
+                                <option class="text-center" v-for="prod in prod.prices" :value="prod.unit">{{prod.unit}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="weui-actionsheet__cell weui-cell weui-cell_noactive weui-cell_vcode">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">购买数量</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <div class="weui-flex">
+                                <div class="weui-flex__item">
+                                    <a href="javascript:" class="weui-btn weui-btn_mini weui-btn_default h-100 align-middle float-right" @click="hdlBuyChg">-</a>
+                                </div>
+                                <div class="weui-flex__item text-center">{{order.amount}}</div>
+                                <div class="weui-flex__item">
+                                    <a href="javascript:" class="weui-btn weui-btn_mini weui-btn_default h-100 align-middle float-left" @click="hdlBuyChg">+</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-actionsheet__cell weui-cell weui-cell_noactive">
+                        <div class="weui-cell__hd"><label class="weui-label">总金额</label></div>
+                        <div class="weui-cell__bd text-center">{{totalAmount}}</div>
+                    </div>
+                </div>
+                <div class="weui-actionsheet__action">
+                    <div class="weui-actionsheet__cell weui-form-preview__btn_primary" @click="newOrder">下单</div>
+                    <div class="weui-actionsheet__cell" id="cancelActionSheetMenu">取消</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import $ from "jquery"
+    import _ from "lodash"
     import holderjs from "holderjs"
     import hdrAdvBar from "../components/hdrAdvBar"
+    import cookies from "../../utils/cookies"
 
     export default {
         components: {
@@ -50,6 +148,14 @@
                 	express:[{}],
                     prefer: []
                 },
+                order: {
+                    prodId: "",
+                    prodName: "",
+                    unit: "",
+                    amount: 1
+                },
+                unitPrice: {},
+                totalAmount: "0"
             }
         },
         mounted() {
@@ -62,13 +168,65 @@
                     throw new Error(`未找到指定id：${this.$route.params.id}产品记录`)
                 }
                 this.prod = this.prod[0];
+                this.prod.prefer = _.compact(this.prod.prefer);
+
+                this.order.prodId = this.prod._id;
+                this.order.unit = this.prod.prices[0].unit;
+                this.totalAmount = this.prod.prices[0].price;
+
+                this.unitPrice = _.fromPairs(this.prod.prices.map(p => [p.unit, p.price]));
+
+                // this.prod.prices.sort((p1, p2) => {
+                //     let tp1 = parseFloat(_.compact(p1.price.match(/[\d\.]*/g))[0]);
+                //     let tp2 = parseFloat(_.compact(p2.price.match(/[\d\.]*/g))[0]);
+                //     return tp1 - tp2
+                // });
+                // let minPrice = this.prod.prices[0].price;
+                // let maxPrice = this.prod.prices[this.prod.prices.length - 1].price;
+                // this.prod.priceRange = `${minPrice} - ${maxPrice}`
             } catch (e) {
                 weui.alert(`获取产品详情失败：${e.message || JSON.stringify(e)}`)
             }
+
+            $(function(){
+                let $actionSheetMenu = $("#actionSheetMenu");
+                let $actionSheetMask = $("#actionSheetMask");
+
+                function hideActionSheet() {
+                    $actionSheetMenu.removeClass("weui-actionsheet_toggle");
+                    $actionSheetMask.fadeOut(200);
+                }
+
+                $actionSheetMask.on("click", hideActionSheet);
+                $("#cancelActionSheetMenu").on("click", hideActionSheet);
+                $("#showActionSheetMenu").on("click", function(){
+                    $actionSheetMenu.addClass("weui-actionsheet_toggle");
+                    $actionSheetMask.fadeIn(200);
+                });
+            });
         },
         methods: {
         	hdlCommentTab() {
         		weui.alert("评论功能还未开启，敬请期待")
+            },
+            hdlBuyChg(me) {
+        	    if(!me.target.value) {
+                    if(me.target.text === "-" && this.order.amount === 1) {
+                        return;
+                    }
+                    this.order.amount += parseInt(`${me.target.text}1`);
+                }
+
+        	    let upSig = this.unitPrice[this.order.unit];
+        	    let up = _.compact(upSig.match(/[\d.]*/g))[0];
+                this.totalAmount = parseFloat(up) * this.order.amount;
+                this.totalAmount = upSig.replace(up, this.totalAmount)
+            },
+            newOrder() {
+                let orders = cookies.get("orders") || [];
+                orders.push(this.order);
+                cookies.set("orders", orders);
+        	    this.$router.push({path: "/autumnFarmWX/order/new"})
             }
         }
     }
@@ -77,5 +235,8 @@
 <style type="text/scss">
     .fixed-bottom {
         position: fixed !important;
+    }
+    .weui-cell_noactive:active {
+        background-color: transparent !important;
     }
 </style>

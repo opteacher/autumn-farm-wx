@@ -147,6 +147,7 @@
                     }
     				this.form.body.express[0].cost = this.form.body.express[0].money + this.form.body.express[0].cost;
     				this.form.body.prefer = this.form.body.prefer.split("&");
+                    this.form.body.date = new Date();
 
     				await this.axios.post("/mdl/v1/prod", this.form.body);
                     weui.alert("添加成功", () => {

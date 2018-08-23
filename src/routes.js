@@ -28,7 +28,7 @@ export default [{
 	path: "/autumnFarmWX/order/detail/:oid",
 	component: orderDtl
 }, {
-	path: "/autumnFarmWX/order/new/:oid",
+	path: "/autumnFarmWX/order/new",
 	component: newOrder
 }, {
     path: "/autumnFarmWX/admin/login",
