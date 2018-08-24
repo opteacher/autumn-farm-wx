@@ -18,12 +18,15 @@
                     <input class="weui-input" type="text" placeholder="请输入产品名" v-model="form.body.name">
                 </div>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell weui-cell_vcode">
                 <div class="weui-cell__hd">
-                    <label class="weui-label">图片</label>
+                    <label class="weui-label">图标</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" placeholder="请输入图片链接" v-model="form.body.icon">
+                    <input class="weui-input" type="text" placeholder="请输入图标链接" v-model="form.body.icon">
+                </div>
+                <div class="weui-cell__ft">
+                    <button class="weui-vcode-btn">选择图片</button>
                 </div>
             </div>
             <div class="weui-cell weui-cell_select">
@@ -81,22 +84,14 @@
                     <input class="weui-input" type="text" placeholder="请输入快递方式" v-model="form.body.express[0].typ">
                 </div>
             </div>
-            <div class="weui-cell pt-0 pb-0">
+            <div class="weui-cell">
                 <div class="weui-cell__hd">
                     <label class="weui-label">快递单价</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <div class="weui-cell weui-cell_select weui-cell_select-before">
-                        <div class="weui-cell__hd">
-                            <select name="money" class="weui-select money-symbol" v-model="form.body.express[0].money">
-                                <option value="￥">￥</option>
-                            </select>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <input name="price" class="weui-input" type="number" pattern="[0-9\.]*" placeholder="请输入快递单价" v-model="form.body.express[0].cost">
-                        </div>
-                    </div>
+                    <input name="price" class="weui-input" type="number" pattern="[0-9\.]*" placeholder="请输入快递单价" v-model="form.body.express[0].cost">
                 </div>
+                <div class="weui-cell__ft">￥</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd">
@@ -131,8 +126,7 @@
                         prices: [],
 					    express: [{
     						typ: "",
-                            cost: "",
-                            money: "￥"
+                            cost: ""
                         }],
 					    prefer: ""
                     }
@@ -143,9 +137,8 @@
     		async doAddProd() {
     			try {
     				if(this.form.body.express[0].cost === "") {
-					    this.form.body.express[0].cost = "0"
+					    this.form.body.express[0].cost = 0
                     }
-    				this.form.body.express[0].cost = this.form.body.express[0].money + this.form.body.express[0].cost;
     				this.form.body.prefer = this.form.body.prefer.split("&");
                     this.form.body.date = new Date();
 
@@ -171,7 +164,7 @@
                     		let form = $(this).parents(".weui-dialog").children("form");
 	                        let data = _.fromPairs(form.serializeArray().map(v => [v.name, v.value]));
 	                        self.form.body.prices.push({
-                                price: data.money + data.price,
+                                price: data.price,
                                 unit: data.unit
 	                        })
                         }
@@ -206,9 +199,6 @@
 		            a.toggle();
                 });
             }
-        },
-        created() {
-
         }
     }
 </script>

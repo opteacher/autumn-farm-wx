@@ -1,14 +1,10 @@
 <template>
     <form class="weui-cells">
-        <div class="weui-cell weui-cell_select weui-cell_select-before">
-            <div class="weui-cell__hd">
-                <select name="money" class="weui-select money-symbol">
-                    <option value="￥" selected>￥</option>
-                </select>
-            </div>
+        <div class="weui-cell">
             <div class="weui-cell__bd">
-                <input name="price" class="weui-input" type="number" pattern="[0-9\.]*" placeholder="价格">
+                <input name="price" class="weui-input" type="number" pattern="[0-9\.]*" placeholder="价格" autofocus>
             </div>
+            <div class="weui-cell__ft">￥</div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__bd">

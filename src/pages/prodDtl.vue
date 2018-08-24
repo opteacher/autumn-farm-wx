@@ -46,8 +46,8 @@
                     <div class="weui-media-box weui-media-box_small-appmsg">
                         <div class="weui-cells">
                             <div v-for="price in prod.prices" class="weui-cell">
-                                <div class="weui-cell__bd"><p>{{price.price}}</p></div>
-                                <div class="weui-cell__ft gray-text">{{price.unit}}</div>
+                                <div class="weui-cell__bd"><p>{{price.unit}}</p></div>
+                                <div class="weui-cell__ft gray-text">{{price.price}}￥</div>
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                     </div>
                     <div class="weui-actionsheet__cell weui-cell weui-cell_noactive">
                         <div class="weui-cell__hd"><label class="weui-label">总金额</label></div>
-                        <div class="weui-cell__bd text-center">{{totalAmount}}</div>
+                        <div class="weui-cell__bd text-center">{{totalAmount}}￥</div>
                     </div>
                 </div>
                 <div class="weui-actionsheet__action">
@@ -218,15 +218,13 @@
                     this.order.amount += parseInt(`${me.target.text}1`);
                 }
 
-        	    let upSig = this.unitPrice[this.order.unit];
-        	    let up = _.compact(upSig.match(/[\d.]*/g))[0];
-                this.totalAmount = parseFloat(up) * this.order.amount;
-                this.totalAmount = upSig.replace(up, this.totalAmount)
+                this.totalAmount = this.unitPrice[this.order.unit] * this.order.amount;
             },
             async newOrder() {
 	            try {
 		            this.order.openId = cookies.get("openid");
 		            this.order.time = new Date();
+                    this.order.process = "待付款";
 		            let result = (await this.axios.post("/mdl/v1/order", this.order)).data.data;
 		            if(result.length < 1) {
 			            weui.alert(`插入订单数据库失败：${JSON.stringify(result)}`);

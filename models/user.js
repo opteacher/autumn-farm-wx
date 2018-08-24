@@ -6,7 +6,9 @@ module.exports = db.defineModel({
     name:       db.Types.String,
     sex:        db.Types.String,
     phone:      db.Types.String,
-    addresses:  db.Types.String
+    addresses:  [{
+        type:   db.Types.String
+    }]
 }, {
     router: {
         methods: ["GET", "ALL", "POST", "PUT"]

@@ -14,7 +14,7 @@
             <div class="weui-form-preview__hd">
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">付款金额</label>
-                    <em class="weui-form-preview__value">{{totalAmount}}</em>
+                    <em class="weui-form-preview__value">{{totalAmount}}￥</em>
                 </div>
             </div>
             <div class="weui-form-preview__bd">
@@ -39,7 +39,14 @@
             </div>
         </div>
 
-        <div class="weui-cells__title">递送方式</div>
+        <div class="weui-cells__title">
+            <div class="weui-flex">
+                <div>递送方式</div>
+                <div v-show="!useExpress" class="weui-flex__item">
+                    <div class="text-right">自提地址：上海市嘉定区平成路嘉华居</div>
+                </div>
+            </div>
+        </div>
         <div class="weui-cells weui-cells_checkbox">
             <label v-for="exp in prod.express" class="weui-cell weui-check__label" :for="exp.typ">
                 <div class="weui-cell__hd">
@@ -49,18 +56,17 @@
                 <div class="weui-cell__bd"><p>{{exp.typ}}：{{exp.cost}}</p></div>
             </label>
         </div>
-        <div class="weui-cells__tips text-right">自提地址：上海市嘉定区平成路嘉华居</div>
 
         <div v-show="useExpress" class="weui-cells__title">收款地址</div>
         <div v-show="useExpress" class="weui-cells weui-cells_radio">
-            <label v-show="order.address" class="weui-cell weui-check__label" for="selRecvAddr">
-                <div class="weui-cell__bd"><p>{{order.address}}</p></div>
+            <label v-show="selAddress" class="weui-cell weui-check__label" for="selRecvAddr">
+                <div class="weui-cell__bd"><p>{{selAddress}}</p></div>
                 <div class="weui-cell__ft">
-                    <input type="radio" class="weui-check" name="radio1" id="selRecvAddr" checked>
+                    <input type="radio" class="weui-check" id="selRecvAddr" checked>
                     <span class="weui-icon-checked"></span>
                 </div>
             </label>
-            <a href="javascript:void(0);" class="weui-cell weui-cell_link">
+            <a href="javascript:" class="weui-cell weui-cell_link">
                 <div class="weui-cell__bd" @click="hdlAddAddress">添加更多</div>
             </a>
         </div>
@@ -69,10 +75,10 @@
         <div class="weui-cells">
             <div class="weui-cell weui-cell_select">
                 <div class="weui-cell__bd ml-3">
-                    <input class="weui-input" type="text" placeholder="请输入姓名">
+                    <input class="weui-input" type="text" placeholder="请输入姓名" v-model="user.name">
                 </div>
                 <div class="weui-cell__ft mr-2">
-                    <select class="weui-select" v-model="sexCall">
+                    <select class="weui-select" v-model="user.sex">
                         <option value="先生">先生</option>
                         <option value="女士">女士</option>
                     </select>
@@ -80,7 +86,7 @@
             </div>
             <div class="weui-cell weui-cell_vcode">
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="tel" placeholder="请输入手机号">
+                    <input class="weui-input" type="tel" placeholder="请输入手机号" v-model="user.phone">
                 </div>
                 <div class="weui-cell__ft">
                     <button class="weui-vcode-btn">获取验证码</button>
@@ -102,8 +108,8 @@
             </label>
         </div>
 
-        <div class="weui-btn-area">
-            <a href="javascript:" class="weui-btn weui-btn_primary">付款</a>
+        <div class="weui-btn-area mb-3">
+            <a href="javascript:" class="weui-btn weui-btn_primary" @click="doPayBill">付款</a>
         </div>
     </div>
 </template>
@@ -111,17 +117,26 @@
 <script>
     import _ from "lodash"
     import Vue from "vue"
+    import cookies from "../../utils/cookies"
     import addRecvAddrForm from "../forms/addRecvAddrForm"
 
     export default {
         data() {
             return {
-                order: {address: ""},
+                order: {
+                    address: ""
+                },
                 prod: {},
-	            totalAmount: "",
+                user: {
+                    name: "",
+                    sex: "先生",
+                    phone: "",
+                    addresses: []
+                },
+	            totalAmount: 0,
 	            unitPrice: {},
                 useExpress: false,
-                sexCall: "先生"
+                selAddress: ""
             }
         },
         async created() {
@@ -132,6 +147,11 @@
                     return
                 }
 		        this.order = this.order[0];
+                if(!this.order.address) {
+                    this.order.address = ""
+                } else {
+                    this.selAddress = this.order.address
+                }
 	        } catch (e) {
                 weui.alert(`查询订单失败：${e.message || JSON.stringify(e)}`)
 	        }
@@ -148,34 +168,94 @@
 		        weui.alert(`查询产品失败：${e.message || JSON.stringify(e)}`)
 	        }
 
-	        let upSig = this.unitPrice[this.order.unit];
-	        let up = _.compact(upSig.match(/[\d.]*/g))[0];
-	        this.totalAmount = parseFloat(up) * this.order.amount;
-	        this.totalAmount = upSig.replace(up, this.totalAmount)
+	        try {
+        	    this.order.openId = cookies.get("openid");
+        	    let users = (await this.axios.get(`/mdl/v1/users?openid=${this.order.openId}`)).data.data;
+        	    if(users.length !== 0) {
+        	        this.user = users[0];
+        	        if(!this.user.addresses) {
+                        this.user.addresses = []
+                    }
+                } else {
+                    this.user.openid = this.order.openId;
+                    users = (await this.axios.post("/mdl/v1/user", this.user)).data.data;
+                    if(users.length === 1) {
+                        this.user = users[0]
+                    }
+                }
+            } catch (e) {
+        	    weui.alert(`根据openid查询用户失败：${e.message || JSON.stringify(e)}`)
+            }
+
+	        this.totalAmount = this.unitPrice[this.order.unit] * this.order.amount
         },
         methods: {
 	        hdlClkExp(me) {
-	        	let expIndex = _.findIndex(this.prod.express, exp => exp.typ === me.target.id);
-		        let expCost = this.prod.express[expIndex].cost;
-		        let cost = _.compact(expCost.match(/[\d.]*/g))[0];
-		        let orgAmt = _.compact(this.totalAmount.match(/[\d.]*/g))[0];
-		        let ttlAmt = parseFloat(orgAmt);
-		        ttlAmt += parseFloat(`${me.target.checked ? "+" : "-"}${cost}`);
-		        this.totalAmount = this.totalAmount.replace(orgAmt, ttlAmt);
+                this.totalAmount += parseFloat(`${me.target.checked ? "+" : "-"}${this.prod.express.find(exp => exp.typ === me.target.id).cost}`)
 	        },
 	        hdlAddAddress() {
-	        	weui.dialog({
-                    title: "管理收获地址",
+                let self = this;
+
+	            weui.dialog({
+                    title: "管理收货地址",
                     buttons: [{
 	                    label: '取消',
 	                    type: 'default'
                     }, {
 	                    label: '确定',
 	                    type: 'primary',
-	                    onClick: function () { alert('确定') }
+	                    onClick: function () {
+	                        self.order.address = $("#hidSelAddress").val();
+                            self.selAddress = self.order.address;
+                        }
                     }]
                 });
-	        	new Vue(addRecvAddrForm).$mount(".weui-dialog__bd")
+
+	        	new Vue({
+                    data() {
+                        return {
+                            addresses: self.user.addresses || [],
+                            selAddress: self.order.address,
+                            userId: self.user._id
+                        }
+                    },
+                    components: {
+                        "add-recv-addr-form": addRecvAddrForm
+                    },
+                    template: "<add-recv-addr-form :userId='userId' :selAddress='selAddress' :addresses='addresses'/>"
+                }).$mount(".weui-dialog__bd")
+            },
+            async doPayBill() {
+	            try {
+	                let orders = (await this.axios.get(`/mdl/v1/order/${this.order._id}`)).data.data;
+	                if(orders.length !== 1) {
+	                    throw new Error("数据库存储错误：重复的订单记录")
+                    }
+                    if(!["待付款"].includes(orders[0].process)) {
+	                    throw new Error("该订单已付款，请勿重复付款")
+                    }
+                } catch (e) {
+	                weui.alert(`订单异常：${e.message || JSON.stringify(e)}`);
+                    return
+                }
+
+	            try {
+	                this.order.total = this.totalAmount;
+                    await this.axios.put(`/mdl/v1/order/${this.order._id}`, this.order)
+                } catch (e) {
+	                weui.alert(`付款失败，存储订单错误：${e.message || JSON.stringify(e)}`);
+                    return
+                }
+
+                try {
+                    await this.axios.put(`/mdl/v1/user/${this.user._id}`, this.user)
+                } catch (e) {
+	                weui.alert(`付款失败，存储用户信息错误：${e.message || JSON.stringify(e)}`);
+                    return
+                }
+
+                // this.totalAmount
+
             }
         }
     }

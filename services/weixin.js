@@ -1,5 +1,6 @@
 const wxXml = require("wx-xml");
 const axios = require("axios");
+const uuidv4 = require("uuid/v4");
 
 const env = require("../utils/system").env();
 const wxCfg = require(`../config/wx.${env}`);
@@ -106,5 +107,23 @@ module.exports = {
         }
         console.log(`发送的消息：${ret}`);
         return ret;
+    },
+    configWxSDK() {
+        wx.config({
+            debug: true,
+            appId: wxCfg.appid,
+            timestamp: Date.now(),
+            nonceStr: uuidv4().replace("-", ""),
+            signature: "",
+            jsApiList: []
+        });
+        wx.error(res => {
+
+        })
+    },
+    payByWX() {
+	    wx.ready(() => {
+
+        })
     }
 };
