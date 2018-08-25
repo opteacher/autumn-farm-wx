@@ -1,6 +1,6 @@
 <template>
     <wx-admin-lyt tabIndex="orders">
-        <div id="backToOrders" class="weui-cells mb-3">
+        <div id="backToOrders" class="weui-cells mt-0">
             <a class="weui-cell weui-cell_access" href="/#/autumnFarmWX/admin/process/orders">
                 <div class="weui-cell__hd"></div>
                 <div class="weui-cell__bd ml-3">
@@ -22,40 +22,42 @@
             </form>
             <a href="javascript:" class="weui-search-bar__cancel-btn" id="search_cancel">取消</a>
         </div>
-        <div v-for="order in orders" class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">订单号</label>
-                    <em class="weui-form-preview__value">{{order.oid}}</em>
+        <div v-for="order in orders">
+            <div class="weui-form-preview">
+                <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">订单号</label>
+                        <em class="weui-form-preview__value">{{order.oid}}</em>
+                    </div>
+                </div>
+                <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">商品*数量</label>
+                        <span class="weui-form-preview__value">{{order.prodName}}({{order.prodId}}) * {{order.amount}}({{order.unit}})</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">下单时间</label>
+                        <span class="weui-form-preview__value">{{order.time}}</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">客户(联系电话)</label>
+                        <span class="weui-form-preview__value">{{order.custName}}({{order.custContact}})</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">状态</label>
+                        <span class="weui-form-preview__value">{{order.process}}</span>
+                    </div>
+                    <div class="weui-form-preview__item" v-show="order.wayBill">
+                        <label class="weui-form-preview__label">运单(快递)</label>
+                        <span class="weui-form-preview__value">{{order.wayBill}}</span>
+                    </div>
+                </div>
+                <div class="weui-form-preview__ft">
+                    <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">取消订单</a>
                 </div>
             </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">商品*数量</label>
-                    <span class="weui-form-preview__value">{{order.prodName}}({{order.prodId}}) * {{order.amount}}({{order.unit}})</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">下单时间</label>
-                    <span class="weui-form-preview__value">{{order.time}}</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">客户(联系电话)</label>
-                    <span class="weui-form-preview__value">{{order.custName}}({{order.custContact}})</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">状态</label>
-                    <span class="weui-form-preview__value">{{order.process}}</span>
-                </div>
-                <div class="weui-form-preview__item" v-show="order.wayBill">
-                    <label class="weui-form-preview__label">运单(快递)</label>
-                    <span class="weui-form-preview__value">{{order.wayBill}}</span>
-                </div>
-            </div>
-            <div class="weui-form-preview__ft">
-                <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">取消订单</a>
-            </div>
+            <br/>
         </div>
-        <br/>
     </wx-admin-lyt>
 </template>
 

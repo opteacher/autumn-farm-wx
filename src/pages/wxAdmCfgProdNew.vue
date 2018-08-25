@@ -219,10 +219,10 @@
             -webkit-transform: matrix(.71,.71,-.71,.71,0,0);
             transform: matrix(.71,.71,-.71,.71,0,0);
             position: relative;
-            top: -2px;
+            top: 2px;
             position: absolute;
             top: 50%;
-            margin-top: -2px;
+            margin-top: -4px;
             left: 15px;
         }
     }
