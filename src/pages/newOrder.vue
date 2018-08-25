@@ -241,6 +241,8 @@
 
 	            try {
 	                this.order.total = this.totalAmount;
+	                this.order.custName = `${this.user.name} ${this.user.sex}`;
+	                this.order.custContact = this.user.phone;
                     await this.axios.put(`/mdl/v1/order/${this.order._id}`, this.order)
                 } catch (e) {
 	                weui.alert(`付款失败，存储订单错误：${e.message || JSON.stringify(e)}`);
@@ -255,7 +257,22 @@
                 }
 
                 // this.totalAmount
-
+                let self = this;
+                weui.confirm("订单已下单，请耐心等待发货", {
+                    buttons: [{
+                        label: "前往我的订单",
+                        type: "default",
+                        onClick() {
+                            self.$router.push(`/autumnFarmWX/order/detail/${self.order._id}`)
+                        }
+                    }, {
+                        label: "继续购买",
+                        type: "primary",
+                        onClick() {
+                            self.$router.push(`/autumnFarmWX/prod/list/${self.$route.query.prodTyp}`)
+                        }
+                    }]
+                })
             }
         }
     }
