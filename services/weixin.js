@@ -8,6 +8,7 @@ const cookies = require("../utils/cookies");
 
 module.exports = {
 	accessToken: {},
+    jsApiTicket: {},
     wrapError(errResp) {
         if(!errResp) {
             return "undefined response";
@@ -31,6 +32,24 @@ module.exports = {
 	        this.accessToken.tkn = result.access_token;
 	        this.accessToken.exp = Date.now() + result.expires_in * 1000;
 	        return this.accessToken.tkn;
+        }
+    },
+    async getJsApiTicket() {
+	    if(this.jsApiTicket.tkt && Date.now() < this.jsApiTicket.exp) {
+	        return this.jsApiTicket.tkt;
+        } else {
+            let result = (await axios.get(wxCfg.urls.getJsApiTicket, {
+                params: {
+                    access_token: await this.getAccessToken(),
+                    type: "jsapi"
+                }
+            })).data;
+            if(!result.ticket) {
+                throw new Error(this.wrapError(result));
+            }
+            this.jsApiTicket.tkt = result.ticket;
+            this.jsApiTicket.exp = Date.now() + result.expires_in * 1000;
+            return this.jsApiTicket.tkt
         }
     },
     async initialize() {
@@ -108,7 +127,22 @@ module.exports = {
         console.log(`发送的消息：${ret}`);
         return ret;
     },
-    configWxSDK() {
+    async genSignature(noncestr, timestamp) {
+	    let signature = [
+            ["jsApiTicket", await this.getJsApiTicket()],
+            ["noncestr", noncestr],
+            ["timestamp", timestamp],
+            ["url", window.location.href]
+        ];
+        signature = signature.map(pr => [pr[0], pr[1].toLowerCase()]);
+        signature.sort((pr1, pr2) => pr1[0] < pr2[0] ? -1 : 1);
+        signature = signature.map(pr => `${pr[0]}=${pr[1]}`).reduce((pr1, pr2) => `${pr1}&${pr2}`);
+        return crypto.createHash("sha1").update(signature).digest("hex");
+    },
+    async configWxSDK() {
+	    // 生成签名
+
+
         wx.config({
             debug: true,
             appId: wxCfg.appid,

@@ -1,3 +1,4 @@
+import home from "./pages/home.vue"
 import prodList from "./pages/prodList"
 import prodDtl from "./pages/prodDtl"
 import wxAuth from "./pages/wxAuth"
@@ -13,6 +14,9 @@ import wxAdmCfgProdNew from "./pages/wxAdmCfgProdNew"
 import wxAdminLgn from "./pages/wxAdminLgn"
 
 export default [{
+	path: "/",
+	component: home
+}, {
 	path: "/autumnFarmWX/prod/list/:type",
 	component: prodList
 }, {
