@@ -226,6 +226,7 @@
                 }).$mount(".weui-dialog__bd")
             },
             async doPayBill() {
+	            // 查询订单是否重复
 	            try {
 	                let orders = (await this.axios.get(`/mdl/v1/order/${this.order._id}`)).data.data;
 	                if(orders.length !== 1) {
@@ -239,6 +240,7 @@
                     return
                 }
 
+                // 更新订单状态
 	            try {
 	                this.order.total = this.totalAmount;
 	                this.order.custName = `${this.user.name} ${this.user.sex}`;
@@ -249,12 +251,56 @@
                     return
                 }
 
+                // 保存用户输入的个人信息
                 try {
                     await this.axios.put(`/mdl/v1/user/${this.user._id}`, this.user)
                 } catch (e) {
 	                weui.alert(`付款失败，存储用户信息错误：${e.message || JSON.stringify(e)}`);
                     return
                 }
+
+                // 微信下单
+                let wxPayRes = {};
+                try {
+                    wxPayRes = (await this.axios.post("/api/v1/weixin/order", {
+                        orderId: this.order._id,
+                        total: this.order.total,
+                        openid: this.order.openid,
+                        time: this.order.time,
+                        prodId: this.prod._id,
+                        body: this.prod.name, // 拼接body
+                        callback: "http://opteacher.top/#/autumnFarmWX/order/new/notify",
+                        note: this.order.note, // 写到detail里面
+                    })).data.data;
+                } catch(e) {
+                    weui.alert(`付款失败，微信下单失败：${e.message || JSON.stringify(e)}`);
+                    return
+                }
+
+                // 微信支付
+                let self = this;
+                wx.ready(async () => {
+                    let result = {};
+                    try {
+                        result = (await self.axios.get("/api/v1/weixin/signature", {
+                            params: { extra: {appid: ""} }
+                        })).data;
+                    } catch (e) {
+                        weui.alert(`付款失败，发起微信支付失败：${e.message || JSON.stringify(e)}`);
+                        return
+                    }
+
+	                wx.chooseWXPay({
+                        timestamp: result.timestamp,
+                        nonceStr: result.noncestr,
+                        package: "",
+                        signType: "SHA1",
+                        paySign: result.signature,
+                        success(res) {
+
+                        }
+                    })
+                });
 
                 // this.totalAmount
                 let self = this;

@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const wxXml = require("wx-xml");
 const axios = require("axios");
 const uuidv4 = require("uuid/v4");
@@ -127,37 +128,14 @@ module.exports = {
         console.log(`发送的消息：${ret}`);
         return ret;
     },
-    async genSignature(noncestr, timestamp) {
-	    let signature = [
-            ["jsApiTicket", await this.getJsApiTicket()],
-            ["noncestr", noncestr],
-            ["timestamp", timestamp],
-            ["url", window.location.href]
-        ];
-        signature = signature.map(pr => [pr[0], pr[1].toLowerCase()]);
+    async genSignature(cypoAlgo, encBody, noSort) {
+	    let signature = _.toPairs(encBody);
+        // signature = signature.map(pr => [pr[0], pr[1].toLowerCase()]);
         signature.sort((pr1, pr2) => pr1[0] < pr2[0] ? -1 : 1);
+        if(noSort) {
+            signature = signature.concat(_.toPairs(noSort));
+        }
         signature = signature.map(pr => `${pr[0]}=${pr[1]}`).reduce((pr1, pr2) => `${pr1}&${pr2}`);
-        return crypto.createHash("sha1").update(signature).digest("hex");
-    },
-    async configWxSDK() {
-	    // 生成签名
-
-
-        wx.config({
-            debug: true,
-            appId: wxCfg.appid,
-            timestamp: Date.now(),
-            nonceStr: uuidv4().replace("-", ""),
-            signature: "",
-            jsApiList: []
-        });
-        wx.error(res => {
-
-        })
-    },
-    payByWX() {
-	    wx.ready(() => {
-
-        })
+        return crypto.createHash(cypoAlgo).update(signature).digest("hex");
     }
 };

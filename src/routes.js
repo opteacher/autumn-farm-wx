@@ -5,6 +5,7 @@ import wxAuth from "./pages/wxAuth"
 import orderList from "./pages/orderList"
 import orderDtl from "./pages/orderDtl"
 import newOrder from "./pages/newOrder"
+import newOrderNotify from "./pages/newOrderNotify.vue"
 import wxAdmPcsOrders from "./pages/wxAdmPcsOrders"
 import wxAdmPcsOrderCtg from "./pages/wxAdmPcsOrderCtg"
 import wxAdmCfgAdvBar from "./pages/wxAdmCfgAdvBar"
@@ -34,6 +35,9 @@ export default [{
 }, {
 	path: "/autumnFarmWX/order/new",
 	component: newOrder
+}, {
+    path: "/autumnFarmWX/order/new/notify",
+    component: newOrderNotify
 }, {
     path: "/autumnFarmWX/admin/login",
     component: wxAdminLgn,
