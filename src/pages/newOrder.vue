@@ -303,7 +303,6 @@
                 });
 
                 // this.totalAmount
-                let self = this;
                 weui.confirm("订单已下单，请耐心等待发货", {
                     buttons: [{
                         label: "前往我的订单",
