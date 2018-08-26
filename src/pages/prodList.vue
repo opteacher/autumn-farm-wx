@@ -30,6 +30,7 @@
 <script>
     import holderjs from "holderjs"
     import hdrAdvBar from "../components/hdrAdvBar"
+    import cookies from "../../utils/cookies"
 
     export default {
         data() {
