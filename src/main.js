@@ -1,15 +1,17 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 import VueAxios from "vue-axios"
-import MintUI from "mint-ui"
+import { Swipe, SwipeItem } from "mint-ui"
 import "mint-ui/lib/style.css"
 import axios from "axios"
 import routes from "./routes"
 
-Vue.use(MintUI);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 // Vue.axios.defaults.baseURL = 'https://api-demo.websanova.com/api/v1';
+
+Vue.component(Swipe.name, Swipe);
+Vue.component(SwipeItem.name, SwipeItem);
 
 Vue.router = new VueRouter({ routes });
 

@@ -15,9 +15,12 @@ module.exports = db.defineModel({
         cost:   db.Types.Number
     }],
     prefer:     [db.Types.String],
+    images:     [db.Types.String],
     date:       db.Types.Date
 }, {
     router: {
-        methods: ["GET", "ALL", "POST", "PUT", "DELETE"]
+        methods: ["GET", "ALL", "POST", "PUT", "DELETE", {
+            method: "PROP", properties: ["images"]
+        }]
     }
 });

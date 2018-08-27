@@ -1,5 +1,5 @@
 <template>
-    <form class="weui-cells">
+    <form class="weui-cells mb-3">
         <div class="weui-cell">
             <div class="weui-cell__bd">
                 <input name="price" class="weui-input" type="number" pattern="[0-9\.]*" placeholder="价格" autofocus>

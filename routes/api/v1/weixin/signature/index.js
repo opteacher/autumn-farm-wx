@@ -1,6 +1,7 @@
 const router = require("koa-router")();
 const projPath = require("../../../../../utils/system").projRootPath();
 
+const env = require(`${projPath}/utils/system`).env();
 const wxCfg = require(`${projPath}/config/wx.${env}`);
 const wxSvc = require(`${projPath}/services/weixin`);
 
@@ -24,7 +25,7 @@ router.get("/", async ctx => {
         delete ctx.request.query.crypto;
     }
 
-    resBody.signature = await wxSvc.genSignature(cypoAlgo, ctx.request.query);
+    resBody.signature = wxSvc.genSignature(cypoAlgo, ctx.request.query);
 
     ctx.body = resBody;
 });

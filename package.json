@@ -37,6 +37,7 @@
     "@websanova/vue-auth": "^2.21.14-beta",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
+    "babel-plugin-component": "^1.1.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-vue-app": "^2.0.0",
     "css-loader": "^0.28.11",

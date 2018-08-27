@@ -9,13 +9,11 @@ const wxSvc = require(`${projPath}/services/weixin`);
 
 router.get("/", async ctx => {
     if(!ctx.request.query) {
-        ctx.body = "This's not a weixin request";
-        return;
+        ctx.throw(400, "weixin", "This's not a weixin request");
     }
     let query = ctx.request.query;
     if(!query.signature || !query.timestamp || !query.nonce || !query.echostr) {
-        ctx.body = "Lost one of signature or timestamp or nonce or echostr";
-        return;
+        ctx.throw(400, "weixin", "Lost one of signature or timestamp or nonce or echostr");
     }
     let sig = query.signature;
     let tms = query.timestamp;
@@ -50,7 +48,7 @@ router.post("/", async ctx => {
 	    });
     }).then(res => {
 	    if(res.length === 0) {
-		    ctx.body = "错误的请求格式，来源非微信";
+	        ctx.throw(400, "weixin", "错误的请求格式，来源非微信");
 	    }
 	    ctx.set("Content-Type", "text/xml");
 	    return res;

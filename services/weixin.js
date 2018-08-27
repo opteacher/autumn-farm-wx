@@ -1,6 +1,7 @@
 const _ = require("lodash");
 const wxXml = require("wx-xml");
 const axios = require("axios");
+const crypto = require("crypto");
 const uuidv4 = require("uuid/v4");
 
 const env = require("../utils/system").env();
@@ -128,7 +129,7 @@ module.exports = {
         console.log(`发送的消息：${ret}`);
         return ret;
     },
-    async genSignature(cypoAlgo, encBody, noSort) {
+    genSignature(cypoAlgo, encBody, noSort) {
 	    let signature = _.toPairs(encBody);
         // signature = signature.map(pr => [pr[0], pr[1].toLowerCase()]);
         signature.sort((pr1, pr2) => pr1[0] < pr2[0] ? -1 : 1);

@@ -12,6 +12,7 @@ import wxAdmCfgAdvBar from "./pages/wxAdmCfgAdvBar"
 import wxAdmCfgProds from "./pages/wxAdmCfgProds"
 import wxAdmCfgProdDtl from "./pages/wxAdmCfgProdDtl"
 import wxAdmCfgProdNew from "./pages/wxAdmCfgProdNew"
+import wxAdmCfgProdImg from "./pages/wxAdmCfgProdImg"
 import wxAdminLgn from "./pages/wxAdminLgn"
 
 export default [{
@@ -61,6 +62,10 @@ export default [{
 }, {
     path: "/autumnFarmWX/admin/config/prod/:pid/detail",
     component: wxAdmCfgProdDtl,
+    meta: {auth: true}
+}, {
+    path: "/autumnFarmWX/admin/config/prod/:pid/images",
+    component: wxAdmCfgProdImg,
     meta: {auth: true}
 }, {
 	path: "/autumnFarmWX/admin/config/prod/new",

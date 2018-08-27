@@ -265,15 +265,15 @@
                     wxPayRes = (await this.axios.post("/api/v1/weixin/order", {
                         orderId: this.order._id,
                         total: this.order.total,
-                        openid: this.order.openid,
+                        openid: this.order.openId,
                         time: this.order.time,
                         prodId: this.prod._id,
                         body: this.prod.name, // 拼接body
                         callback: "http://opteacher.top/#/autumnFarmWX/order/new/notify",
                         note: this.order.note, // 写到detail里面
                     })).data.data;
-                } catch(e) {
-                    weui.alert(`付款失败，微信下单失败：${e.message || JSON.stringify(e)}`);
+                } catch(res) {
+                    weui.alert(`付款失败，微信下单失败：${res.response.data || JSON.stringify(res)}`);
                     return
                 }
 

@@ -26,10 +26,7 @@
 
 <script>
     import holderjs from "holderjs"
-    import Vue from "vue"
-    import { MessageBox } from "mint-ui"
     import wxAdminLyt from "../layouts/wxAdminLyt"
-    import addProdForm from "../components/addProdForm"
 
     export default {
         components: {

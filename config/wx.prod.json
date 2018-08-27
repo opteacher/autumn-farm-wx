@@ -2,7 +2,12 @@
   "appid": "wx5e95891ef30544d3",
   "token": "opteacher",
   "secret": "5aea98dcdcc99031be463e1455a8aa5b",
+  "pay": {
+    "mch_id": "",
+    "key": ""
+  },
   "urls": {
+    "newOrder": "https://api.mch.weixin.qq.com/pay/unifiedorder",
     "getToken": "https://api.weixin.qq.com/cgi-bin/token",
     "createButton": "https://api.weixin.qq.com/cgi-bin/menu/create",
     "authorize": "https://open.weixin.qq.com/connect/oauth2/authorize"
