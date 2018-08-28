@@ -12,15 +12,15 @@
         </div>
         <div class="weui-tabbar">
             <a class="weui-tabbar__item" href="/#/autumnFarmWX/prod/list/fruit" :class="{'weui-bar__item_on': selTab === 'fruit'}">
-                <img class="weui-tabbar__icon" :src="selTab === 'fruit' ? '/img/水果_active.png' : '/img/水果.png'" alt="">
+                <i class="iconfont fs-25 icon-fruit" :class="{'is-active': selTab === 'fruit'}"></i>
                 <p class="weui-tabbar__label">水果</p>
             </a>
             <a class="weui-tabbar__item" href="/#/autumnFarmWX/prod/list/poultry" :class="{'weui-bar__item_on': selTab === 'poultry'}">
-                <img class="weui-tabbar__icon" :src="selTab === 'poultry' ? '/img/家禽_active.png' : '/img/家禽.png'" alt="">
+                <i class="iconfont fs-25 icon-chicken" :class="{'is-active': selTab === 'poultry'}"></i>
                 <p class="weui-tabbar__label">家禽</p>
             </a>
             <a class="weui-tabbar__item" href="/#/autumnFarmWX/prod/list/aquatic" :class="{'weui-bar__item_on': selTab === 'aquatic'}">
-                <img class="weui-tabbar__icon" :src="selTab === 'aquatic' ? '/img/水产_active.png' : '/img/水产.png'" alt="">
+                <i class="iconfont fs-25 icon-fish" :class="{'is-active': selTab === 'aquatic'}"></i>
                 <p class="weui-tabbar__label">水产</p>
             </a>
         </div>
@@ -77,5 +77,13 @@
     }
     a:hover {
         text-decoration: none;
+    }
+    .weui-tabbar {
+        .is-active {
+            color: #09BA07;
+        }
+    }
+    .fs-25 {
+        font-size: 25px
     }
 </style>

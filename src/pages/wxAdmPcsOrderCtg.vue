@@ -8,6 +8,7 @@
                 </div>
             </a>
         </div>
+        <div class="weui-cells__title">{{$route.params.category}}</div>
         <div class="weui-search-bar d-none" id="search_bar">
             <form class="weui-search-bar__form">
                 <div class="weui-search-bar__box">

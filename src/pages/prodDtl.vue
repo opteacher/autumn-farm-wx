@@ -32,9 +32,7 @@
                     <div class="weui-media-box weui-media-box_small-appmsg">
                         <div class="weui-cells">
                             <div v-for="prefer in prod.prefer" class="weui-cell">
-                                <div class="weui-cell__bd">
-                                    <p class="weui-media-box__desc">{{prefer}}</p>
-                                </div>
+                                <div class="weui-cell__bd"><i class="my-icon-star"></i>{{prefer}}</div>
                             </div>
                         </div>
                     </div>
@@ -64,7 +62,7 @@
                             </div>
                             <div v-for="express in prod.express" class="weui-cell">
                                 <div class="weui-cell__bd"><p>{{express.typ}}</p></div>
-                                <div class="weui-cell__ft gray-text">{{express.cost}}</div>
+                                <div class="weui-cell__ft gray-text">{{express.cost}}￥</div>
                             </div>
                         </div>
                     </div>
@@ -256,5 +254,10 @@
     }
     .weui-cell_noactive:active {
         background-color: transparent !important;
+    }
+    .my-icon-star {
+        background-image: url(/img/列表标头.png);
+        -webkit-background-size: 20px;
+        background-size: 20px;
     }
 </style>

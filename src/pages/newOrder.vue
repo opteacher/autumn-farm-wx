@@ -98,7 +98,7 @@
         <div class="weui-cells weui-cells_radio">
             <label class="weui-cell weui-check__label" for="weixin">
                 <div class="weui-cell__hd">
-                    <img src="/img/微信.png" alt="" style="width:20px;margin-right:5px;display:block">
+                    <i class="iconfont icon-weixin"></i>
                 </div>
                 <div class="weui-cell__bd"><p>微信</p></div>
                 <div class="weui-cell__ft">
@@ -322,3 +322,12 @@
         }
     }
 </script>
+
+<style type="text/scss">
+    .icon-weixin {
+        color: #09BA07;
+        font-size: 25px;
+        margin-right: 5px;
+        display: block
+    }
+</style>

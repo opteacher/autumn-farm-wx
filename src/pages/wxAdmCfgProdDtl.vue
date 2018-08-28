@@ -19,7 +19,7 @@
 <script>
     import holderjs from "holderjs"
     import wxAdminLyt from "../layouts/wxAdminLyt"
-    import edtOrderForm from "../forms/edtOrderForm"
+    import edtOrderForm from "../forms/edtProdForm"
 
     export default {
         data() {

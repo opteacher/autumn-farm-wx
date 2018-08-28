@@ -15,7 +15,8 @@ const exp = {
     "Users": require("./user"),
     "Admin": require("./admin"),
     "Prods": require("./prod"),
-    "Orders": require("./order")
+    "Orders": require("./order"),
+    "Images": require("./image")
 };
 
 // @step{}:同步数据库

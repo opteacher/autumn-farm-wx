@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import edtOrderForm from "../forms/edtOrderForm"
+    import edtOrderForm from "../forms/edtProdForm"
 
     export default {
         components: {
@@ -36,7 +36,8 @@
     						typ: "",
                             cost: ""
                         }],
-					    prefer: ""
+					    prefer: "",
+                        images: []
                     }
                 }
             }

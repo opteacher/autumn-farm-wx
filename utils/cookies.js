@@ -32,7 +32,7 @@ module.exports = {
             if(!(k in t)) {
                 return null;
             }
-            if(i === keyAry.length - 1) {
+            if(i == keyAry.length - 1) {
                 ret = t[k];
                 if(take) {
                     t[k] = undefined;
@@ -65,14 +65,15 @@ module.exports = {
             let key = keyAry.shift();
             let cookie = Cookies.get(key);
             if(cookie === undefined) { cookie = "{}"; }
-            cookie = cvtJSON(cookie);
+            cookie = this._cvtJSON(cookie);
             let t = cookie;
             for(let i in keyAry) {
                 let k = keyAry[i];
                 if(!(k in t)) {
-                    t[k] = {};
+                    t[k] = value;
+                    break;
                 }
-                if(i === keyAry.length - 1) {
+                if(i == keyAry.length - 1) {
                     t[k] = value;
                     break;
                 } else {

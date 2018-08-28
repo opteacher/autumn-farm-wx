@@ -8,15 +8,28 @@
                 <input class="weui-input" type="text" placeholder="请输入产品名" v-model="form.body.name">
             </div>
         </div>
-        <div class="weui-cell weui-cell_vcode">
+        <div class="weui-cell">
             <div class="weui-cell__hd">
                 <label class="weui-label">图标</label>
             </div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入图标链接" v-model="form.body.icon">
+                <input class="weui-input" type="text" placeholder="选择图标" v-model="form.body.icon">
             </div>
             <div class="weui-cell__ft">
-                <button class="weui-vcode-btn" @click="hdlSelImages">选择图片</button>
+                <a class="weui-cell weui-cell_access p-0" href="javascript:" @click="hdlSelImages('icon')">
+                    <div class="weui-cell__ft">选择图标</div>
+                </a>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">图片</label>
+            </div>
+            <div class="weui-cell__bd gray-text">{{form.body.images.length}} / 5</div>
+            <div class="weui-cell__ft">
+                <a class="weui-cell weui-cell_access p-0" href="javascript:" @click="hdlSelImages('images')">
+                    <div class="weui-cell__ft">选择图片</div>
+                </a>
             </div>
         </div>
         <div class="weui-cell weui-cell_select">
@@ -99,6 +112,7 @@
     import _ from "lodash"
     import Vue from "vue"
     import addPriceForm from "./addPriceForm"
+    import cookies from "../../utils/cookies"
 
     export default {
         props: {
@@ -107,8 +121,14 @@
         data() {
             return {
                 form: {
+                    key: "prod",
                     body: this.body
                 }
+            }
+        },
+        created() {
+            if(cookies.get("back_url", true)) {
+                this.form.body = cookies.get(this.form.key, true)
             }
         },
         methods: {
@@ -161,13 +181,18 @@
                     a.toggle();
                 });
             },
-            hdlSelImages() {
-                this.$router.push(`/autumnFarmWX/admin/config/prod/${this.form.body._id}/images`)
-            }
-        },
-        watch: {
-            "form.body" (to) {
-                console.log(to)
+            hdlSelImages(imgType) {
+                if(!this.form.body.name || this.form.body.name === "") {
+                    weui.alert("请先输入产品名");
+                    return
+                }
+                cookies.set(this.form.key, this.form.body);
+                cookies.set("back_url", `${window.location.href}?imgType=${imgType}`);
+                this.$router.push([
+                    "/autumnFarmWX/admin/config/prod/images",
+                    `?num=${imgType === "icon" ? 1 : 5}`,
+                    `&name=${this.form.body.name}`
+                ].join(""))
             }
         }
     }

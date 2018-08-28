@@ -64,7 +64,7 @@ export default [{
     component: wxAdmCfgProdDtl,
     meta: {auth: true}
 }, {
-    path: "/autumnFarmWX/admin/config/prod/:pid/images",
+    path: "/autumnFarmWX/admin/config/prod/images",
     component: wxAdmCfgProdImg,
     meta: {auth: true}
 }, {
