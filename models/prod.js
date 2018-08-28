@@ -14,7 +14,7 @@ module.exports = db.defineModel({
         typ:    db.Types.String,
         cost:   db.Types.Number
     }],
-    prefer:     [db.Types.String],
+    prefers:    [db.Types.String],
     images:     [db.Types.String],
     date:       db.Types.Date
 }, {

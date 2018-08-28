@@ -8,15 +8,11 @@ const cdnCfg = require(`${projPath}/config/cdn.${env}`);
 let token = {tkn: "", exp: 0};
 
 router.get("/token", async ctx => {
-    if(token.tkn.length === 0 || Date.now() - token.exp > 1200000) {// 过期一小时后
-        let mac = new qiniu.auth.digest.Mac(cdnCfg.access, cdnCfg.secret);
-        let putPolicy = new qiniu.rs.PutPolicy({
-            scope: cdnCfg.bucket
-        });
-        token.tkn = putPolicy.uploadToken(mac);
-        token.exp = Date.now();
-    }
-    ctx.body = token.tkn;
+	let mac = new qiniu.auth.digest.Mac(cdnCfg.access, cdnCfg.secret);
+	let putPolicy = new qiniu.rs.PutPolicy({
+		scope: cdnCfg.bucket
+	});
+    ctx.body = putPolicy.uploadToken(mac);
 });
 
 module.exports = router;

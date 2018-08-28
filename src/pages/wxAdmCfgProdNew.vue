@@ -34,9 +34,9 @@
                         prices: [],
 					    express: [{
     						typ: "",
-                            cost: ""
+                            cost: 0
                         }],
-					    prefer: "",
+					    prefers: [],
                         images: []
                     }
                 }
@@ -45,11 +45,7 @@
     	methods: {
     		async doAddProd() {
     			try {
-    				if(this.form.body.express[0].cost === "") {
-					    this.form.body.express[0].cost = 0
-                    }
                     this.form.body.date = new Date();
-
     				await this.axios.post("/mdl/v1/prod", this.form.body);
                     weui.alert("添加成功", () => {
 	                    this.$router.push("/autumnFarmWX/admin/config/prods")

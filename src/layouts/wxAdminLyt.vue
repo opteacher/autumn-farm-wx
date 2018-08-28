@@ -11,9 +11,6 @@
                 </div>
                 <div class="weui-tab-container">
                     <slot/>
-                    <div class="weui-btn-area">
-                        <a class="weui-btn weui-btn_warn" href="javascript:" @click="doLogout">登出</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -24,13 +21,6 @@
     export default {
         props: ["tabIndex"],
         methods: {
-            doLogout() {
-                weui.confirm("确认退出？", () => {
-                    this.$auth.logout({
-                        redirect: "/autumnFarmWX/admin/login"
-                    })
-                })
-            },
             hdTopTabChg(mouseEvent) {
                 let selTab = mouseEvent.target.id;
                 if(selTab === this.tabIndex) {

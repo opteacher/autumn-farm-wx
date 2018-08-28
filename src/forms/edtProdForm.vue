@@ -25,7 +25,7 @@
             <div class="weui-cell__hd">
                 <label class="weui-label">图片</label>
             </div>
-            <div class="weui-cell__bd gray-text">{{form.body.images.length}} / 5</div>
+            <div class="weui-cell__bd gray-text">{{form.body.images ? form.body.images.length : 0}} / 5</div>
             <div class="weui-cell__ft">
                 <a class="weui-cell weui-cell_access p-0" href="javascript:" @click="hdlSelImages('images')">
                     <div class="weui-cell__ft">选择图片</div>
@@ -64,18 +64,18 @@
         </div>
         <div v-for="(price, index) in form.body.prices" class="weui-cells mt-0">
             <a class="price-item weui-cell weui-cell_access" @click="hdlShowDelPriceBtn">
-                <div class="weui-cell__bd"><p>{{price.price}}</p></div>
+                <div class="weui-cell__bd"><p>#&nbsp;{{price.price}}￥</p></div>
                 <div class="weui-cell__ft">{{price.unit}}</div>
             </a>
             <a class="price-item weui-cell weui-cell_swiped" style="display: none">
                 <div class="weui-cell__bd">
                     <a class="weui-cell weui-cell_access" @click="hdlHideDelPriceBtn">
-                        <div class="weui-cell__bd"><p>{{price.price}}</p></div>
+                        <div class="weui-cell__bd"><p>#&nbsp;{{price.price}}￥</p></div>
                         <div class="weui-cell__ft">{{price.unit}}</div>
                     </a>
                 </div>
                 <div class="weui-cell__ft">
-                    <a class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:" :rel="index" @click="delPrice">删除</a>
+                    <a class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:" @click="delPrice(index)">删除</a>
                 </div>
             </a>
         </div>
@@ -96,13 +96,31 @@
             </div>
             <div class="weui-cell__ft">￥</div>
         </div>
-        <div class="weui-cell">
+        <div class="weui-cell weui-cell_vcode">
             <div class="weui-cell__hd">
-                <label class="weui-label">优惠(&分隔)</label>
+                <label class="weui-label">优惠</label>
             </div>
-            <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入优惠方案" v-model="form.body.prefer">
+            <div class="weui-cell__bd"></div>
+            <div class="weui-cell-ft">
+                <button class="weui-vcode-btn" @click="addPrefer">添加方案</button>
             </div>
+        </div>
+        <div v-for="(prefer, index) in form.body.prefers" class="weui-cells mt-0">
+            <a class="price-item weui-cell weui-cell_access" @click="hdlShowDelPriceBtn">
+                <div class="weui-cell__bd"><p>#&nbsp;{{prefer}}</p></div>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a class="price-item weui-cell weui-cell_swiped" style="display: none">
+                <div class="weui-cell__bd">
+                    <a class="weui-cell weui-cell_access" @click="hdlHideDelPriceBtn">
+                        <div class="weui-cell__bd"><p>#&nbsp;{{prefer}}</p></div>
+                        <div class="weui-cell__ft"></div>
+                    </a>
+                </div>
+                <div class="weui-cell__ft">
+                    <a class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:" @click="delProp('prefers', index)">删除</a>
+                </div>
+            </a>
         </div>
     </div>
 </template>
@@ -126,9 +144,37 @@
                 }
             }
         },
-        created() {
+        async created() {
             if(cookies.get("back_url", true)) {
-                this.form.body = cookies.get(this.form.key, true)
+            	let cookieObj = cookies.get(this.form.key);
+            	if(!cookieObj) {
+            		return
+                }
+	            _.forIn(cookieObj, (v, k) => {
+		            if(v) {
+			            this.form.body[k] = v
+		            }
+	            });
+	            cookies.clear(this.form.key);
+
+	            let prod = this.form.body;
+                if(prod._id) {
+                	let reqBody = {};
+                	if(prod.icon) {
+                		reqBody.icon = prod.icon;
+                    }
+                	if(prod.images) {
+                		reqBody.images = prod.images;
+                    }
+                	try {
+                        let result = (await this.axios.put(`/mdl/v1/prod/${prod._id}`, reqBody)).data;
+                        if(result.length === 0) {
+                        	throw new Error("未能更新产品")
+                        }
+	                } catch (e) {
+                        weui.alert(`更新产品失败：${e.message || JSON.stringify(e)}`)
+	                }
+                }
             }
         },
         methods: {
@@ -154,10 +200,35 @@
                 });
                 new Vue(addPriceForm).$mount(".weui-dialog__bd")
             },
-            delPrice(me) {
-                let index = parseInt(me.target.rel);
-                this.form.body.prices = this.form.body.prices.slice(0, index)
-                    .concat(this.form.body.prices.slice(index + 1))
+	        addPrefer() {
+		        let self = this;
+		        weui.dialog({
+			        title: "添加优惠方案",
+			        buttons: [{
+				        label: "取消",
+				        type: "default"
+			        }, {
+				        label: "确认",
+				        type: "primary",
+				        onClick() {
+					        self.form.body.prefers.push($(this).parents(".weui-dialog").find(".weui-input").val())
+				        }
+			        }]
+		        });
+		        new Vue({
+                    template: `
+                    <div class="weui-cells mb-3">
+                    <div class='weui-cell'>
+                    <div class='weui-cell__bd'>
+                    <input class='weui-input' type='text' placeholder="请输入方案">
+                    </div>
+                    </div>
+                    </div>`
+                }).$mount(".weui-dialog__bd")
+            },
+            delProp(prop, index) {
+                this.form.body[prop] = this.form.body[prop].slice(0, index).concat(
+                	this.form.body[prop].slice(index + 1))
             },
             hdlShowDelPriceBtn(me) {
                 let a = $(me.target.closest(".price-item"));
@@ -190,8 +261,7 @@
                 cookies.set("back_url", `${window.location.href}?imgType=${imgType}`);
                 this.$router.push([
                     "/autumnFarmWX/admin/config/prod/images",
-                    `?num=${imgType === "icon" ? 1 : 5}`,
-                    `&name=${this.form.body.name}`
+                    `?num=${imgType === "icon" ? 1 : 5}`
                 ].join(""))
             }
         }

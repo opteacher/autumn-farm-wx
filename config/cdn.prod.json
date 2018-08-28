@@ -2,5 +2,6 @@
   "access": "",
   "secret": "",
   "bucket": "autumn-farm-wx",
-  "bucketUrl": ""
+  "bucketUrl": "",
+  "tokenExp": 1200000
 }

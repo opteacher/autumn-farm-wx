@@ -67,17 +67,22 @@
         },
         async created() {
             this.backUrl = cookies.get("back_url");
-            this.images = cookies.get(`${this.key}.images`) || [];
-            if(this.images.length !== 0) {
-                this.images = this.images.map(img => {
-                    return {src: img, pcs: 101}
-                });
+	        this.maxNum = this.$route.query.num ? parseInt(this.$route.query.num) : 5;
+            if(this.maxNum === 1) {
+	            this.images = [{
+	            	src: cookies.get(`${this.key}.icon`), pcs: 101
+	            }]
+            } else {
+	            this.images = cookies.get(`${this.key}.images`) || [];
+	            if(this.images.length !== 0) {
+		            this.images = this.images.map(img => {
+			            return {src: img, pcs: 101}
+		            });
+	            }
             }
-            this.maxNum = this.$route.query.num || 5
         },
         methods: {
             async uploadImg(uplEve) {
-                let name = `产品图片_${this.$route.query.name}_${this.images.length}`;
                 let file = uplEve.target.files[0];
                 let token = "";
                 try {
@@ -87,7 +92,7 @@
                     return
                 }
 
-                let observable = qiniu.upload(file, name, token, {}, {
+                let observable = qiniu.upload(file, file.name, token, {}, {
                     useCdnDomain: true,
                     region: qiniu.region.z0
                 });
@@ -97,7 +102,7 @@
                 let self = this;
                 observable.subscribe({
                     next(res) {
-                        self.images[lastIdx].pcs = res.total.percent
+                        self.images[lastIdx].pcs = parseInt(res.total.percent)
                     },
                     error(err) {
                         self.images[lastIdx].pcs = -1;
@@ -127,7 +132,11 @@
                 this.selImgIdx = -1;
             },
             doConfirm() {
-                cookies.set(`${this.key}.images`, this.images.map(img => img.src));
+            	if(this.maxNum === 1) {
+		            cookies.set(`${this.key}.icon`, this.images[0].src);
+                } else {
+		            cookies.set(`${this.key}.images`, this.images.map(img => img.src));
+                }
                 window.location.href = this.backUrl
             }
         }

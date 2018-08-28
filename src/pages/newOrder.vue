@@ -53,7 +53,7 @@
                     <input type="checkbox" class="weui-check" :id="exp.typ" v-model="useExpress" @click="hdlClkExp">
                     <i class="weui-icon-checked"></i>
                 </div>
-                <div class="weui-cell__bd"><p>{{exp.typ}}：{{exp.cost}}</p></div>
+                <div class="weui-cell__bd"><p>{{exp.typ}}：{{exp.cost}}￥</p></div>
             </label>
         </div>
 
@@ -147,6 +147,19 @@
                     return
                 }
 		        this.order = this.order[0];
+                if(this.order.process !== "待付款") {
+                	let self = this;
+                	weui.alert("该订单已付款成功", {
+                		buttons: [{
+                			label: "查看",
+                            onClick() {
+	                            self.$router.push(`/autumnFarmWX/order/detail/${self.order._id}`)
+                            }
+                        }]
+                    });
+                    return
+                }
+
                 if(!this.order.address) {
                     this.order.address = ""
                 } else {
@@ -191,6 +204,7 @@
         },
         methods: {
 	        hdlClkExp(me) {
+	        	this.order.expTyp = me.target.id;
                 this.totalAmount += parseFloat(`${me.target.checked ? "+" : "-"}${this.prod.express.find(exp => exp.typ === me.target.id).cost}`)
 	        },
 	        hdlAddAddress() {
@@ -226,7 +240,8 @@
                 }).$mount(".weui-dialog__bd")
             },
             async doPayBill() {
-	            // 查询订单是否重复
+	            let self = this;
+	        	// 查询订单是否重复
 	            try {
 	                let orders = (await this.axios.get(`/mdl/v1/order/${this.order._id}`)).data.data;
 	                if(orders.length !== 1) {
@@ -240,14 +255,15 @@
                     return
                 }
 
-                // 更新订单状态
+                // 更新订单状态为待付款
 	            try {
 	                this.order.total = this.totalAmount;
 	                this.order.custName = `${this.user.name} ${this.user.sex}`;
 	                this.order.custContact = this.user.phone;
+	                console.log(this.order)
                     await this.axios.put(`/mdl/v1/order/${this.order._id}`, this.order)
                 } catch (e) {
-	                weui.alert(`付款失败，存储订单错误：${e.message || JSON.stringify(e)}`);
+	                weui.alert(`付款失败，更新订单错误：${e.message || JSON.stringify(e)}`);
                     return
                 }
 
@@ -259,48 +275,56 @@
                     return
                 }
 
-                // 微信下单
-                let wxPayRes = {};
-                try {
-                    wxPayRes = (await this.axios.post("/api/v1/weixin/order", {
-                        orderId: this.order._id,
-                        total: this.order.total,
-                        openid: this.order.openId,
-                        time: this.order.time,
-                        prodId: this.prod._id,
-                        body: this.prod.name, // 拼接body
-                        callback: "http://opteacher.top/#/autumnFarmWX/order/new/notify",
-                        note: this.order.note, // 写到detail里面
-                    })).data.data;
-                } catch(res) {
-                    weui.alert(`付款失败，微信下单失败：${res.response.data || JSON.stringify(res)}`);
-                    return
-                }
+                // // 微信下单
+                // let wxPayRes = {};
+                // try {
+                //     wxPayRes = (await this.axios.post("/api/v1/weixin/order", {
+                //         orderId: this.order._id,
+                //         total: this.order.total,
+                //         openid: this.order.openId,
+                //         time: this.order.time,
+                //         prodId: this.prod._id,
+                //         body: this.prod.name, // 拼接body
+                //         callback: "http://opteacher.top/#/autumnFarmWX/order/new/notify",
+                //         note: this.order.note, // 写到detail里面
+                //     })).data.data;
+                // } catch(res) {
+                //     weui.alert(`付款失败，微信下单失败：${res.response.data || JSON.stringify(res)}`);
+                //     return
+                // }
+                //
+                // // 微信支付
+                // wx.ready(async () => {
+                //     let result = {};
+                //     try {
+                //         result = (await self.axios.get("/api/v1/weixin/signature", {
+                //             params: { extra: {appid: ""} }
+                //         })).data;
+                //     } catch (e) {
+                //         weui.alert(`付款失败，发起微信支付失败：${e.message || JSON.stringify(e)}`);
+                //         return
+                //     }
+                //
+	             //    wx.chooseWXPay({
+                //         timestamp: result.timestamp,
+                //         nonceStr: result.noncestr,
+                //         package: "",
+                //         signType: "SHA1",
+                //         paySign: result.signature,
+                //         success(res) {
+                //
+                //         }
+                //     })
+                // });
 
-                // 微信支付
-                let self = this;
-                wx.ready(async () => {
-                    let result = {};
-                    try {
-                        result = (await self.axios.get("/api/v1/weixin/signature", {
-                            params: { extra: {appid: ""} }
-                        })).data;
-                    } catch (e) {
-                        weui.alert(`付款失败，发起微信支付失败：${e.message || JSON.stringify(e)}`);
-                        return
-                    }
-
-	                wx.chooseWXPay({
-                        timestamp: result.timestamp,
-                        nonceStr: result.noncestr,
-                        package: "",
-                        signType: "SHA1",
-                        paySign: result.signature,
-                        success(res) {
-
-                        }
-                    })
-                });
+                // 更新订单状态为待发货
+	            try {
+		            this.order.process = "待发货";
+		            await this.axios.put(`/mdl/v1/order/${this.order._id}`, this.order)
+	            } catch (e) {
+		            weui.alert(`付款失败，更新订单错误：${e.message || JSON.stringify(e)}`);
+		            return
+	            }
 
                 // this.totalAmount
                 weui.confirm("订单已下单，请耐心等待发货", {

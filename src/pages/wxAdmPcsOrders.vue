@@ -33,6 +33,9 @@
                 <div class="weui-cell__ft"></div>
             </a>
         </div>
+        <div class="weui-btn-area">
+            <a class="weui-btn weui-btn_warn" href="javascript:" @click="doLogout">登出</a>
+        </div>
     </wx-admin-lyt>
 </template>
 
@@ -53,6 +56,13 @@
             holderjs.run()
         },
         methods: {
+	        doLogout() {
+		        weui.confirm("确认退出？", () => {
+			        this.$auth.logout({
+				        redirect: "/autumnFarmWX/admin/login"
+			        })
+		        })
+	        },
 	        toDetail(category) {
 	        	let self = this;
 	        	return () => {

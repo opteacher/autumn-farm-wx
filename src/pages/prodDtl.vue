@@ -8,7 +8,13 @@
                 </div>
             </a>
         </div>
-        <hdr-adv-bar/>
+        <template>
+            <mt-swipe :auto="4000" style="height: 30vh;">
+                <mt-swipe-item v-for="img in prod.images">
+                    <img class="img-fluid" :src="img">
+                </mt-swipe-item>
+            </mt-swipe>
+        </template>
         <div class="weui-tab">
             <div class="weui-navbar mb-3" style="display: none;">
                 <div class="weui-navbar__item weui-bar__item_on">介绍</div>
@@ -20,31 +26,33 @@
                         <h4 class="weui-media-box__title">{{prod.name}}</h4>
                         <p class="weui-media-box__desc mb-0">{{prod.title}}</p>
                         <ul class="weui-media-box__info mb-0">
-                            <li class="weui-media-box__info__meta">上市时间</li>
+                            <li class="weui-media-box__info__meta"><i class="iconfont icon-huiyishiqueren_huabanfuben"></i>&nbsp;上市时间</li>
                             <li class="weui-media-box__info__meta">{{prod.date}}</li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="weui-panel" v-show="prod.prefer.length !== 0">
-                <div class="weui-panel__hd">优惠</div>
+            <div class="weui-panel" v-show="prod.prefers.length !== 0">
+                <div class="weui-panel__hd"><i class="iconfont icon-youhui"></i>&nbsp;优惠</div>
                 <div class="weui-panel__bd">
                     <div class="weui-media-box weui-media-box_small-appmsg">
                         <div class="weui-cells">
-                            <div v-for="prefer in prod.prefer" class="weui-cell">
-                                <div class="weui-cell__bd"><i class="my-icon-star"></i>{{prefer}}</div>
+                            <div v-for="prefer in prod.prefers" class="weui-cell">
+                                <div class="weui-cell__bd">#&nbsp;{{prefer}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="weui-panel">
-                <div class="weui-panel__hd">价格方案</div>
+                <div class="weui-panel__hd"><i class="iconfont icon-jiage"></i>&nbsp;价格方案</div>
                 <div class="weui-panel__bd">
                     <div class="weui-media-box weui-media-box_small-appmsg">
                         <div class="weui-cells">
                             <div v-for="price in prod.prices" class="weui-cell">
-                                <div class="weui-cell__bd"><p>{{price.unit}}</p></div>
+                                <div class="weui-cell__bd">
+                                    <i class="iconfont icon-dian"></i>&nbsp;{{price.unit}}
+                                </div>
                                 <div class="weui-cell__ft gray-text">{{price.price}}￥</div>
                             </div>
                         </div>
@@ -52,16 +60,18 @@
                 </div>
             </div>
             <div class="weui-panel" style="margin-bottom: 10vh">
-                <div class="weui-panel__hd">运送方式</div>
+                <div class="weui-panel__hd"><i class="iconfont icon-wuliu"></i>&nbsp;运送方式</div>
                 <div class="weui-panel__bd">
                     <div class="weui-media-box weui-media-box_small-appmsg">
                         <div class="weui-cells">
                             <div class="weui-cell">
-                                <div class="weui-cell__bd"><p>自提</p></div>
+                                <div class="weui-cell__bd"><i class="iconfont icon-navicon-ztdzsz"></i>&nbsp;自提</div>
                                 <div class="weui-cell__ft gray-text">店铺位置: 上海</div>
                             </div>
                             <div v-for="express in prod.express" class="weui-cell">
-                                <div class="weui-cell__bd"><p>{{express.typ}}</p></div>
+                                <div class="weui-cell__bd">
+                                    <i class="iconfont icon-tianmaoshunfengbaoyou"></i>&nbsp;{{express.typ}}
+                                </div>
                                 <div class="weui-cell__ft gray-text">{{express.cost}}￥</div>
                             </div>
                         </div>
@@ -144,7 +154,7 @@
             return {
                 prod: {
                 	express:[{}],
-                    prefer: []
+                    prefers: []
                 },
                 order: {
                     prodId: "",
@@ -166,7 +176,6 @@
                     throw new Error(`未找到指定id：${this.$route.params.id}产品记录`)
                 }
                 this.prod = this.prod[0];
-                this.prod.prefer = _.compact(this.prod.prefer);
 
                 this.order.prodId = this.prod._id;
                 this.order.prodName = this.prod.name;
