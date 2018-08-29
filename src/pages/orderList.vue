@@ -1,7 +1,7 @@
 <template>
     <div class="weui-tab">
         <div class="weui-navbar">
-            <div class="weui-navbar__item" :class="{'weui-bar__item_on': selTab === 'all'}" @click="toPage('all')">
+            <div class="weui-navbar__item" :class="{'weui-bar__item_on': selTab === '全部'}" @click="toPage('全部')">
                 全部
             </div>
             <div class="weui-navbar__item" :class="{'weui-bar__item_on': selTab === '待付款'}" @click="toPage('待付款')">
@@ -14,20 +14,19 @@
                 已发货
             </div>
             <div class="weui-navbar__item" :class="{'weui-bar__item_on': selTab === '已完成'}" @click="toPage('已完成')">
-                已完成
+                已结束
             </div>
         </div>
         <div class="weui-tab__panel">
             <div v-for="order in orders" class="weui-panel">
                 <div class="weui-panel__hd p-0">
-                    <a :href="`/#/autumnFarmWX/order/detail/${order._id}`" class="weui-cell weui-cell_access weui-cell_link">
+                    <a :href="`/#/autumnFarmWX/order/detail/${order._id}?process=${selTab}`" class="weui-cell weui-cell_access weui-cell_link">
                         <div class="weui-cell__bd">订单号：{{order._id}}</div>
                         <span class="weui-cell__ft"></span>
                     </a>
                 </div>
                 <div class="weui-panel__bd">
-                    <div v-if="order.prodId in prods" href="javascript:void(0);"
-                         class="weui-media-box weui-media-box_appmsg pb-0">
+                    <div v-if="order.prodId in prods" class="weui-media-box weui-media-box_appmsg pb-0">
                         <div class="media">
                             <img class="align-self-start mr-3 img-fluid" :src="prods[order.prodId].icon" style="width: 64px">
                             <div class="media-body">
@@ -70,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-else href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                    <div v-else class="weui-media-box weui-media-box_appmsg">
                         <div class="weui-media-box__hd">
                             <i class="iconfont icon-moren gray-text" style="font-size: 2rem"></i>
                         </div>
@@ -85,8 +84,8 @@
                         <div class="w-100 text-right">
                             <a v-show="order.process === '待付款'" href="javascript:" class="weui-btn weui-btn_mini weui-btn_primary mt-0 ml-2" @click="doPay(order._id)">付款</a>
                             <a v-show="order.process === '已发货'" href="javascript:" class="weui-btn weui-btn_mini weui-btn_primary mt-0 ml-2" @click="doConfirm(order._id)">确认收货</a>
-                            <a href="javascript:" class="weui-btn weui-btn_mini weui-btn_default mt-0 ml-2">取消</a>
-                            <a href="javascript:" class="weui-btn weui-btn_mini weui-btn_default mt-0 ml-2">联系</a>
+                            <a href="javascript:" class="weui-btn weui-btn_mini weui-btn_default mt-0 ml-2">联系商家</a>
+                            <a v-show="!['已完成', '已撤单'].includes(order.process)" href="javascript:" class="weui-btn weui-btn_mini weui-btn_warn mt-0 ml-2" @click="doCancel(order._id)">取消</a>
                         </div>
                     </div>
                 </div>
@@ -101,11 +100,12 @@
     import holderjs from "holderjs"
     import cookies from "../../utils/cookies"
     import confRecvForm from "../forms/confRecvForm"
+    import cancelOrderForm from "../forms/cancelOrderForm"
 
     export default {
         data() {
             return {
-                selTab: "all",
+                selTab: "全部",
                 orders: [],
                 prods: {}
             }
@@ -121,7 +121,7 @@
                 if(target === this.selTab) {
                     return
                 }
-                this.$router.push(`/autumnFarmWX/order/list/${target}?process=${this.selTab}`);
+                this.$router.push(`/autumnFarmWX/order/list/${target}`);
                 this.reload()
             },
             async reload() {
@@ -129,11 +129,18 @@
                     openId: cookies.get("openid")
                 };
                 this.selTab = this.$route.params.process;
-                if (this.selTab !== "all") {
+                if (this.selTab !== "全部") {
                     params.process = this.selTab
                 }
+	            params.order_by = {time: -1};//按时间降序
                 try {
                     this.orders = (await this.axios.get("/mdl/v1/orders", {params})).data.data;
+                    if(this.selTab === "已完成") {
+	                    params.process = "已撤单";
+	                    let orders = (await this.axios.get("/mdl/v1/orders", {params})).data.data;
+	                    this.orders = this.orders.concat(orders);
+	                    this.orders.sort((o1, o2) => o1.time < o2.time ? 1 : -1);
+                    }
 
                     let prods = {};// 不知为什么，vue的状态导致只能这样写
                     for (let order of this.orders) {
@@ -189,6 +196,45 @@
                         "conf-recv-form": confRecvForm
                     },
                     template: "<conf-recv-form :phone='phone'/>"
+                }).$mount(".weui-dialog__bd")
+            },
+	        doCancel(oid) {
+            	let self = this;
+            	try {
+		            weui.dialog({
+			            title: "确认撤单",
+			            buttons: [{
+				            type: "default",
+				            label: "取消"
+			            }, {
+				            type: "primary",
+				            label: "确认",
+				            async onClick() {
+					            let form = $(this).parents(".weui-dialog");
+					            let txtArea = form.find(".weui-textarea").val();
+					            let cancelReason = txtArea || "";
+					            if(cancelReason === "") {
+						            cancelReason = form.find(".weui-select").val();
+					            }
+					            await self.axios.put(`/mdl/v1/order/${oid}`, {
+					            	cancelReason,
+                                    process: "已撤单"
+					            });
+                                self.$router.go(0)
+				            }
+			            }]
+		            })
+                } catch (e) {
+                    weui.alert(`更新撤单理由失败：${e.message || JSON.stringify(e)}`)
+	            }
+            	new Vue({
+                    data() {
+                    	return { orderId: oid }
+                    },
+                    components: {
+	                    "cancel-order-form": cancelOrderForm
+                    },
+                    template: "<cancel-order-form :orderId='orderId'/>"
                 }).$mount(".weui-dialog__bd")
             }
         }

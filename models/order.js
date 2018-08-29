@@ -15,7 +15,8 @@ module.exports = db.defineModel({
 	custName:       db.Types.String,
 	custContact:    db.Types.String,
 	process:        db.Types.String,
-	note:           db.Types.String
+	note:           db.Types.String,
+	cancelReason:   db.Types.String
 }, {
 	router: {
 		methods: ["GET", "ALL", "POST", "PUT"]

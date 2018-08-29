@@ -169,6 +169,9 @@ Mongo.prototype.select = function(model, condition, options) {
         if(condition.order_by) {
             order_by = condition.order_by;
             delete condition.order_by;
+            if(typeof order_by === "string") {
+	            order_by = JSON.parse(order_by);
+            }
         }
         let limit = null;
         if(condition.limit) {

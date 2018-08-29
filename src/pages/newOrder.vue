@@ -260,7 +260,6 @@
 	                this.order.total = this.totalAmount;
 	                this.order.custName = `${this.user.name} ${this.user.sex}`;
 	                this.order.custContact = this.user.phone;
-	                console.log(this.order)
                     await this.axios.put(`/mdl/v1/order/${this.order._id}`, this.order)
                 } catch (e) {
 	                weui.alert(`付款失败，更新订单错误：${e.message || JSON.stringify(e)}`);
@@ -332,7 +331,7 @@
                         label: "前往我的订单",
                         type: "default",
                         onClick() {
-                            self.$router.push(`/autumnFarmWX/order/detail/${self.order._id}`)
+                            self.$router.push(`/autumnFarmWX/order/detail/${self.order._id}?process=待发货`)
                         }
                     }, {
                         label: "继续购买",

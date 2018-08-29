@@ -8,7 +8,6 @@
             </div>
         </div>
         <div class="weui-cells">
-            <div class="weui-cells__title text-left">验证码已发送到尾号为：{{phone.slice(-4)}}的手机上</div>
             <div class="weui-cell weui-cell_vcode">
                 <div class="weui-cell__bd">
                     <input class="weui-input" type="text" placeholder="请输入验证码">
@@ -18,6 +17,7 @@
                 </div>
             </div>
         </div>
+        <div class="weui-cells__tips text-left">验证码将发送到尾号为{{phone.slice(-4)}}的手机上</div>
     </div>
 </template>
 

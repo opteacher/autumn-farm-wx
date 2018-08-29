@@ -22,6 +22,9 @@ export default [{
 	path: "/autumnFarmWX/prod/list/:type",
 	component: prodList
 }, {
+	path: "/autumnFarmWX/prod/list",
+	redirect: "/autumnFarmWX/prod/list/fruit"
+}, {
 	path: "/autumnFarmWX/prod/detail/:id",
 	component: prodDtl,
 }, {
@@ -30,6 +33,9 @@ export default [{
 }, {
 	path: "/autumnFarmWX/order/list/:process",
 	component: orderList
+}, {
+	path: "/autumnFarmWX/order/list",
+	redirect: "/autumnFarmWX/order/list/全部"
 }, {
 	path: "/autumnFarmWX/order/detail/:oid",
 	component: orderDtl
