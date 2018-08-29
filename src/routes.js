@@ -28,7 +28,7 @@ export default [{
 	path: "/autumnFarmWX/wx/auth",
 	component: wxAuth
 }, {
-	path: "/autumnFarmWX/order/list",
+	path: "/autumnFarmWX/order/list/:process",
 	component: orderList
 }, {
 	path: "/autumnFarmWX/order/detail/:oid",
