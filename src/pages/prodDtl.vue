@@ -232,6 +232,7 @@
 		            this.order.openId = cookies.get("openid");
 		            this.order.time = new Date();
                     this.order.process = "待付款";
+                    this.order.total = this.totalAmount;
 		            let result = (await this.axios.post("/mdl/v1/order", this.order)).data.data;
 		            if(result.length < 1) {
 			            weui.alert(`插入订单数据库失败：${JSON.stringify(result)}`);

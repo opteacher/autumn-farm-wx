@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="weui-form-preview__ft">
-                    <a v-show="$route.params.category !== '已撤销'" class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:" @click="doCancel(order._id)">取消订单</a>
+                    <a v-show="!['已撤销', '已完成'].includes($route.params.category)" class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:" @click="doCancel(order._id)">取消订单</a>
                     <a v-show="$route.params.category === '待发货'" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:" @click="doInputNo(order._id)">输入快递号</a>
                 </div>
             </div>
