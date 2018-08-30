@@ -26,7 +26,7 @@
                                     <i class="iconfont green-text" :class="iconMap[prods[order.prodId].type]"></i>&nbsp;{{prods[order.prodId].name}}
                                 </h4>
                                 <p class="weui-media-box__desc mb-2">{{prods[order.prodId].title}}</p>
-                                <div class="weui-media-box__desc weui-flex">
+                                <div class="weui-media-box__desc weui-flex w-100">
                                     <div class="weui-flex__item">
                                         <i class="iconfont icon-xiangxi green-text"></i>&nbsp;{{order.amount}}&nbsp;x&nbsp;{{order.unit}}{{order.expTyp ? ` + ${order.expTyp}` : ""}}
                                     </div>
