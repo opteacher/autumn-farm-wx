@@ -26,17 +26,14 @@
                                     <i class="iconfont green-text" :class="iconMap[prods[order.prodId].type]"></i>&nbsp;{{prods[order.prodId].name}}
                                 </h4>
                                 <p class="weui-media-box__desc mb-2">{{prods[order.prodId].title}}</p>
-                                <p class="weui-media-box__desc">
-                                    <i class="iconfont icon-xiangxi green-text"></i>&nbsp;{{order.amount}}&nbsp;x&nbsp;{{order.unit}}{{order.expTyp ? ` + ${order.expTyp}` : ""}}
-                                </p>
-                                <ul class="weui-media-box__info mb-0">
-                                    <li class="weui-media-box__info__meta">
+                                <div class="weui-media-box__desc weui-flex">
+                                    <div class="weui-flex__item">
+                                        <i class="iconfont icon-xiangxi green-text"></i>&nbsp;{{order.amount}}&nbsp;x&nbsp;{{order.unit}}{{order.expTyp ? ` + ${order.expTyp}` : ""}}
+                                    </div>
+                                    <div>
                                         <i class="iconfont icon-shiliangzhinengduixiang-copy green-text"></i>&nbsp;{{order.total}}￥
-                                    </li>
-                                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra text-truncate">
-                                        <i class="iconfont icon-huiyishiqueren_huabanfuben green-text"></i>&nbsp;{{order.time}}
-                                    </li>
-                                </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

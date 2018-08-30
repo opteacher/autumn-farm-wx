@@ -25,7 +25,9 @@
                                 <div class="weui-cell">
                                     <div class="weui-cell__hd">
                                         <label class="weui-label">
-                                            <h5 class="weui-media-box__title">{{prod.name}}</h5>
+                                            <h5 class="weui-media-box__title">
+                                                <i class="iconfont green-text" :class="iconMap[prod.type]"></i>&nbsp;{{prod.name}}
+                                            </h5>
                                         </label>
                                     </div>
                                     <div class="weui-cell__bd weui-media-box__desc">
@@ -34,31 +36,41 @@
                                 </div>
                                 <div class="weui-cell">
                                     <div class="weui-cell__hd">
-                                        <label class="weui-label fs-13"><i class="iconfont icon-huiyishiqueren_huabanfuben"></i>&nbsp;下单时间</label>
+                                        <label class="weui-label fs-13">
+                                            <i class="iconfont icon-huiyishiqueren_huabanfuben green-text"></i>&nbsp;下单时间
+                                        </label>
                                     </div>
                                     <div class="weui-cell__bd weui-media-box__desc text-truncate">{{order.time}}</div>
                                 </div>
                                 <div class="weui-cell">
                                     <div class="weui-cell__hd">
-                                        <label class="weui-label fs-13">购买数量</label>
+                                        <label class="weui-label fs-13">
+                                            <i class="iconfont icon-xiangxi green-text"></i>&nbsp;购买数量
+                                        </label>
                                     </div>
                                     <div class="weui-cell__bd weui-media-box__desc">{{order.amount}}&nbsp;x&nbsp;{{order.unit}}</div>
                                 </div>
                                 <div class="weui-cell">
                                     <div class="weui-cell__hd">
-                                        <label class="weui-label fs-13">总金额</label>
+                                        <label class="weui-label fs-13">
+                                            <i class="iconfont icon-shiliangzhinengduixiang-copy green-text"></i>&nbsp;总金额
+                                        </label>
                                     </div>
                                     <div class="weui-cell__bd weui-media-box__desc">{{order.total}}￥</div>
                                 </div>
                                 <div class="weui-cell" v-show="order.expNo">
                                     <div class="weui-cell__hd">
-                                        <label class="weui-label fs-13">快递单号({{order.expTyp}})</label>
+                                        <label class="weui-label fs-13">
+                                            <i class="iconfont icon-wuliu green-text"></i>&nbsp;快递({{order.expTyp}})
+                                        </label>
                                     </div>
                                     <div class="weui-cell__bd weui-media-box__desc">{{order.expNo}}</div>
                                 </div>
                                 <div class="weui-cell" v-show="order.cancelReason">
                                     <div class="weui-cell__hd">
-                                        <label class="weui-label fs-13">撤单理由</label>
+                                        <label class="weui-label fs-13">
+                                            <i class="iconfont icon-chuyidong green-text"></i>&nbsp;撤单理由
+                                        </label>
                                     </div>
                                     <div class="weui-cell__bd weui-media-box__desc">{{order.cancelReason}}</div>
                                 </div>
@@ -150,6 +162,11 @@
     		return {
     			order: {},
     			prod: {},
+                iconMap: {
+                    "fruit": "icon-fruit",
+                    "poultry": "icon-chicken",
+                    "aquatic": "icon-fish"
+                },
                 rateLevel: 0,
                 rateContent: ""
             }
