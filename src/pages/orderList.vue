@@ -30,7 +30,7 @@
                                     <div class="weui-flex__item">
                                         <i class="iconfont icon-xiangxi green-text"></i>&nbsp;{{order.amount}}&nbsp;x&nbsp;{{order.unit}}{{order.expTyp ? ` + ${order.expTyp}` : ""}}
                                     </div>
-                                    <div>
+                                    <div class="float-right">
                                         <i class="iconfont icon-shiliangzhinengduixiang-copy green-text"></i>&nbsp;{{order.total}}￥
                                     </div>
                                 </div>
