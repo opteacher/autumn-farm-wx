@@ -10,7 +10,8 @@
     "newOrder": "https://api.mch.weixin.qq.com/pay/unifiedorder",
     "getToken": "https://api.weixin.qq.com/cgi-bin/token",
     "createButton": "https://api.weixin.qq.com/cgi-bin/menu/create",
-    "authorize": "https://open.weixin.qq.com/connect/oauth2/authorize"
+    "authorize": "https://open.weixin.qq.com/connect/oauth2/authorize",
+    "getJsApiTicket": "https://api.weixin.qq.com/cgi-bin/ticket/getticket"
   },
   "adminPasswords": [
     "慧慧柚子"

@@ -1,23 +1,13 @@
 <template>
-    <div class="weui-tab">
-        <div class="weui-navbar">
-            <div class="weui-navbar__item" :class="{'weui-bar__item_on': selTab === '全部'}" @click="toPage('全部')">
-                全部
-            </div>
-            <div class="weui-navbar__item" :class="{'weui-bar__item_on': selTab === '待付款'}" @click="toPage('待付款')">
-                待付款
-            </div>
-            <div class="weui-navbar__item" :class="{'weui-bar__item_on': selTab === '待发货'}" @click="toPage('待发货')">
-                待发货
-            </div>
-            <div class="weui-navbar__item" :class="{'weui-bar__item_on': selTab === '已发货'}" @click="toPage('已发货')">
-                已发货
-            </div>
-            <div class="weui-navbar__item" :class="{'weui-bar__item_on': selTab === '已完成'}" @click="toPage('已完成')">
-                已结束
-            </div>
-        </div>
-        <div class="weui-tab__panel">
+    <div>
+        <mt-navbar v-model="selTab" :fixed="true" style="z-index: 39;">
+            <mt-tab-item id="全部" href="/#/autumnFarmWX/order/list/全部">全部</mt-tab-item>
+            <mt-tab-item id="待付款" href="/#/autumnFarmWX/order/list/待付款">待付款</mt-tab-item>
+            <mt-tab-item id="待发货" href="/#/autumnFarmWX/order/list/待发货">待发货</mt-tab-item>
+            <mt-tab-item id="已发货" href="/#/autumnFarmWX/order/list/已发货">已发货</mt-tab-item>
+            <mt-tab-item id="已完成" href="/#/autumnFarmWX/order/list/已完成">已结束</mt-tab-item>
+        </mt-navbar>
+        <div class="weui-tab__panel" style="margin-top: 55px;">
             <div v-for="order in orders" class="weui-panel">
                 <div class="weui-panel__hd p-0">
                     <a :href="`/#/autumnFarmWX/order/detail/${order._id}?process=${selTab}`" class="weui-cell weui-cell_access weui-cell_link">
@@ -26,46 +16,27 @@
                     </a>
                 </div>
                 <div class="weui-panel__bd">
-                    <div v-if="order.prodId in prods" class="weui-media-box weui-media-box_appmsg pb-0">
-                        <div class="media">
-                            <img class="align-self-start mr-3 img-fluid" :src="prods[order.prodId].icon" style="width: 64px">
-                            <div class="media-body">
-                                <div class="weui-cells no-tb-border mt-0">
-                                    <div class="weui-cell">
-                                        <div class="weui-cell__hd">
-                                            <label class="weui-label">
-                                                <h5 class="weui-media-box__title">{{prods[order.prodId].name}}</h5>
-                                            </label>
-                                        </div>
-                                        <div class="weui-cell__bd weui-media-box__desc">
-                                            <p class="weui-media-box__desc">{{prods[order.prodId].title}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="weui-cell">
-                                        <div class="weui-cell__hd weui-media-box__desc">
-                                            <label class="weui-label">下单时间</label>
-                                        </div>
-                                        <div class="weui-cell__bd weui-media-box__desc text-truncate">{{order.time}}</div>
-                                    </div>
-                                    <div class="weui-cell">
-                                        <div class="weui-cell__hd weui-media-box__desc">
-                                            <label class="weui-label">购买数量</label>
-                                        </div>
-                                        <div class="weui-cell__bd weui-media-box__desc">{{order.amount}}</div>
-                                    </div>
-                                    <div class="weui-cell">
-                                        <div class="weui-cell__hd weui-media-box__desc">
-                                            <label class="weui-label">总金额</label>
-                                        </div>
-                                        <div class="weui-cell__bd weui-media-box__desc">{{order.total}}￥</div>
-                                    </div>
-                                    <div class="weui-cell">
-                                        <div class="weui-cell__hd weui-media-box__desc">
-                                            <label class="weui-label">状态</label>
-                                        </div>
-                                        <div class="weui-cell__bd weui-media-box__desc">{{order.process}}</div>
-                                    </div>
-                                </div>
+                    <div v-if="order.prodId in prods" class="weui-flex">
+                        <div class="weui-media-box weui-media-box_appmsg">
+                            <div class="weui-media-box__hd">
+                                <img class="weui-media-box__thumb" :src="prods[order.prodId].icon" alt="">
+                            </div>
+                            <div class="weui-media-box__bd">
+                                <h4 class="weui-media-box__title">
+                                    <i class="iconfont green-text" :class="iconMap[prods[order.prodId].type]"></i>&nbsp;{{prods[order.prodId].name}}
+                                </h4>
+                                <p class="weui-media-box__desc mb-2">{{prods[order.prodId].title}}</p>
+                                <p class="weui-media-box__desc">
+                                    <i class="iconfont icon-xiangxi green-text"></i>&nbsp;{{order.amount}}&nbsp;x&nbsp;{{order.unit}}{{order.expTyp ? ` + ${order.expTyp}` : ""}}
+                                </p>
+                                <ul class="weui-media-box__info mb-0">
+                                    <li class="weui-media-box__info__meta">
+                                        <i class="iconfont icon-shiliangzhinengduixiang-copy green-text"></i>&nbsp;{{order.total}}￥
+                                    </li>
+                                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra text-truncate">
+                                        <i class="iconfont icon-huiyishiqueren_huabanfuben green-text"></i>&nbsp;{{order.time}}
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -80,12 +51,13 @@
                     </div>
                 </div>
                 <div class="weui-panel__ft">
-                    <div class="weui-cell weui-cell_link w-100">
-                        <div class="w-100 text-right">
+                    <div class="weui-cell weui-cell_link">
+                        <div class="weui-cell__bd">{{order.process}}</div>
+                        <div class="weui-cell__ft">
                             <a v-show="order.process === '待付款'" href="javascript:" class="weui-btn weui-btn_mini weui-btn_primary mt-0 ml-2" @click="doPay(order._id)">付款</a>
                             <a v-show="order.process === '已发货'" href="javascript:" class="weui-btn weui-btn_mini weui-btn_primary mt-0 ml-2" @click="doConfirm(order._id)">确认收货</a>
                             <a href="javascript:" class="weui-btn weui-btn_mini weui-btn_default mt-0 ml-2">联系商家</a>
-                            <a v-show="!['已完成', '已撤单'].includes(order.process)" href="javascript:" class="weui-btn weui-btn_mini weui-btn_warn mt-0 ml-2" @click="doCancel(order._id)">取消</a>
+                            <a v-show="!['已完成', '已撤销'].includes(order.process)" href="javascript:" class="weui-btn weui-btn_mini weui-btn_warn mt-0 ml-2" @click="doCancel(order._id)">取消</a>
                         </div>
                     </div>
                 </div>
@@ -107,7 +79,12 @@
             return {
                 selTab: "全部",
                 orders: [],
-                prods: {}
+                prods: {},
+                iconMap: {
+                    "fruit": "icon-fruit",
+                    "poultry": "icon-chicken",
+                    "aquatic": "icon-fish"
+                }
             }
         },
         created() {
@@ -116,14 +93,12 @@
         mounted() {
             holderjs.run()
         },
-        methods: {
-            toPage(target) {
-                if(target === this.selTab) {
-                    return
-                }
-                this.$router.push(`/autumnFarmWX/order/list/${target}`);
+        watch: {
+            "selTab" (to, from) {
                 this.reload()
-            },
+            }
+        },
+        methods: {
             async reload() {
                 let params = {
                     openId: cookies.get("openid")
@@ -136,7 +111,7 @@
                 try {
                     this.orders = (await this.axios.get("/mdl/v1/orders", {params})).data.data;
                     if(this.selTab === "已完成") {
-	                    params.process = "已撤单";
+	                    params.process = "已撤销";
 	                    let orders = (await this.axios.get("/mdl/v1/orders", {params})).data.data;
 	                    this.orders = this.orders.concat(orders);
 	                    this.orders.sort((o1, o2) => o1.time < o2.time ? 1 : -1);
@@ -218,7 +193,7 @@
 					            }
 					            await self.axios.put(`/mdl/v1/order/${oid}`, {
 					            	cancelReason,
-                                    process: "已撤单"
+                                    process: "已撤销"
 					            });
                                 self.$router.go(0)
 				            }
@@ -242,6 +217,9 @@
 </script>
 
 <style type="text/scss">
+    a {
+        color: #586c94;
+    }
     .no-tb-border:before {
         border-top: none;
     }

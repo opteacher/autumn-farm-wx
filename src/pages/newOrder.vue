@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="weui-cells mt-0">
-            <a class="weui-cell weui-cell_access" :href="`/#/autumnFarmWX/prod/detail/${$route.query.prodId}?type=${$route.query.prodTyp}`">
+            <a class="weui-cell weui-cell_access" href="javascript:" @click="goBack">
                 <div class="weui-cell__hd"></div>
                 <div class="weui-cell__bd ml-3">
                     <p class="gray-text mb-0">返回产品主页</p>
@@ -203,6 +203,9 @@
 	        this.totalAmount = this.unitPrice[this.order.unit] * this.order.amount
         },
         methods: {
+            goBack() {
+                this.$router.go(-1)
+            },
 	        hdlClkExp(me) {
 	        	this.order.expTyp = me.target.id;
                 this.totalAmount += parseFloat(`${me.target.checked ? "+" : "-"}${this.prod.express.find(exp => exp.typ === me.target.id).cost}`)

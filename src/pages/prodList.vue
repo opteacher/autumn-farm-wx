@@ -1,5 +1,4 @@
 <template>
-    <!--<p>{{$route.params.type}}</p>-->
     <div>
         <header-adv-bar/>
         <div class="weui-grids">

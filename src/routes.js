@@ -16,7 +16,10 @@ import wxAdmCfgProdImg from "./pages/wxAdmCfgProdImg"
 import wxAdminLgn from "./pages/wxAdminLgn"
 
 export default [{
-	path: "/",
+    path: "/",
+    redirect: "/autumnFarmWX/home"
+}, {
+	path: "/autumnFarmWX/home",
 	component: home
 }, {
 	path: "/autumnFarmWX/prod/list/:type",

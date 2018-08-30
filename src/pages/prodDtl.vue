@@ -26,7 +26,9 @@
                         <h4 class="weui-media-box__title">{{prod.name}}</h4>
                         <p class="weui-media-box__desc mb-0">{{prod.title}}</p>
                         <ul class="weui-media-box__info mb-0">
-                            <li class="weui-media-box__info__meta"><i class="iconfont icon-huiyishiqueren_huabanfuben"></i>&nbsp;上市时间</li>
+                            <li class="weui-media-box__info__meta">
+                                <i class="iconfont icon-huiyishiqueren_huabanfuben"></i>&nbsp;上市时间
+                            </li>
                             <li class="weui-media-box__info__meta">{{prod.date}}</li>
                         </ul>
                     </div>
@@ -183,15 +185,6 @@
                 this.totalAmount = this.prod.prices[0].price;
 
                 this.unitPrice = _.fromPairs(this.prod.prices.map(p => [p.unit, p.price]));
-
-                // this.prod.prices.sort((p1, p2) => {
-                //     let tp1 = parseFloat(_.compact(p1.price.match(/[\d\.]*/g))[0]);
-                //     let tp2 = parseFloat(_.compact(p2.price.match(/[\d\.]*/g))[0]);
-                //     return tp1 - tp2
-                // });
-                // let minPrice = this.prod.prices[0].price;
-                // let maxPrice = this.prod.prices[this.prod.prices.length - 1].price;
-                // this.prod.priceRange = `${minPrice} - ${maxPrice}`
             } catch (e) {
                 weui.alert(`获取产品详情失败：${e.message || JSON.stringify(e)}`)
             }
@@ -264,10 +257,5 @@
     }
     .weui-cell_noactive:active {
         background-color: transparent !important;
-    }
-    .my-icon-star {
-        background-image: url(/img/列表标头.png);
-        -webkit-background-size: 20px;
-        background-size: 20px;
     }
 </style>

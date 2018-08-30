@@ -1,4 +1,5 @@
 const db = require("../databases/mongo");
+const moment = require("moment");
 
 module.exports = db.defineModel({
 	__modelName:    "order",
@@ -16,8 +17,20 @@ module.exports = db.defineModel({
 	custContact:    db.Types.String,
 	process:        db.Types.String,
 	note:           db.Types.String,
-	cancelReason:   db.Types.String
+	cancelReason:   db.Types.String,
+    rateLevel:		db.Types.Number,
+	rateContent:	db.Types.String
 }, {
+	middle: {
+        select: {
+        	after(docs) {
+                docs = docs.map(d => {
+                    d._doc.time = moment(d._doc.time).format("YYYY/MM/DD HH:mm:ss");
+                    return d;
+				});
+			}
+		}
+	},
 	router: {
 		methods: ["GET", "ALL", "POST", "PUT"]
 	}
