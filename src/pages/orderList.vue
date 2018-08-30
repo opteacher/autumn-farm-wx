@@ -17,7 +17,7 @@
                 </div>
                 <div class="weui-panel__bd">
                     <div v-if="order.prodId in prods" class="weui-flex">
-                        <div class="weui-media-box weui-media-box_appmsg">
+                        <div class="weui-media-box weui-media-box_appmsg w-100">
                             <div class="weui-media-box__hd">
                                 <img class="weui-media-box__thumb" :src="prods[order.prodId].icon" alt="">
                             </div>
@@ -30,7 +30,7 @@
                                     <div class="weui-flex__item">
                                         <i class="iconfont icon-xiangxi green-text"></i>&nbsp;{{order.amount}}&nbsp;x&nbsp;{{order.unit}}{{order.expTyp ? ` + ${order.expTyp}` : ""}}
                                     </div>
-                                    <div class="text-right">
+                                    <div>
                                         <i class="iconfont icon-shiliangzhinengduixiang-copy green-text"></i>&nbsp;{{order.total}}￥
                                     </div>
                                 </div>
