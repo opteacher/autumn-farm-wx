@@ -75,7 +75,7 @@
                     </a>
                 </div>
                 <div class="weui-cell__ft">
-                    <a class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:" @click="delPrice(index)">删除</a>
+                    <a class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:" @click="delProp('prices', index)">删除</a>
                 </div>
             </a>
         </div>
