@@ -28,4 +28,3 @@ services:
         port: 3000
     depends_on:
       - mongodb
-      - python
