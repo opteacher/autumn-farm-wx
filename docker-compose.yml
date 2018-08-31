@@ -20,11 +20,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 12345
 
-  python:
-    container_name: python
-    image: mongo
-    restart: unless-stopped
-
   autumn-farm-wx:
     container_name: autumn-farm-wx
     build:
