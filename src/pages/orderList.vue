@@ -17,7 +17,7 @@
                 </div>
                 <div class="weui-panel__bd">
                     <div v-if="order.prodId in prods" class="weui-flex">
-                        <div class="weui-media-box weui-media-box_appmsg w-100">
+                        <a class="weui-media-box weui-media-box_appmsg w-100" :href="`/#/autumnFarmWX/prod/detail/${order.prodId}`">
                             <div class="weui-media-box__hd">
                                 <img class="weui-media-box__thumb" :src="prods[order.prodId].icon" alt="">
                             </div>
@@ -35,9 +35,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-                    <div v-else class="weui-media-box weui-media-box_appmsg">
+                    <a v-else class="weui-media-box weui-media-box_appmsg" href="javascript:" @click="weui.alert('等待数据加载完毕')">
                         <div class="weui-media-box__hd">
                             <i class="iconfont icon-moren gray-text" style="font-size: 2rem"></i>
                         </div>
@@ -45,7 +45,7 @@
                             <h4 class="weui-media-box__title">产品名称</h4>
                             <p class="weui-media-box__desc">产品标题</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="weui-panel__ft">
                     <div class="weui-cell weui-cell_link">

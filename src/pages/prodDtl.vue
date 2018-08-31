@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="weui-cells mt-0">
-            <a class="weui-cell weui-cell_access" :href="`/#/autumnFarmWX/prod/list/${$route.query.type}`">
+            <a class="weui-cell weui-cell_access" href="javascript:" @click="$router.go(-1)">
                 <div class="weui-cell__hd"></div>
                 <div class="weui-cell__bd ml-3">
                     <p class="gray-text mb-0">返回产品列表</p>
