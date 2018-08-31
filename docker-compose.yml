@@ -20,6 +20,9 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 12345
 
+  python:
+    container_name: python
+
   autumn-farm-wx:
     container_name: autumn-farm-wx
     build:
@@ -28,3 +31,4 @@ services:
         port: 3000
     depends_on:
       - mongodb
+      - python
