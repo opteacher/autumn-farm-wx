@@ -50,7 +50,7 @@
         },
         async created() {
             try {
-                let result = (await this.axios.get(`/mdl/v1/prod/${this.$route.params.pid}`)).data.data;
+                let result = (await this.axios.get(`/autumnFarmWX/mdl/v1/prod/${this.$route.params.pid}`)).data.data;
                 if(result.length !== 1) {
                     throw new Error("找不到指定产品")
                 }
@@ -71,7 +71,7 @@
                     }
                     this.form.body.date = new Date();
 
-                    await this.axios.put(`/mdl/v1/prod/${this.$route.params.pid}`, this.form.body);
+                    await this.axios.put(`/autumnFarmWX/mdl/v1/prod/${this.$route.params.pid}`, this.form.body);
                     weui.alert("修改成功", () => {
                         this.$router.push("/autumnFarmWX/admin/config/prods")
                     });
@@ -82,7 +82,7 @@
             async doDelProd() {
             	try {
 		            weui.confirm(`确认删除产品：${this.form.body.name}`, async () => {
-                        await this.axios.delete(`/mdl/v1/prod/${this.$route.params.pid}`);
+                        await this.axios.delete(`/autumnFarmWX/mdl/v1/prod/${this.$route.params.pid}`);
                         this.$router.push("/autumnFarmWX/admin/config/prods")
 		            })
                 } catch (e) {

@@ -6,7 +6,7 @@ const router = require("koa-router")();
 const scanPath = require("../utils/system").scanPath;
 
 // @block{userRoutes}:用户自定义路由
-// @includes:path
+// @includes:path/../
 // @includes:koa-router
 // @includes:../utils/system.scanPath
 console.log("API路由：");

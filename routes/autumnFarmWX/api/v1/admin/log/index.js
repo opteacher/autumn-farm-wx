@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const uuidv4 = require("uuid/v4");
 const ms = require("ms");
 
-const system = require("../../../../../utils/system");
+const system = require("../../../../../../utils/system");
 const projPath = system.projRootPath();
 const db = require(`${projPath}/databases/mongo`);
 const { Admin } = require(`${projPath}/models/index`);

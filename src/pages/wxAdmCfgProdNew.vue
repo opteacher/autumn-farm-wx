@@ -46,7 +46,7 @@
     		async doAddProd() {
     			try {
                     this.form.body.date = new Date();
-    				await this.axios.post("/mdl/v1/prod", this.form.body);
+    				await this.axios.post("/autumnFarmWX/mdl/v1/prod", this.form.body);
                     weui.alert("添加成功", () => {
 	                    this.$router.push("/autumnFarmWX/admin/config/prods")
                     });

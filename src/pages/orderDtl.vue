@@ -173,7 +173,7 @@
         },
         async created() {
     		try {
-    			this.order = (await this.axios.get(`/mdl/v1/order/${this.$route.params.oid}`)).data.data[0];
+    			this.order = (await this.axios.get(`/autumnFarmWX/mdl/v1/order/${this.$route.params.oid}`)).data.data[0];
                 this.rateLevel = this.order.rateLevel || 0;
                 this.rateContent = this.order.rateContent || ""
 		    } catch (e) {
@@ -182,7 +182,7 @@
 		    }
 
 		    try {
-    			this.prod = (await this.axios.get(`/mdl/v1/prod/${this.order.prodId}`)).data.data[0]
+    			this.prod = (await this.axios.get(`/autumnFarmWX/mdl/v1/prod/${this.order.prodId}`)).data.data[0]
             } catch (e) {
 			    weui.alert(`获取产品${this.order.prodId}失败：${e.message || JSON.stringify(e)}`);
 		    }
@@ -216,7 +216,7 @@
                             async onClick() {
                                 let verfCode = $(this).parents(".weui-dialog").find(".weui-input").val();
                                 // @_@ 判断验证码有效性
-                                await self.axios.put(`/mdl/v1/order/${self.order._id}`, {process: "已完成"});
+                                await self.axios.put(`/autumnFarmWX/mdl/v1/order/${self.order._id}`, {process: "已完成"});
                                 self.$router.go(0)
                             }
                         }]
@@ -252,7 +252,7 @@
                                 if(cancelReason === "") {
                                     cancelReason = form.find(".weui-select").val();
                                 }
-                                await self.axios.put(`/mdl/v1/order/${self.order._id}`, {
+                                await self.axios.put(`/autumnFarmWX/mdl/v1/order/${self.order._id}`, {
                                     cancelReason,
                                     process: "已撤销"
                                 });
@@ -282,7 +282,7 @@
                     params.rateContent = this.rateContent
                 }
                 try {
-                    await this.axios.put(`/mdl/v1/order/${this.order._id}`, params);
+                    await this.axios.put(`/autumnFarmWX/mdl/v1/order/${this.order._id}`, params);
                     weui.alert("评论成功，谢谢")
                 } catch (e) {
                     weui.alert(`更新用户的评论失败：${e.message || JSON.stringify(e)}`)

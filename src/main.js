@@ -24,10 +24,10 @@ Vue.use(require('@websanova/vue-auth'), {
 	http:   require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
 	router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
 	authRedirect:   { path: "/autumnFarmWX/admin/login" },
-    loginData:		{ url: "/api/v1/admin/log/in" },
-    registerData:	{ url: "/api/v1/admin/log/up" },
-	fetchData:		{ url: "/api/v1/admin/log/stat" },
-	refreshData:	{ url: "/api/v1/admin/log/refs" }
+    loginData:		{ url: "/autumnFarmWX/api/v1/admin/log/in" },
+    registerData:	{ url: "/autumnFarmWX/api/v1/admin/log/up" },
+	fetchData:		{ url: "/autumnFarmWX/api/v1/admin/log/stat" },
+	refreshData:	{ url: "/autumnFarmWX/api/v1/admin/log/refs" }
 });
 
 new Vue({

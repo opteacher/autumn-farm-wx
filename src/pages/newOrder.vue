@@ -141,7 +141,7 @@
         },
         async created() {
         	try {
-		        this.order = (await this.axios.get(`/mdl/v1/order/${this.$route.query.orderId}`)).data.data;
+		        this.order = (await this.axios.get(`/autumnFarmWX/mdl/v1/order/${this.$route.query.orderId}`)).data.data;
                 if(this.order.length !== 1) {
 		        	weui.alert(`查询不到订单：${this.$route.query.orderId}`);
                     return
@@ -170,7 +170,7 @@
 	        }
 
 	        try {
-        		this.prod = (await this.axios.get(`/mdl/v1/prod/${this.$route.query.prodId}`)).data.data;
+        		this.prod = (await this.axios.get(`/autumnFarmWX/mdl/v1/prod/${this.$route.query.prodId}`)).data.data;
 		        if(this.prod.length !== 1) {
 			        weui.alert(`查询不到货品：${this.$route.query.prodId}`);
 			        return
@@ -183,7 +183,7 @@
 
 	        try {
         	    this.order.openId = cookies.get("openid");
-        	    let users = (await this.axios.get(`/mdl/v1/users?openid=${this.order.openId}`)).data.data;
+        	    let users = (await this.axios.get(`/autumnFarmWX/mdl/v1/users?openid=${this.order.openId}`)).data.data;
         	    if(users.length !== 0) {
         	        this.user = users[0];
         	        if(!this.user.addresses) {
@@ -191,7 +191,7 @@
                     }
                 } else {
                     this.user.openid = this.order.openId;
-                    users = (await this.axios.post("/mdl/v1/user", this.user)).data.data;
+                    users = (await this.axios.post("/autumnFarmWX/mdl/v1/user", this.user)).data.data;
                     if(users.length === 1) {
                         this.user = users[0]
                     }
@@ -246,7 +246,7 @@
 	            let self = this;
 	        	// 查询订单是否重复
 	            try {
-	                let orders = (await this.axios.get(`/mdl/v1/order/${this.order._id}`)).data.data;
+	                let orders = (await this.axios.get(`/autumnFarmWX/mdl/v1/order/${this.order._id}`)).data.data;
 	                if(orders.length !== 1) {
 	                    throw new Error("数据库存储错误：重复的订单记录")
                     }
@@ -263,7 +263,7 @@
 	                this.order.total = this.totalAmount;
 	                this.order.custName = `${this.user.name} ${this.user.sex}`;
 	                this.order.custContact = this.user.phone;
-                    await this.axios.put(`/mdl/v1/order/${this.order._id}`, this.order)
+                    await this.axios.put(`/autumnFarmWX/mdl/v1/order/${this.order._id}`, this.order)
                 } catch (e) {
 	                weui.alert(`付款失败，更新订单错误：${e.message || JSON.stringify(e)}`);
                     return
@@ -271,7 +271,7 @@
 
                 // 保存用户输入的个人信息
                 try {
-                    await this.axios.put(`/mdl/v1/user/${this.user._id}`, this.user)
+                    await this.axios.put(`/autumnFarmWX/mdl/v1/user/${this.user._id}`, this.user)
                 } catch (e) {
 	                weui.alert(`付款失败，存储用户信息错误：${e.message || JSON.stringify(e)}`);
                     return
@@ -280,7 +280,7 @@
                 // // 微信下单
                 // let wxPayRes = {};
                 // try {
-                //     wxPayRes = (await this.axios.post("/api/v1/weixin/order", {
+                //     wxPayRes = (await this.axios.post("/autumnFarmWX/api/v1/weixin/order", {
                 //         orderId: this.order._id,
                 //         total: this.order.total,
                 //         openid: this.order.openId,
@@ -299,7 +299,7 @@
                 // wx.ready(async () => {
                 //     let result = {};
                 //     try {
-                //         result = (await self.axios.get("/api/v1/weixin/signature", {
+                //         result = (await self.axios.get("/autumnFarmWX/api/v1/weixin/signature", {
                 //             params: { extra: {appid: ""} }
                 //         })).data;
                 //     } catch (e) {
@@ -322,7 +322,7 @@
                 // 更新订单状态为待发货
 	            try {
 		            this.order.process = "待发货";
-		            await this.axios.put(`/mdl/v1/order/${this.order._id}`, this.order)
+		            await this.axios.put(`/autumnFarmWX/mdl/v1/order/${this.order._id}`, this.order)
 	            } catch (e) {
 		            weui.alert(`付款失败，更新订单错误：${e.message || JSON.stringify(e)}`);
 		            return

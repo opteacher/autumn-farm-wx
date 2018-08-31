@@ -42,7 +42,7 @@
         },
         async created() {
             try {
-                this.prods = (await this.axios.get("/mdl/v1/prods")).data.data;
+                this.prods = (await this.axios.get("/autumnFarmWX/mdl/v1/prods")).data.data;
             } catch (e) {
                 weui.alert(`获取产品列表失败：${e.message || JSON.stringify(e)}`)
             }

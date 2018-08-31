@@ -37,10 +37,10 @@ db.genPreRoutes(exp);
 
 // @steps{3}:遍历所有模型
 console.log("模型生成的路由：");
-router.get(`/mdl/v${cfg.version}/model`, async ctx => {
+router.get(`/${cfg.prefix}/mdl/v${cfg.version}/model`, async ctx => {
     ctx.body = {version: cfg.version};
 });
-console.log(`GET\t\t/mdl/v${cfg.version}/model`);
+console.log(`GET\t\t/${cfg.prefix}/mdl/v${cfg.version}/model`);
 _.forIn(exp, (model, apiNam) => {
     // @steps{3_1}:检测用户定义的模型参数是否包含了所需的信息
     if (!model.__extProperties) {
@@ -61,13 +61,13 @@ _.forIn(exp, (model, apiNam) => {
 
     // @steps{3_2}:定义所有用到的URL
     const modelName = model.__extProperties.infor.modelName;
-    const GetUrl = `/mdl/v${cfg.version}/${modelName}/:id`;
-    const AllUrl = `/mdl/v${cfg.version}/${modelName}s`;
-    const PostUrl = `/mdl/v${cfg.version}/${modelName}`;
+    const GetUrl = `/${cfg.prefix}/mdl/v${cfg.version}/${modelName}/:id`;
+    const AllUrl = `/${cfg.prefix}/mdl/v${cfg.version}/${modelName}s`;
+    const PostUrl = `/${cfg.prefix}/mdl/v${cfg.version}/${modelName}`;
     const PutUrl = GetUrl;
     const DelUrl = GetUrl;
     const prePath = model.__extProperties.router.prePath;
-    const LnkUrl = prePath ? `/mdl/v${cfg.version}/${prePath.map(pp => pp[1]).join("/")}/${modelName}/:id` : null;
+    const LnkUrl = prePath ? `/${cfg.prefix}/mdl/v${cfg.version}/${prePath.map(pp => pp[1]).join("/")}/${modelName}/:id` : null;
 
     // @steps{3_3}:遍历用户要求的method接口
     model.__extProperties.router.methods.map(method => {
@@ -161,7 +161,7 @@ _.forIn(exp, (model, apiNam) => {
                 // @steps{3_3_2_7}:*PROP*：根据列名，查询对象属性，**会联表**
                 // @notice{steps{3_3_2_7}}:建议使用表名（可带复数）作为列名
                 extAttr.properties && extAttr.properties.map(prop => {
-                    let PropUrl = `/mdl/v${cfg.version}/${modelName}/:id/${prop}`;
+                    let PropUrl = `/${cfg.prefix}/mdl/v${cfg.version}/${modelName}/:id/${prop}`;
                     router.get(PropUrl, async ctx => {
                         ctx.body = {
                             data: await db.select(model, {

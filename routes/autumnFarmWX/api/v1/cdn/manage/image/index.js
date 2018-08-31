@@ -1,5 +1,5 @@
 const router = require("koa-router")();
-const projPath = require("../../../../../../utils/system").projRootPath();
+const projPath = require("../../../../../../../utils/system").projRootPath();
 
 const env = require(`${projPath}/utils/system`).env();
 const cdnCfg = require(`${projPath}/config/cdn.${env}`);

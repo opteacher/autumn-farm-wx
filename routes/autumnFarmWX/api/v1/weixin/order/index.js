@@ -4,7 +4,7 @@ const uuidv4 = require("uuid/v4");
 const moment = require("moment");
 const axios = require("axios");
 const wxXml = require("wx-xml");
-const projPath = require("../../../../../utils/system").projRootPath();
+const projPath = require("../../../../../../utils/system").projRootPath();
 
 const getClientIp = require(`${projPath}/utils/system`).getClientIp;
 const env = require(`${projPath}/utils/system`).env();

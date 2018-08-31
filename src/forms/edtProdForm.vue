@@ -167,7 +167,7 @@
                 		reqBody.images = prod.images;
                     }
                 	try {
-                        let result = (await this.axios.put(`/mdl/v1/prod/${prod._id}`, reqBody)).data;
+                        let result = (await this.axios.put(`/autumnFarmWX/mdl/v1/prod/${prod._id}`, reqBody)).data;
                         if(result.length === 0) {
                         	throw new Error("未能更新产品")
                         }

@@ -173,7 +173,7 @@
         },
         async created() {
             try {
-                this.prod = (await this.axios.get(`/mdl/v1/prod/${this.$route.params.id}`)).data.data;
+                this.prod = (await this.axios.get(`/autumnFarmWX/mdl/v1/prod/${this.$route.params.id}`)).data.data;
                 if(this.prod.length !== 1) {
                     throw new Error(`未找到指定id：${this.$route.params.id}产品记录`)
                 }
@@ -226,7 +226,7 @@
 		            this.order.time = new Date();
                     this.order.process = "待付款";
                     this.order.total = this.totalAmount;
-		            let result = (await this.axios.post("/mdl/v1/order", this.order)).data.data;
+		            let result = (await this.axios.post("/autumnFarmWX/mdl/v1/order", this.order)).data.data;
 		            if(result.length < 1) {
 			            weui.alert(`插入订单数据库失败：${JSON.stringify(result)}`);
 			            return

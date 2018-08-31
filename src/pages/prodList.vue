@@ -51,7 +51,7 @@
             async loadProdList(type) {
                 try {
                     this.selTab = type;
-                    this.prods = (await this.axios.get("/mdl/v1/prods", { params: {type} })).data.data
+                    this.prods = (await this.axios.get("/autumnFarmWX/mdl/v1/prods", { params: {type} })).data.data
                 } catch (e) {
                     weui.alert(`查询产品列表失败：${e.message || JSON.stringify(e)}`)
                 }

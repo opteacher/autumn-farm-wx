@@ -72,7 +72,7 @@
         },
         async created() {
         	try {
-        		let result = (await this.axios.get("/mdl/v1/orders?process=待发货")).data.data;
+        		let result = (await this.axios.get("/autumnFarmWX/mdl/v1/orders?process=待发货")).data.data;
         		this.numWaitForSend = result.length
             } catch (e) {
 		        weui.alert(`查询代发货订单数失败：${e.message || JSON.stringify(e)}`)

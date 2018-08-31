@@ -121,7 +121,7 @@
 	        });
 
 	        try {
-                this.orders = (await this.axios.get(`/mdl/v1/orders?process=${this.$route.params.category}`)).data.data
+                this.orders = (await this.axios.get(`/autumnFarmWX/mdl/v1/orders?process=${this.$route.params.category}`)).data.data
             } catch (e) {
                 weui.alert(`获取订单列表失败：${e.message || JSON.stringify(e)}`)
             }
@@ -130,7 +130,7 @@
 	        async doCancel(oid) {
 	        	try {
 			        weui.confirm(`确认撤销订单：${oid}？`, async () => {
-				        await this.axios.put(`/mdl/v1/order/${oid}`, {process: "已撤销"});
+				        await this.axios.put(`/autumnFarmWX/mdl/v1/order/${oid}`, {process: "已撤销"});
 				        this.$router.go(0)
 			        })
                 } catch (e) {
@@ -149,7 +149,7 @@
 				        type: 'primary',
 				        async onClick() {
 				        	try {
-						        await self.axios.put(`/mdl/v1/order/${oid}`, {
+						        await self.axios.put(`/autumnFarmWX/mdl/v1/order/${oid}`, {
 						        	process: "已发货",
                                     expNo: $(this).parents(".weui-dialog").find(".weui-input").val()
                                 });

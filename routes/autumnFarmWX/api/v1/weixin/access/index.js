@@ -1,6 +1,6 @@
 const _ = require("lodash");
 const router = require("koa-router")();
-const projPath = require("../../../../../utils/system").projRootPath();
+const projPath = require("../../../../../../utils/system").projRootPath();
 const crypto = require("crypto");
 
 const env = require(`${projPath}/utils/system`).env();

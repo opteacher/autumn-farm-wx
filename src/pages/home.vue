@@ -42,7 +42,7 @@
             let timestamp = Date.now();
             let nonceStr = uuidv4().replace("-", "");
             try {
-                let result = (await this.axios.get("/api/v1/weixin/signature", {
+                let result = (await this.axios.get("/autumnFarmWX/api/v1/weixin/signature", {
                     params: {
                         appId: "",
                         nonceStr,

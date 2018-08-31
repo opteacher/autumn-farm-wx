@@ -47,7 +47,7 @@
                 this.address = "";
 
                 try {
-                    let users = (await this.axios.put(`/mdl/v1/user/${this.userId}`, {
+                    let users = (await this.axios.put(`/autumnFarmWX/mdl/v1/user/${this.userId}`, {
                         addresses: [this.addresses]
                     })).data.data;
                     if(users.length !== 1) {

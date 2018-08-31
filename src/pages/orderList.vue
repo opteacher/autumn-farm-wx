@@ -106,10 +106,10 @@
                 }
 	            params.order_by = {time: -1};//按时间降序
                 try {
-                    this.orders = (await this.axios.get("/mdl/v1/orders", {params})).data.data;
+                    this.orders = (await this.axios.get("/autumnFarmWX/mdl/v1/orders", {params})).data.data;
                     if(this.selTab === "已完成") {
 	                    params.process = "已撤销";
-	                    let orders = (await this.axios.get("/mdl/v1/orders", {params})).data.data;
+	                    let orders = (await this.axios.get("/autumnFarmWX/mdl/v1/orders", {params})).data.data;
 	                    this.orders = this.orders.concat(orders);
 	                    this.orders.sort((o1, o2) => o1.time < o2.time ? 1 : -1);
                     }
@@ -117,7 +117,7 @@
                     let prods = {};// 不知为什么，vue的状态导致只能这样写
                     for (let order of this.orders) {
                         if (!(order.prodId in prods)) {
-                            prods[order.prodId] = (await this.axios.get(`/mdl/v1/prod/${order.prodId}`)).data.data[0]
+                            prods[order.prodId] = (await this.axios.get(`/autumnFarmWX/mdl/v1/prod/${order.prodId}`)).data.data[0]
                         }
                     }
                     this.prods = prods
@@ -152,7 +152,7 @@
                             async onClick() {
                                 let verfCode = $(this).parents(".weui-dialog").find(".weui-input").val();
                                 // @_@ 判断验证码有效性
-                                await self.axios.put(`/mdl/v1/order/${oid}`, {process: "已完成"});
+                                await self.axios.put(`/autumnFarmWX/mdl/v1/order/${oid}`, {process: "已完成"});
                                 self.$router.go(0)
                             }
                         }]
@@ -188,7 +188,7 @@
 					            if(cancelReason === "") {
 						            cancelReason = form.find(".weui-select").val();
 					            }
-					            await self.axios.put(`/mdl/v1/order/${oid}`, {
+					            await self.axios.put(`/autumnFarmWX/mdl/v1/order/${oid}`, {
 					            	cancelReason,
                                     process: "已撤销"
 					            });

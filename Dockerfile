@@ -7,7 +7,8 @@ COPY . /app
 
 ENV PORT=$port
 
-RUN npm install
+RUN npm install && npm run build
 
 EXPOSE $port
+
 CMD ["pm2-runtime", "start", "ecosystem.config.js"]

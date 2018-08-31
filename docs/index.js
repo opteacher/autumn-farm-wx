@@ -343,7 +343,7 @@ function docsGen(options) {
         }
         avaDocFiles.push(file);
 
-        let pth = `/doc/v${cfg.version}/${file.split(".")[0]}`;
+        let pth = `/${cfg.prefix}/doc/v${cfg.version}/${file.split(".")[0]}`;
         router.get(pth, async ctx => {
             if (ctx.request.query.api !== undefined) {
                 ctx.body = {data: [file, doc]};
@@ -353,22 +353,22 @@ function docsGen(options) {
         });
         console.log(`GET\t${pth}`);
     });
-    router.get(`/doc`, async ctx => {
+    router.get(`/${cfg.prefix}/doc`, async ctx => {
         ctx.body = {version: cfg.version};
     });
-    console.log("GET\t/doc");
-    router.get(`/doc/v${cfg.version}/`, async ctx => {
+    console.log(`GET\t/${cfg.prefix}/doc`);
+    router.get(`/${cfg.prefix}/doc/v${cfg.version}/`, async ctx => {
         await ctx.redirect(`/doc/v${cfg.version}/index`);
     });
-    console.log(`GET\t/doc/v${cfg.version}/`);
-    router.get(`/doc/v${cfg.version}/index`, async ctx => {
+    console.log(`GET\t/${cfg.prefix}/doc/v${cfg.version}/`);
+    router.get(`/${cfg.prefix}/doc/v${cfg.version}/index`, async ctx => {
         await ctx.render("docs");
     });
-    console.log(`GET\t/doc/v${cfg.version}/index`);
-    router.get(`/doc/v${cfg.version}/file-list`, async ctx => {
+    console.log(`GET\t/${cfg.prefix}/doc/v${cfg.version}/index`);
+    router.get(`/${cfg.prefix}/doc/v${cfg.version}/file-list`, async ctx => {
         ctx.body = {data: avaDocFiles};
     });
-    console.log(`GET\t/doc/v${cfg.version}/file-list`);
+    console.log(`GET\t/${cfg.prefix}/doc/v${cfg.version}/file-list`);
 
     return router;
 }

@@ -86,7 +86,7 @@
                 let file = uplEve.target.files[0];
                 let token = "";
                 try {
-                    token = (await this.axios.get("/api/v1/cdn/upload/token")).data;
+                    token = (await this.axios.get("/autumnFarmWX/api/v1/cdn/upload/token")).data;
                 } catch (e) {
                     weui.alert(`获取七牛云CDN上传TOKEN失败：${e.message || JSON.stringify(e)}`);
                     return
@@ -112,7 +112,7 @@
                         try {
                             self.images[lastIdx].pcs = 101;
                             self.images[lastIdx].src = (
-                                await self.axios.post("/api/v1/cdn/manage/image", res)
+                                await self.axios.post("/autumnFarmWX/api/v1/cdn/manage/image", res)
                             ).data;
                         } catch (res) {
                             weui.alert(`保存图片信息失败：${res.response.data || JSON.stringify(res)}`)
