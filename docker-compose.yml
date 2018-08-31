@@ -22,6 +22,8 @@ services:
 
   python:
     container_name: python
+    image: mongo
+    restart: unless-stopped
 
   autumn-farm-wx:
     container_name: autumn-farm-wx
