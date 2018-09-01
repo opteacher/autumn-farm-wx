@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="/#/autumnFarmWX/admin/config/prods">
+            <a class="weui-cell weui-cell_access" href="javascript:" @click="toBack">
                 <div class="weui-cell__hd"></div>
                 <div class="weui-cell__bd ml-3">
                     <p class="gray-text mb-0">返回产品列表</p>
@@ -27,6 +27,7 @@
     		return {
     			form: {
     				body: {
+    					tempId: "",
     					name: "",
                         icon: "",
                         type: "",
@@ -43,9 +44,23 @@
             }
         },
     	methods: {
+		    async toBack() {
+		    	try {
+				    if(this.form.body.tempId && this.form.body.tempId !== "") {
+					    await this.axios.delete(`/autumnFarmWX/mdl/v1/temp/${this.form.body.tempId}`)
+				    }
+				    this.$router.push("/autumnFarmWX/admin/config/prods")
+                } catch (e) {
+		    		weui.alert(`删除临时数据失败：${e.message || JSON.stringify(e)}`)
+			    }
+            },
     		async doAddProd() {
     			try {
+				    if(this.form.body.tempId && this.form.body.tempId !== "") {
+					    await this.axios.delete(`/autumnFarmWX/mdl/v1/temp/${this.form.body.tempId}`)
+				    }
                     this.form.body.date = new Date();
+				    this.form.body.tempId = "";
     				await this.axios.post("/autumnFarmWX/mdl/v1/prod", this.form.body);
                     weui.alert("添加成功", () => {
 	                    this.$router.push("/autumnFarmWX/admin/config/prods")

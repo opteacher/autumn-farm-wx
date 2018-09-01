@@ -2,6 +2,7 @@ const db = require("../databases/mongo");
 
 module.exports = db.defineModel({
     __modelName:    "prod",
+    tempId:     db.Types.String,
     icon:       db.Types.String,
     name:       db.Types.String,
     type:       db.Types.String,

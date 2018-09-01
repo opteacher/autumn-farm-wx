@@ -1,7 +1,7 @@
 <template>
     <wx-admin-lyt tabIndex="prodLst">
         <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="/#/autumnFarmWX/admin/config/prods">
+            <a class="weui-cell weui-cell_access" href="javascript:" @click="toBack">
                 <div class="weui-cell__hd"></div>
                 <div class="weui-cell__bd ml-3">
                     <p class="gray-text mb-0">返回产品列表</p>
@@ -27,6 +27,7 @@
             return {
                 form: {
                     body: {
+                    	tempId: "",
                         name: "",
                         icon: "",
                         type: "",
@@ -64,14 +65,32 @@
             }
         },
         methods: {
+        	async toBack() {
+        		try {
+			        if(this.form.body.tempId && this.form.body.tempId !== "") {
+				        await this.axios.delete(`/autumnFarmWX/mdl/v1/temp/${this.form.body.tempId}`)
+			        }
+			        this.form.body.tempId = "";
+			        await this.axios.put(`/autumnFarmWX/mdl/v1/prod/${this.$route.params.pid}`, this.form.body);
+			        this.$router.push("/autumnFarmWX/admin/config/prods")
+                } catch (e) {
+			        weui.alert(`删除临时数据失败：${e.message || JSON.stringify(e)}`)
+		        }
+            },
             async doEdtProd() {
                 try {
+	                if(this.form.body.tempId && this.form.body.tempId !== "") {
+		                await this.axios.delete(`/autumnFarmWX/mdl/v1/temp/${this.form.body.tempId}`)
+	                }
+
                     if(this.form.body.express[0].cost === "") {
                         this.form.body.express[0].cost = 0
                     }
                     this.form.body.date = new Date();
+	                this.form.body.tempId = "";
 
                     await this.axios.put(`/autumnFarmWX/mdl/v1/prod/${this.$route.params.pid}`, this.form.body);
+
                     weui.alert("修改成功", () => {
                         this.$router.push("/autumnFarmWX/admin/config/prods")
                     });

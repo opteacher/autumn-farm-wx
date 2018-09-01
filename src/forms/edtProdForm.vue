@@ -130,7 +130,6 @@
     import _ from "lodash"
     import Vue from "vue"
     import addPriceForm from "./addPriceForm"
-    import cookies from "../../utils/cookies"
 
     export default {
         props: {
@@ -139,43 +138,29 @@
         data() {
             return {
                 form: {
-                    key: "prod",
                     body: this.body
                 }
             }
         },
         async created() {
-            if(cookies.get("back_url", true)) {
-            	let cookieObj = cookies.get(this.form.key);
-            	if(!cookieObj) {
-            		return
-                }
-	            _.forIn(cookieObj, (v, k) => {
-		            if(v) {
-			            this.form.body[k] = v
-		            }
-	            });
-	            cookies.clear(this.form.key);
-
-	            let prod = this.form.body;
-                if(prod._id) {
-                	let reqBody = {};
-                	if(prod.icon) {
-                		reqBody.icon = prod.icon;
-                    }
-                	if(prod.images) {
-                		reqBody.images = prod.images;
-                    }
-                	try {
-                        let result = (await this.axios.put(`/autumnFarmWX/mdl/v1/prod/${prod._id}`, reqBody)).data;
-                        if(result.length === 0) {
-                        	throw new Error("未能更新产品")
-                        }
-	                } catch (e) {
-                        weui.alert(`更新产品失败：${e.message || JSON.stringify(e)}`)
-	                }
-                }
+        	if(!this.$route.query.tempId) {
+        		return
             }
+	        try {
+        		let result = (
+        			await this.axios.get(`/autumnFarmWX/mdl/v1/temp/${this.$route.query.tempId}`)
+                ).data.data[0];
+        		if(!result) {
+        			return
+                }
+		        _.forIn(JSON.parse(result.json), (v, k) => {
+			        if(v) {
+				        this.form.body[k] = v
+			        }
+		        });
+            } catch (e) {
+                weui.alert(`操作临时数据失败：${e.message || JSON.stringify(e)}`)
+	        }
         },
         methods: {
             addPrice() {
@@ -252,17 +237,29 @@
                     a.toggle();
                 });
             },
-            hdlSelImages(imgType) {
-                if(!this.form.body.name || this.form.body.name === "") {
-                    weui.alert("请先输入产品名");
-                    return
+            async hdlSelImages(imgType) {
+                let result = {};
+                try {
+                	if(this.form.body.tempId) {
+		                result = (await this.axios.put(`/autumnFarmWX/mdl/v1/temp/${this.form.body.tempId}`, {
+			                json: JSON.stringify(this.form.body)
+		                })).data.data[0];
+                    } else {
+		                result = (await this.axios.post("/autumnFarmWX/mdl/v1/temp", {
+			                json: JSON.stringify(this.form.body)
+		                })).data.data[0];
+		                this.form.body.tempId = result._id;
+                    }
+
+	                this.$router.push([
+		                "/autumnFarmWX/admin/config/prod",
+                        `/${this.form.body.tempId}/images`,
+		                `?num=${imgType === "icon" ? 1 : 5}`,
+                        `&backUrl=${this.$route.path}`
+	                ].join(""))
+                } catch (e) {
+                    weui.alert(`插入临时表失败：${e.message || JSON.stringify(e)}`)
                 }
-                cookies.set(this.form.key, this.form.body);
-                cookies.set("back_url", `${window.location.href}?imgType=${imgType}`);
-                this.$router.push([
-                    "/autumnFarmWX/admin/config/prod/images",
-                    `?num=${imgType === "icon" ? 1 : 5}`
-                ].join(""))
             }
         }
     }

@@ -11,7 +11,7 @@
         <template>
             <mt-swipe :auto="4000" style="height: 30vh;">
                 <mt-swipe-item v-for="img in prod.images" :key="img">
-                    <img class="img-fluid" :src="img">
+                    <img class="img-fluid h-100 w-100" :src="img">
                 </mt-swipe-item>
             </mt-swipe>
         </template>

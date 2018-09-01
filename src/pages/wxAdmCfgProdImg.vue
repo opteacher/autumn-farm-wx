@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" :href="backUrl">
+            <a class="weui-cell weui-cell_access" href="javascript:" @click="$router.go(-1)">
                 <div class="weui-cell__hd"></div>
                 <div class="weui-cell__bd ml-3">
                     <p class="gray-text mb-0">返回产品详情</p>
@@ -57,8 +57,7 @@
     export default {
         data() {
             return {
-                key: "prod",
-                backUrl: "",
+                tempData: {},
                 maxNum: 5,
                 images: [],
                 uplLock: false,
@@ -66,14 +65,32 @@
             }
         },
         async created() {
-            this.backUrl = cookies.get("back_url");
 	        this.maxNum = this.$route.query.num ? parseInt(this.$route.query.num) : 5;
+
+        	let result = {};
+        	try {
+        		result = (
+        			await this.axios.get(`/autumnFarmWX/mdl/v1/temp/${this.$route.params.tid}`)
+                ).data.data[0]
+            } catch (e) {
+                weui.alert(`获取临时数据失败：${e.message || JSON.stringify(e)}`);
+                return
+	        }
+	        this.tempData = JSON.parse(result.json);
+	        this.tempData.tempId = this.$route.params.tid;
+
             if(this.maxNum === 1) {
+            	if(!this.tempData.icon) {
+            		return
+                }
 	            this.images = [{
-	            	src: cookies.get(`${this.key}.icon`), pcs: 101
+	            	src: this.tempData.icon, pcs: 101
 	            }]
             } else {
-	            this.images = cookies.get(`${this.key}.images`) || [];
+	            if(!this.tempData.images) {
+		            return
+	            }
+	            this.images = this.tempData.images;
 	            if(this.images.length !== 0) {
 		            this.images = this.images.map(img => {
 			            return {src: img, pcs: 101}
@@ -131,13 +148,20 @@
                 _.pullAt(this.images, this.selImgIdx);
                 this.selImgIdx = -1;
             },
-            doConfirm() {
-            	if(this.maxNum === 1) {
-		            cookies.set(`${this.key}.icon`, this.images[0].src);
-                } else {
-		            cookies.set(`${this.key}.images`, this.images.map(img => img.src));
-                }
-                window.location.href = this.backUrl
+            async doConfirm() {
+            	try {
+		            if(this.maxNum === 1) {
+                        this.tempData.icon = this.images[0].src
+		            } else {
+			            this.tempData.images = this.images.map(img => img.src)
+		            }
+		            await this.axios.put(`/autumnFarmWX/mdl/v1/temp/${this.tempData.tempId}`, {
+		            	json: JSON.stringify(this.tempData)
+                    })
+                } catch (e) {
+                    weui.alert(`获取临时数据失败：${e.message || JSON.stringify(e)}`)
+	            }
+                this.$router.push(`${this.$route.query.backUrl}?tempId=${this.tempData.tempId}`)
             }
         }
     }
